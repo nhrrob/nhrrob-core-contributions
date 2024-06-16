@@ -1,12 +1,14 @@
 <?php
 /**
- * Plugin Name: Nhrrob Core Contributions
+ * Plugin Name: NHR Core Contributions
+ * Plugin URI: http://wordpress.org/plugins/nhrrob-core-contributions/
  * Description: Display Core Contributions stat in your own website
- * Plugin URI: https://www.example.com/
- * Author: Plugin Author
- * Author URI: https://www.example.com/
+ * Author: Nazmul Hasan Robin
  * Version: 1.0.0
- * License: GPL2 or later
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
+ * Text Domain: nhrrob-options-table-manager
+ * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
