@@ -1,5 +1,5 @@
 {
-    "name": "nhrrob/nhrrob-core-contributions",
+    "name": "nhrcc/core-contributions",
     "description": "NHR Core Contributions plugin",
     "type": "wordpress-plugin",
     "license": "GPLv2",
@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "NhrrobCoreContributions\\": "includes/"
+            "Nhrcc\\CoreContributions\\": "includes/"
         },
         "files": [ "includes/functions.php" ]
     }

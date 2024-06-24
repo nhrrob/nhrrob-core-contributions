@@ -24,7 +24,6 @@ Upload the NHR Core Contributions plugin to your blog, activate it.
 == Frequently Asked Questions ==
 
 = Does it require any other plugin =
-
 No. It works as standalone plugin.
 
 = Is NHR Core Contributions compatible with all WordPress themes and plugins? =

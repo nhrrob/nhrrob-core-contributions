@@ -1,6 +1,6 @@
 <?php
 
-namespace NhrrobCoreContributions\Frontend;
+namespace Nhrcc\CoreContributions\Frontend;
 
 /**
  * Shortcode handler class
@@ -11,7 +11,7 @@ class Shortcode {
      * Initialize the class
      */
     function __construct() {
-        add_shortcode( 'nhrrob-core-contributions', [ $this, 'render_shortcode' ] );
+        add_shortcode( 'nhrcc-core-contributions', [ $this, 'render_shortcode' ] );
     }
 
     /**
@@ -23,9 +23,9 @@ class Shortcode {
      * @return string
      */
     public function render_shortcode( $atts, $content = '' ) {
-        wp_enqueue_script( 'nhrrob-core-contributions-script' );
-        wp_enqueue_style( 'nhrrob-core-contributions-style' );
+        wp_enqueue_script( 'nhrcc-core-contributions-script' );
+        wp_enqueue_style( 'nhrcc-core-contributions-style' );
 
-        return '<div class="nhrrob-core-contributions-shortcode">Hello from Shortcode</div>';
+        return '<div class="nhrcc-core-contributions-shortcode">Hello from Shortcode</div>';
     }
 }

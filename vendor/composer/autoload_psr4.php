@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'NhrrobCoreContributions\\' => array($baseDir . '/includes'),
+    'Nhrcc\\CoreContributions\\' => array($baseDir . '/includes'),
 );

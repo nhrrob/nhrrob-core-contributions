@@ -1,6 +1,6 @@
 <?php
 
-namespace NhrrobCoreContributions;
+namespace Nhrcc\CoreContributions;
 
 /**
  * Installer class
@@ -21,13 +21,13 @@ class Installer {
      * Add time and version on DB
      */
     public function add_version() {
-        $installed = get_option( 'nhrrob_core_contributions_installed' );
+        $installed = get_option( 'nhrcc_core_contributions_installed' );
 
         if ( ! $installed ) {
-            update_option( 'nhrrob_core_contributions_installed', time() );
+            update_option( 'nhrcc_core_contributions_installed', time() );
         }
 
-        update_option( 'nhrrob_core_contributions_version', NHRROB_CORE_CONTRIBUTIONS_VERSION );
+        update_option( 'nhrcc_core_contributions_version', NHRCC_VERSION );
     }
 
     /**

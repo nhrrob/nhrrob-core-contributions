@@ -1,6 +1,6 @@
 <?php
 
-namespace NhrrobCoreContributions;
+namespace Nhrcc\CoreContributions;
 
 /**
  * Frontend handler class
