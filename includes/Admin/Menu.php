@@ -36,7 +36,13 @@ class Menu {
      * @return void
      */
     public function settings_page() {
-        _e('Settings Page Content', 'nhrrob-core-contributions');
+        $settings_page = new SettingsPage();
+        
+        ob_start();
+        $settings_page->view();
+        $content = ob_get_clean();
+        
+        echo wp_kses( $content, $this->allowed_html() );
     }
 
     /**
