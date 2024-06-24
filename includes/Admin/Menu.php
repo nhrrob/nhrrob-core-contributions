@@ -2,11 +2,14 @@
 
 namespace Nhrcc\CoreContributions\Admin;
 
+use Nhrcc\CoreContributions\Traits\GlobalTrait;
+
 /**
  * The Menu handler class
  */
 class Menu {
 
+    USE GlobalTrait;
     /**
      * Initialize the class
      */

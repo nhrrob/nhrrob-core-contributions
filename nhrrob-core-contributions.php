@@ -67,6 +67,9 @@ final class Nhrcc_Core_Contributions {
         define( 'NHRCC_PATH', __DIR__ );
         define( 'NHRCC_URL', plugins_url( '', NHRCC_FILE ) );
         define( 'NHRCC_ASSETS', NHRCC_URL . '/assets' );
+        define( 'NHRCC_PLUGIN_DIR', plugin_dir_path( NHRCC_FILE ) );
+        define( 'NHRCC_INCLUDES_PATH', NHRCC_PATH . '/includes' );
+        define( 'NHRCC_VIEWS_PATH', NHRCC_INCLUDES_PATH . '/views' );
     }
 
     /**

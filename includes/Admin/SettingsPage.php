@@ -29,7 +29,7 @@ class SettingsPage extends Page
         global $wpdb;
         
         ob_start();
-		include NHROTM_VIEWS_PATH . '/admin/settings/index.php';
+		include NHRCC_VIEWS_PATH . '/admin/settings/index.php';
         $content = ob_get_clean();
         echo wp_kses( $content, $this->allowed_html() );
     }
