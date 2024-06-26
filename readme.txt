@@ -4,7 +4,7 @@ Tags: TBA
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,9 @@ Yes, NHR Core Contributions is designed to be compatible with most WordPress the
 
 
 == Changelog ==
+
+= 1.0.1 - 26/06/2024 =
+- Textdomain issue fixed
 
 = 1.0.0 - 16/06/2024 =
 - Initial beta release. Cheers!

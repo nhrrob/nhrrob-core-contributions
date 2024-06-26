@@ -4,10 +4,10 @@
  * Plugin URI: http://wordpress.org/plugins/nhrcc-core-contributions/
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
- * Text Domain: nhrcc-core-contributions
+ * Text Domain: nhrrob-core-contributions
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -28,7 +28,7 @@ final class Nhrcc_Core_Contributions {
      *
      * @var string
      */
-    const nhrcc_version = '1.0.0';
+    const nhrcc_version = '1.0.1';
 
     /**
      * Class construcotr
