@@ -4,6 +4,8 @@ namespace Nhrcc\CoreContributions\Traits;
 
 trait GlobalTrait
 {
+    use CoreContributionsTrait;
+    
     public function dd($var)
     {
         echo "<pre>";

@@ -2,14 +2,13 @@
 
 namespace Nhrcc\CoreContributions\Admin;
 
-use Nhrcc\CoreContributions\Traits\GlobalTrait;
+use Nhrcc\CoreContributions\App;
 
 /**
  * The Menu handler class
  */
-class Menu {
+class Menu extends App {
 
-    USE GlobalTrait;
     /**
      * Initialize the class
      */
@@ -26,10 +25,11 @@ class Menu {
         $parent_slug = 'nhrcc-core-contributions';
         $capability = 'manage_options';
 
-        $hook = add_menu_page( __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'settings_page' ], 'dashicons-welcome-learn-more' );
+        // $hook = add_menu_page( __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'settings_page' ], 'dashicons-welcome-learn-more' );
         // add_submenu_page( $parent_slug, __( 'Resource Book', 'nhrrob-core-contributions' ), __( 'Resource Book', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'plugin_page' ] );
         // add_submenu_page( $parent_slug, __( 'Settings', 'nhrrob-core-contributions' ), __( 'Settings', 'nhrrob-core-contributions' ), $capability, 'nhrcc-core-contributions-settings', [ $this, 'settings_page' ] );
 
+        $hook = add_submenu_page( 'tools.php', __( 'Core Contributions', 'nhrrob-core-contributions' ), __( 'Core Contributions', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'settings_page' ] );
         add_action( 'admin_head-' . $hook, [ $this, 'enqueue_assets' ] );
     }
 
