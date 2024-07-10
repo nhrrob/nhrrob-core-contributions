@@ -47,8 +47,8 @@ class Assets {
                 'version' => filemtime( NHRCC_PATH . '/assets/css/frontend.css' )
             ],
             'nhrcc-core-contributions-admin-style' => [
-                'src'     => NHRCC_ASSETS . '/css/admin.css',
-                'version' => filemtime( NHRCC_PATH . '/assets/css/admin.css' )
+                'src'     => NHRCC_ASSETS . '/css/admin.out.css',
+                'version' => filemtime( NHRCC_PATH . '/assets/css/admin.out.css' )
             ],
         ];
     }
