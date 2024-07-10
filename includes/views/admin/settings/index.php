@@ -32,19 +32,18 @@
                 <?php
                 // Get the current page URL
                 $current_url = admin_url("admin.php?page={$this->page_slug}");
-
-                $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
-                $next_page = $current_page + 1;
-                $prev_page = $current_page > 1 ? $current_page - 1 : 1;
-
-                // Previous Page link
-                if ($current_page > 1) {
-                    echo '<a href="' . esc_url(add_query_arg('paged', $prev_page, $current_url)) . '">' . __('Previous Page', 'nhrrob-core-contributions') . '</a>';
-                }
                 
-                // Next Page link
-                echo ' | ';
-                echo '<a href="' . esc_url(add_query_arg('paged', $next_page, $current_url)) . '">' . __('Next Page', 'nhrrob-core-contributions') . '</a>';
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    if ($i == $page) {
+                        echo '<span>' . $i . '</span>';
+                    } else {
+                        echo '<a href="' . esc_url(add_query_arg('paged', $i, $current_url)) . '">' . $i . '</a>';
+                    }
+                    
+                    if ($i < $total_pages) {
+                        echo ' | ';
+                    }
+                }
                 ?>
             </div>
 
