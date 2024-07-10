@@ -10,7 +10,7 @@ trait CoreContributionsTrait
         $cache_key = 'nhrcc_' . md5($username);
         $cached_data = get_transient($cache_key);
         if ($cached_data !== false) {
-            return $cached_data;
+            // return $cached_data;
         }
 
         $url = "https://core.trac.wordpress.org/search?q=$username&noquickjump=1&changeset=on";
@@ -47,6 +47,43 @@ trait CoreContributionsTrait
         set_transient($cache_key, $formatted, 12 * HOUR_IN_SECONDS);
 
         return $formatted;
+    }
+
+    public function get_core_contribution_count($username)
+    {
+        // Check for cached count
+        $cache_key = 'nhrcc_count_' . md5($username);
+        $cached_count = get_transient($cache_key);
+        if ($cached_count !== false) {
+            return $cached_count;
+        }
+
+        $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on";
+        $response = wp_remote_get($url);
+
+        if (is_wp_error($response)) {
+            return '<p>' . __('Unable to fetch contributions at this time.', 'nhrrob-core-contributions') . '</p>';
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        if (empty($body)) {
+            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
+        }
+
+        // Parse HTML to extract the total number of results
+        $pattern = '/<meta name="totalResults" content="(\d*)" \/>/';
+        preg_match($pattern, $body, $matches);
+
+        if (!isset($matches[1])) {
+            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
+        }
+
+        $count = intval($matches[1]);
+
+        // Cache the count for 12 hours
+        set_transient($cache_key, $count, 12 * HOUR_IN_SECONDS);
+
+        return $count;
     }
     
 }
