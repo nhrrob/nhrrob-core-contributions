@@ -4,25 +4,25 @@ namespace Nhrcc\CoreContributions\Traits;
 
 trait CoreContributionsTrait
 {
-    public function get_core_contributions($username)
+    public function get_core_contributions($username, $page = 1)
     {
         // Check for cached results
-        $cache_key = 'nhrcc_' . md5($username);
+        $cache_key = 'nhrcc_' . md5($username . '_' . $page);
         $cached_data = get_transient($cache_key);
         if ($cached_data !== false) {
-            // return $cached_data;
+            return $cached_data;
         }
 
-        $url = "https://core.trac.wordpress.org/search?q=$username&noquickjump=1&changeset=on";
+        $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on&page=$page";
         $response = wp_remote_get($url);
 
         if (is_wp_error($response)) {
-            return '<p>' . __('Unable to fetch contributions at this time.', 'nhrrob-core-contributions') . '</p>';
+            return [];
         }
 
         $body = wp_remote_retrieve_body($response);
         if (empty($body)) {
-            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
+            return [];
         }
 
         // Parse HTML to extract the relevant data
@@ -30,7 +30,7 @@ trait CoreContributionsTrait
         preg_match_all($pattern, $body, $matches, PREG_SET_ORDER);
 
         if (empty($matches)) {
-            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
+            return [];
         }
 
         $formatted = [];
@@ -48,6 +48,7 @@ trait CoreContributionsTrait
 
         return $formatted;
     }
+
 
     public function get_core_contribution_count($username)
     {
@@ -85,5 +86,4 @@ trait CoreContributionsTrait
 
         return $count;
     }
-    
 }
