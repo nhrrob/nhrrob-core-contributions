@@ -35,12 +35,13 @@ class Shortcode extends App
         // Extract shortcode attributes if needed (not used in this example)
         $atts = shortcode_atts(array(
             // Define any attributes you might need
+            'username' => 'audrasjb', // Default username
         ), $atts, 'nhrcc_core_contributions');
 
         $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;
                             
         // Initialize variables
-        $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : '';
+        $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : sanitize_text_field($atts['username']);
         $total_contribution_count = 0;
         $core_contributions = [];
 
