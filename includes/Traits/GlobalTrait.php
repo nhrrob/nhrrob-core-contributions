@@ -23,6 +23,8 @@ trait GlobalTrait
             'a' => array(
                 'href'            => 1,
                 'class'           => 1,
+                'id'              => 1,
+                'target'          => 1,
             ),
             // 'img'  => array(
             //     'src'     => 1,
