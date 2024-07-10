@@ -60,6 +60,24 @@ trait GlobalTrait
                 'name' => 1,
                 'placeholder' => 1,
                 'value' => 1,
+                'id' => 1,
+                'required' => 1,
+            ),
+            'select' => array(
+                'class' => 1,
+                'name' => 1,
+                'id' => 1,
+                'required' => 1,
+            ),
+            'option' => array(
+                'value' => 1,
+                'selected' => 1,
+            ),
+            'form' => array(
+                'action' => 1,
+                'method' => 1,
+                'id' => 1,
+                'class' => 1,
             ),
         );
 
@@ -67,4 +85,5 @@ trait GlobalTrait
 
         return $allowed_tags;
     }
+    
 }
