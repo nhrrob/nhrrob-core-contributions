@@ -9,11 +9,7 @@
 
     <?php if (!empty($core_contributions) && is_array($core_contributions)) : ?>
         <ul class="nhrcc-contributions-list">
-            <?php foreach ($core_contributions as $contribution) : 
-                // echo "<pre>";
-                // print_r($core_contributions);
-                // wp_die('ok');
-                ?>
+            <?php foreach ($core_contributions as $contribution) : ?>
                 <li>
                     <a href="<?php echo esc_url($contribution['link']); ?>" target="_blank">
                         <?php echo esc_html($contribution['description']); ?>
@@ -21,6 +17,12 @@
                 </li>
             <?php endforeach; ?>
         </ul>
+
+        <p>
+            <a href="<?php echo esc_url("https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on"); ?>" target="_blank">
+                <?php esc_html_e('See the full list of contributions', 'nhrrob-core-contributions'); ?>
+            </a>
+        </p>
     <?php else : ?>
         <p><?php esc_html_e('No contributions found for this user.', 'nhrrob-core-contributions'); ?></p>
     <?php endif; ?>
