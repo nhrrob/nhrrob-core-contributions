@@ -27,7 +27,7 @@ class SettingsPage extends Page
         global $wpdb;
 
         // Default values
-        $username = isset($_POST['nhrcc_username']) ? sanitize_text_field($_POST['nhrcc_username']) : 'audrasjb';
+        $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : 'audrasjb';
         $page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
         $contributions_per_page = 10; // Define the number of contributions per page
 

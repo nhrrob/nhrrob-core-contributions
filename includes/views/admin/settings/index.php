@@ -1,5 +1,4 @@
-<?php if (!defined('ABSPATH')) exit; // Exit if accessed directly 
-?>
+<?php if (!defined('ABSPATH')) exit; // Exit if accessed directly ?>
 
 <div class="wrap p-6 max-w-4xl mx-auto">
     <div class="bg-white shadow rounded-lg p-6 mb-6">
@@ -33,15 +32,14 @@
                     <?php endforeach; ?>
                 </ul>
 
-                <?php // Pagination links 
-                ?>
+                <?php // Pagination links ?>
                 <div class="pagination flex flex-wrap items-center space-x-4">
                     <?php
                     // Get the current page URL
                     $current_url = admin_url("admin.php?page={$this->page_slug}");
 
-                    // Call the paginate_links function
-                    echo $this->paginate_links($page, $total_pages, $current_url);
+                    // Call the paginate_links function with the username
+                    echo $this->paginate_links($page, $total_pages, $current_url, $username);
                     ?>
                 </div>
 

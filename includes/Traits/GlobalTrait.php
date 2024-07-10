@@ -88,40 +88,40 @@ trait GlobalTrait
         return $allowed_tags;
     }
 
-    public function paginate_links($page, $total_pages, $current_url) {
+    function paginate_links($current_page, $total_pages, $current_url, $username) {
         $output = '';
-
-        if ($page > 1) {
-            $output .= '<a href="' . esc_url(add_query_arg('paged', $page - 1, $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">Previous</a>';
+    
+        if ($current_page > 1) {
+            $output .= '<a href="' . esc_url(add_query_arg(array('paged' => $current_page - 1, 'nhrcc_username' => $username), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">Previous</a>';
         }
-
-        if ($page > 3) {
-            $output .= '<a href="' . esc_url(add_query_arg('paged', 1, $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">1</a>';
-            if ($page > 4) {
+    
+        if ($current_page > 3) {
+            $output .= '<a href="' . esc_url(add_query_arg(array('paged' => 1, 'nhrcc_username' => $username), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">1</a>';
+            if ($current_page > 4) {
                 $output .= '<span class="px-3 py-1">...</span>';
             }
         }
-
-        for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++) {
-            if ($i == $page) {
+    
+        for ($i = max(1, $current_page - 2); $i <= min($total_pages, $current_page + 2); $i++) {
+            if ($i == $current_page) {
                 $output .= '<span class="px-3 py-1 bg-gray-300 rounded">' . $i . '</span>';
             } else {
-                $output .= '<a href="' . esc_url(add_query_arg('paged', $i, $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . $i . '</a>';
+                $output .= '<a href="' . esc_url(add_query_arg(array('paged' => $i, 'nhrcc_username' => $username), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . $i . '</a>';
             }
         }
-
-        if ($page < $total_pages - 2) {
-            if ($page < $total_pages - 3) {
+    
+        if ($current_page < $total_pages - 2) {
+            if ($current_page < $total_pages - 3) {
                 $output .= '<span class="px-3 py-1">...</span>';
             }
-            $output .= '<a href="' . esc_url(add_query_arg('paged', $total_pages, $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . $total_pages . '</a>';
+            $output .= '<a href="' . esc_url(add_query_arg(array('paged' => $total_pages, 'nhrcc_username' => $username), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . $total_pages . '</a>';
         }
-
-        if ($page < $total_pages) {
-            $output .= '<a href="' . esc_url(add_query_arg('paged', $page + 1, $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">Next</a>';
+    
+        if ($current_page < $total_pages) {
+            $output .= '<a href="' . esc_url(add_query_arg(array('paged' => $current_page + 1, 'nhrcc_username' => $username), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">Next</a>';
         }
-
+    
         return $output;
-    }
+    }    
     
 }
