@@ -1,6 +1,6 @@
 === NHR Core Contributions ===
 Contributors: nhrrob
-Tags: TBA
+Tags: contributions, core, wordpress core contributions, core trac contributions, wordpress core contributor
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -8,33 +8,50 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-TBA plugin short description 
+Display Core Contributions stat in your own website.
 
 == Description ==
+- 🚀 [GitHub Repository](https://github.com/nhrrob/nhrrob-core-contributions): Found a bug or have a feature request? Let us know!
+- 💬 [Slack Community](https://join.slack.com/t/nhrrob/shared_invite/zt-2m3nyrl1f-eKv7wwJzsiALcg0nY6~e0Q): Got questions or just want to chat? Come hang out with us on Slack!
 
-TBA plugin description 
+In the vast tapestry of the WordPress universe, let your contributions shine like stars. The NHR Core Contributions Plugin elegantly weaves your efforts into your website, displaying your dedication with real-time stats. Let the world witness the story of your commitment to the WordPress community.
+
+`<?php echo 'Shine a Light on Your WordPress Core Work!'; ?>`
+
+### ✨ Features
+- Real-Time Stats: Your latest WordPress core contributions are automatically displayed.
+- Customizable Display: Display core contributions based on username
+- Simple Integration: Just use a simple shortcode to embed your stats anywhere you like.
+- Pagination: Fetch all of your contributions with pagination.
+
+### Shortcode
+- `[nhrcc_core_contributions username="your_wp_username"]`
 
 == Installation ==
 
-Upload the NHR Core Contributions plugin to your blog, activate it.
-
-1, 2, 3: You're done!
+1. Upload the plugin files to the /wp-content/plugins/nhrrob-core-contributions directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the shortcode [nhrcc_core_contributions username="your_wp_username"] to display your contributions.
 
 
 == Frequently Asked Questions ==
 
-= Does it require any other plugin =
-No. It works as standalone plugin.
+= How do I find my WordPress username? =
+Your WordPress username is the same as the one you use on WordPress.org.
+E.x. https://profiles.wordpress.org/nhrrob/ (here username is: nhrrob)
 
-= Is NHR Core Contributions compatible with all WordPress themes and plugins? =
-Yes, NHR Core Contributions is designed to be compatible with most WordPress themes and plugins.
+= Does it shows all of my contributions =
+Absolutely. It fetches all of your contributions with pagination. 
+
+= Can I see total contributions count? Also link to the details for each ticket? =
+Yes. Total count is shown at the top. Also all tickets are linked to the changesheet url.
 
 
 == Screenshots ==
 
-1. Screenshot 1 details
-2. Screenshot 2 details
-
+1. Dashboard => Tools => Core Contributions page
+2. How to add shortcode 
+3. Shortcode view on the front end
 
 == Changelog ==
 
