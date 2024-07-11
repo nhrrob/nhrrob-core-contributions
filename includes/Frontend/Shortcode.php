@@ -41,7 +41,8 @@ class Shortcode extends App
         $total_contribution_count = 0;
         $core_contributions = [];
         $username = sanitize_text_field( $atts['username'] );
-
+        $page = 1;
+        
         // Verify the nonce before processing form data
         if (isset($_REQUEST['nhrcc_form_nonce']) && wp_verify_nonce($_REQUEST['nhrcc_form_nonce'], 'nhrcc_form_action')) {
             $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;
