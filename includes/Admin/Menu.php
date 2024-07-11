@@ -22,8 +22,8 @@ class Menu extends App {
      * @return void
      */
     public function admin_menu() {
-        $parent_slug = 'nhrcc-core-contributions';
-        $capability = 'manage_options';
+        $parent_slug = esc_html( 'nhrcc-core-contributions' );
+        $capability = esc_html( 'manage_options' );
 
         // $hook = add_menu_page( __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), __( 'NHR Core Contributions', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'settings_page' ], 'dashicons-welcome-learn-more' );
         // add_submenu_page( $parent_slug, __( 'Resource Book', 'nhrrob-core-contributions' ), __( 'Resource Book', 'nhrrob-core-contributions' ), $capability, $parent_slug, [ $this, 'plugin_page' ] );
@@ -54,7 +54,7 @@ class Menu extends App {
      * @return void
      */
     public function enqueue_assets() {
-        wp_enqueue_style( 'nhrcc-core-contributions-admin-style' );
-        wp_enqueue_script( 'nhrcc-core-contributions-admin-script' );
+        wp_enqueue_style( 'nhrcc-admin-style' );
+        wp_enqueue_script( 'nhrcc-admin-script' );
     }
 }

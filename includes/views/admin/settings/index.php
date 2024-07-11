@@ -17,7 +17,7 @@
         <div class="bg-white shadow rounded-lg p-6 mb-6">
             <?php if ($total_contribution_count > 0) : ?>
                 <p class="mb-4 text-gray-700">
-                    <?php printf(esc_html__('Total Contributions: %d', 'nhrrob-core-contributions'), $total_contribution_count); ?>
+                    <?php printf(esc_html__('Total Contributions: %d', 'nhrrob-core-contributions'), intval( $total_contribution_count ) ); ?>
                 </p>
             <?php endif; ?>
 
@@ -43,7 +43,7 @@
                     $current_url = is_admin() ? admin_url("admin.php?page={$this->page_slug}") : home_url(add_query_arg(array(), $wp->request));
                     $is_shortcode = ! is_admin() ? 1 : 0;
                     // Call the paginate_links function with the username
-                    echo $this->paginate_links($page, $total_pages, $current_url, $username, $is_shortcode);
+                    echo $this->paginate_links( intval( $page ), intval( $total_pages ), esc_url( $current_url ), sanitize_text_field( $username ), intval( $is_shortcode ));
                     ?>
                 </div>
 

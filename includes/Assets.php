@@ -22,12 +22,12 @@ class Assets {
      */
     public function get_scripts() {
         return [
-            'nhrcc-core-contributions-script' => [
+            'nhrcc-script' => [
                 'src'     => NHRCC_ASSETS . '/js/frontend.js',
                 'version' => filemtime( NHRCC_PATH . '/assets/js/frontend.js' ),
                 'deps'    => [ 'jquery' ]
             ],
-            'nhrcc-core-contributions-admin-script' => [
+            'nhrcc-admin-script' => [
                 'src'     => NHRCC_ASSETS . '/js/admin.js',
                 'version' => filemtime( NHRCC_PATH . '/assets/js/admin.js' ),
                 'deps'    => [ 'jquery', 'wp-util' ]
@@ -42,11 +42,11 @@ class Assets {
      */
     public function get_styles() {
         return [
-            'nhrcc-core-contributions-style' => [
+            'nhrcc-style' => [
                 'src'     => NHRCC_ASSETS . '/css/frontend.css',
                 'version' => filemtime( NHRCC_PATH . '/assets/css/frontend.css' )
             ],
-            'nhrcc-core-contributions-admin-style' => [
+            'nhrcc-admin-style' => [
                 'src'     => NHRCC_ASSETS . '/css/admin.out.css',
                 'version' => filemtime( NHRCC_PATH . '/assets/css/admin.out.css' )
             ],
@@ -74,8 +74,8 @@ class Assets {
             wp_register_style( $handle, $style['src'], $deps, $style['version'] );
         }
 
-        wp_localize_script( 'nhrcc-core-contributions-admin-script', 'nhrccCoreContributions', [
-            'nonce' => wp_create_nonce( 'nhrcc-core-contributions-admin-nonce' ),
+        wp_localize_script( 'nhrcc-admin-script', 'nhrccCoreContributions', [
+            'nonce' => wp_create_nonce( 'nhrcc-admin-nonce' ),
             'confirm' => __( 'Are you sure?', 'nhrrob-core-contributions' ),
             'error' => __( 'Something went wrong', 'nhrrob-core-contributions' ),
         ] );

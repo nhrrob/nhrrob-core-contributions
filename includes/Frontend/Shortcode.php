@@ -28,14 +28,14 @@ class Shortcode extends App
      */
     public function render_shortcode($atts, $content = '')
     {
-        wp_enqueue_script('nhrcc-core-contributions-script');
-        wp_enqueue_style('nhrcc-core-contributions-style');
-        wp_enqueue_style('nhrcc-core-contributions-admin-style');
+        wp_enqueue_script('nhrcc-script');
+        wp_enqueue_style('nhrcc-style');
+        wp_enqueue_style('nhrcc-admin-style');
 
         // Extract shortcode attributes if needed (not used in this example)
         $atts = shortcode_atts(array(
             // Define any attributes you might need
-            'username' => 'audrasjb', // Default username
+            'username' => 'nhrrob', // Default username
         ), $atts, 'nhrcc_core_contributions');
 
         $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;

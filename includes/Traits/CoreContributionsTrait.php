@@ -13,6 +13,9 @@ trait CoreContributionsTrait
             return $cached_data;
         }
 
+        $username = sanitize_text_field($username);
+        $page = intval( $page );
+
         $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on&page=$page";
         $response = wp_remote_get($url);
 
@@ -36,9 +39,9 @@ trait CoreContributionsTrait
         $formatted = [];
         foreach ($matches as $match) {
             $formatted[] = [
-                'link'        => 'https://core.trac.wordpress.org' . $match[1],
+                'link'        => 'https://core.trac.wordpress.org' . sanitize_text_field( $match[1] ),
                 'changeset'   => intval($match[2]),
-                'description' => $match[3],
+                'description' => sanitize_text_field( $match[3] ),
                 'ticket'      => isset($match[5]) ? intval($match[5]) : '',
             ];
         }
@@ -59,6 +62,7 @@ trait CoreContributionsTrait
             return $cached_count;
         }
 
+        $username = sanitize_text_field($username);
         $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on";
         $response = wp_remote_get($url);
 
