@@ -31,7 +31,6 @@ class SettingsPage extends Page
 
         $username = sanitize_text_field('nhrrob');
         $page = 1;
-        print_r($_REQUEST);
 
         if (isset($_REQUEST['nhrcc_form_nonce']) && wp_verify_nonce($_REQUEST['nhrcc_form_nonce'], 'nhrcc_form_action')) {
             // Default values
