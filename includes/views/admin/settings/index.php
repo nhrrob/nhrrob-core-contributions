@@ -40,7 +40,7 @@
                     // Get the current page URL
                     global $wp;
                     
-                    $current_url = is_admin() ? admin_url("admin.php?page={$this->page_slug}") : home_url(add_query_arg(array(), $wp->request));
+                    $current_url = is_admin() ? admin_url("tools.php?page={$this->page_slug}") : home_url(add_query_arg(array(), $wp->request));
                     $is_shortcode = ! is_admin() ? 1 : 0;
                     // Call the paginate_links function with the username
                     echo $this->paginate_links( intval( $page ), intval( $total_pages ), esc_url( $current_url ), sanitize_text_field( $username ), intval( $is_shortcode ));
