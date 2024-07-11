@@ -32,14 +32,18 @@
                     <?php endforeach; ?>
                 </ul>
 
-                <?php // Pagination links ?>
                 <div class="pagination flex flex-wrap items-center space-x-4">
                     <?php
-                    // Get the current page URL
-                    $current_url = admin_url("admin.php?page={$this->page_slug}");
+                    $contributions_per_page = 10; // Define the number of contributions per page
+                    $total_pages = ceil($total_contribution_count / $contributions_per_page);
 
+                    // Get the current page URL
+                    global $wp;
+                    
+                    $current_url = is_admin() ? admin_url("admin.php?page={$this->page_slug}") : home_url(add_query_arg(array(), $wp->request));
+                    $is_shortcode = ! is_admin() ? 1 : 0;
                     // Call the paginate_links function with the username
-                    echo $this->paginate_links($page, $total_pages, $current_url, $username);
+                    echo $this->paginate_links($page, $total_pages, $current_url, $username, $is_shortcode);
                     ?>
                 </div>
 
