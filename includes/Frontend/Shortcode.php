@@ -38,12 +38,16 @@ class Shortcode extends App
             'username' => 'nhrrob', // Default username
         ), $atts, 'nhrcc_core_contributions');
 
-        $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;
-                            
-        // Initialize variables
-        $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : sanitize_text_field($atts['username']);
         $total_contribution_count = 0;
         $core_contributions = [];
+        $username = sanitize_text_field( $atts['username'] );
+
+        // Verify the nonce before processing form data
+        if (isset($_REQUEST['nhrcc_form_nonce']) && wp_verify_nonce($_REQUEST['nhrcc_form_nonce'], 'nhrcc_form_action')) {
+            $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;
+            // Initialize variables
+            $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : sanitize_text_field( $username );
+        }
 
         // Check if username is provided and retrieve data
         if ($username) {

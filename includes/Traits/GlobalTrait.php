@@ -88,15 +88,16 @@ trait GlobalTrait
         return $allowed_tags;
     }
 
-    function paginate_links($current_page, $total_pages, $current_url, $username, $shortcode=0) {
+    public function paginate_links($current_page, $total_pages, $current_url, $username, $shortcode=0) {
         $output = '';
         $paged = $shortcode ? esc_html( 'front_paged' ) : esc_html( 'paged' );
+        
         if ($current_page > 1) {
-            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $current_page ) - 1, 'nhrcc_username' => sanitize_text_field( $username ) ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . esc_html__('Previous', 'nhrrob-core-contributions') . '</a>';
+            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $current_page ) - 1, 'nhrcc_username' => sanitize_text_field( $username ), 'nhrcc_form_nonce' => wp_create_nonce('nhrcc_form_action') ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . esc_html__('Previous', 'nhrrob-core-contributions') . '</a>';
         }
     
         if ($current_page > 3) {
-            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => 1, 'nhrcc_username' => sanitize_text_field( $username ) ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">1</a>';
+            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => 1, 'nhrcc_username' => sanitize_text_field( $username ), 'nhrcc_form_nonce' => wp_create_nonce('nhrcc_form_action') ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">1</a>';
             if ($current_page > 4) {
                 $output .= '<span class="px-3 py-1">...</span>';
             }
@@ -106,7 +107,7 @@ trait GlobalTrait
             if ($i == $current_page) {
                 $output .= '<span class="px-3 py-1 bg-gray-300 rounded">' . intval( $i ) . '</span>';
             } else {
-                $output .= '<a href="' . esc_url(add_query_arg(array($paged => intval( $i ), 'nhrcc_username' => sanitize_text_field( $username ) ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . intval( $i ) . '</a>';
+                $output .= '<a href="' . esc_url(add_query_arg(array($paged => intval( $i ), 'nhrcc_username' => sanitize_text_field( $username ), 'nhrcc_form_nonce' => wp_create_nonce('nhrcc_form_action') ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . intval( $i ) . '</a>';
             }
         }
     
@@ -114,11 +115,11 @@ trait GlobalTrait
             if ($current_page < $total_pages - 3) {
                 $output .= '<span class="px-3 py-1">...</span>';
             }
-            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $total_pages ), 'nhrcc_username' => sanitize_text_field( $username ) ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . intval( $total_pages ) . '</a>';
+            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $total_pages ), 'nhrcc_username' => sanitize_text_field( $username ), 'nhrcc_form_nonce' => wp_create_nonce('nhrcc_form_action') ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . intval( $total_pages ) . '</a>';
         }
     
         if ($current_page < $total_pages) {
-            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $current_page ) + 1, 'nhrcc_username' => sanitize_text_field( $username ) ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . esc_html__('Next', 'nhrrob-core-contributions') . '</a>';
+            $output .= '<a href="' . esc_url(add_query_arg(array( $paged => intval( $current_page ) + 1, 'nhrcc_username' => sanitize_text_field( $username ), 'nhrcc_form_nonce' => wp_create_nonce('nhrcc_form_action') ), $current_url)) . '" class="px-3 py-1 text-blue-500 hover:bg-blue-100 rounded">' . esc_html__('Next', 'nhrrob-core-contributions') . '</a>';
         }
     
         return $output;
