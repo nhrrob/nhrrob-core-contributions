@@ -54,6 +54,8 @@ class Shortcode extends App
         if ($username) {
             $core_contributions = $this->get_core_contributions($username, $page);
             $total_contribution_count = $this->get_core_contribution_count($username);
+
+            $total_contribution_count = is_wp_error( $total_contribution_count ) ? 0 : $total_contribution_count;
         }
 
         // Buffer output HTML
