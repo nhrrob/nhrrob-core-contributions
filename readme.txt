@@ -1,10 +1,10 @@
 === NHR Core Contributions ===
 Contributors: nhrrob
-Tags: contributions, core, contributions, core trac, core contributor, community
+Tags: contributions, core, community
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,10 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 3. Shortcode view on the front end
 
 == Changelog ==
+
+= 1.0.5 - 29/07/2024 =
+- Updated: Unused tags are removed
+- Few minor bug fixing & improvements
 
 = 1.0.4 - 29/07/2024 =
 - Fixed: Core contributions count related error
