@@ -44,7 +44,7 @@ class Shortcode extends App
         $page = 1;
         
         // Verify the nonce before processing form data
-        if (isset($_REQUEST['nhrcc_form_nonce']) && wp_verify_nonce($_REQUEST['nhrcc_form_nonce'], 'nhrcc_form_action')) {
+        if (isset( $_REQUEST['nhrcc_form_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nhrcc_form_nonce'] ) ), 'nhrcc_form_action') ) {
             $page = isset($_GET['front_paged']) ? absint($_GET['front_paged']) : 1;
             // Initialize variables
             $username = isset($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : sanitize_text_field( $username );

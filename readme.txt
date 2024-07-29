@@ -2,9 +2,9 @@
 Contributors: nhrrob
 Tags: contributions, core, wordpress core contributions, core trac contributions, wordpress core contributor
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,16 @@ In the vast tapestry of the WordPress universe, let your contributions shine lik
 ### Shortcode
 - `[nhrcc_core_contributions username="your_wp_username"]`
 
+## External Services
+
+This plugin uses the WordPress Core Trac API to retrieve core contributions data. By using this plugin, data is sent to the following service:
+
+- **WordPress Core Trac**: https://core.trac.wordpress.org/
+- [Privacy Policy](https://wordpress.org/about/privacy/)
+
+No personal or sensitive data beyond the specified username is shared. This data is used solely to fetch and display the user's contributions to the WordPress core project.
+
+
 == Installation ==
 
 1. Upload the plugin files to the /wp-content/plugins/nhrrob-core-contributions directory, or install the plugin through the WordPress plugins screen directly.
@@ -46,6 +56,9 @@ Absolutely. It fetches all of your contributions with pagination.
 = Can I see total contributions count? Also link to the details for each ticket? =
 Yes. Total count is shown at the top. Also all tickets are linked to the changesheet url.
 
+= How does the plugin handle my data? =
+The NHR Core Contributions plugin only transmits the WordPress.org username specified by the user to the WordPress Core Trac API. This is done solely to fetch and display your core contributions. No personal or sensitive data beyond the username is shared or stored.
+
 
 == Screenshots ==
 
@@ -54,6 +67,12 @@ Yes. Total count is shown at the top. Also all tickets are linked to the changes
 3. Shortcode view on the front end
 
 == Changelog ==
+
+= 1.0.3 - 29/07/2024 =
+- Added: 3rd party services in plugin readme 
+- Improved: Nonce verification mechanism
+- Updated: WordPress tested up to version bumped
+- Few minor bug fixing & improvements
 
 = 1.0.2 - 11/07/2024 =
 - Few minor bug fixing & improvements
