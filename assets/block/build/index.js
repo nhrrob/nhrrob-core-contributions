@@ -128,17 +128,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Edit = () => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-  ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-  children: "Hello World - Block Editor"
-});
-const save = () => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-  ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(),
-  children: "Hello World - Frontend"
-});
+const {
+  TextControl
+} = wp.components;
+// const Edit = () => <p { ...useBlockProps() }>Hello World - Block Editor</p>;
+// const save = () => <p { ...useBlockProps.save() }>Hello World - Frontend</p>;
+
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_2__.name, {
-  edit: Edit,
-  save
+  attributes: {
+    username: {
+      type: 'string',
+      default: ''
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      className: "nhr-core-contributions",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TextControl, {
+        label: "WordPress.org Username",
+        value: attributes.username,
+        onChange: username => setAttributes({
+          username
+        })
+      })
+    });
+  },
+  save: () => {
+    return null; // Dynamic block rendering handled in PHP.
+  }
 });
 })();
 

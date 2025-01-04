@@ -13,6 +13,9 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Nhrcc\CoreContributions\Admin\SettingsPage;
+use Nhrcc\CoreContributions\Traits\GlobalTrait;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -23,6 +26,8 @@ require_once __DIR__ . '/vendor/autoload.php';
  * The main plugin class
  */
 final class Nhrcc_Core_Contributions {
+
+    use GlobalTrait;
 
     /**
      * Plugin version
@@ -107,8 +112,26 @@ final class Nhrcc_Core_Contributions {
         $installer->run();
     }
 
+    /**
+     * Initialize core contributions block
+     *
+     * @return void
+     */
     public function init_core_contributions_block() {
-        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build' );
+        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build', 
+            [
+				'render_callback' => [ $this, 'core_contributions_block_callback' ],
+            ]
+        );
+    }
+
+    public function core_contributions_block_callback( $attributes = [] ) {
+        if ( empty( $attributes['username'] ) ) {
+            return '<p>Please set a username in the block settings.</p>';
+        }
+    
+        $username = sanitize_text_field( $attributes['username'] );
+        return do_shortcode( '[nhrcc_core_contributions username="' . $username . '"]' );
     }
 }
 
@@ -121,5 +144,5 @@ function nhrcc_core_contributions() {
     return Nhrcc_Core_Contributions::init();
 }
 
-//call the plugin
+// Call the plugin
 nhrcc_core_contributions();
