@@ -5,16 +5,13 @@
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 1.0.6
+ * Version: 1.1.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
-
-use Nhrcc\CoreContributions\Admin\SettingsPage;
-use Nhrcc\CoreContributions\Traits\GlobalTrait;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -27,14 +24,14 @@ require_once __DIR__ . '/vendor/autoload.php';
  */
 final class Nhrcc_Core_Contributions {
 
-    use GlobalTrait;
+    use Nhrcc\CoreContributions\Traits\GlobalTrait;
 
     /**
      * Plugin version
      *
      * @var string
      */
-    const nhrcc_version = '1.0.6';
+    const nhrcc_version = '1.1.0';
 
     /**
      * Class construcotr
