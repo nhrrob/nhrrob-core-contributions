@@ -1,0 +1,20 @@
+{
+    "name": "core-contributions-block",
+    "version": "1.0.0",
+    "description": "Core Contributions block to display contributions on core.",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start",
+        "plugin-zip": "wp-scripts plugin-zip",
+        "format": "wp-scripts format"
+    },
+    "author": "Nazmul Hasan Robin",
+    "license": "GPL-2.0-or-later",
+    "devDependencies": {
+        "@wordpress/scripts": "^30.8.1"
+    },
+    "files": [
+        "*"
+    ]
+}

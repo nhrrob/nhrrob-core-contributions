@@ -40,6 +40,8 @@ final class Nhrcc_Core_Contributions {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+
+		add_action( 'init', [ $this, 'init_core_contributions_block' ] );
     }
 
     /**
@@ -103,6 +105,10 @@ final class Nhrcc_Core_Contributions {
     public function activate() {
         $installer = new Nhrcc\CoreContributions\Installer();
         $installer->run();
+    }
+
+    public function init_core_contributions_block() {
+        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build' );
     }
 }
 

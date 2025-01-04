@@ -1,0 +1,8 @@
+{
+  "apiVersion": 3,
+  "title": "Core Contributions Block",
+  "name": "nhrcc-core-contributions/core-contributions-block",
+  "category": "common",
+  "icon": "smiley",
+  "editorScript": "file:./index.js"
+}
