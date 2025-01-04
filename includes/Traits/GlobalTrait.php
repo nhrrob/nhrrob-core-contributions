@@ -9,7 +9,10 @@ trait GlobalTrait
     public function dd($var)
     {
         echo "<pre>";
+
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
         print_r($var);
+        
         wp_die('ok');
     }
 
