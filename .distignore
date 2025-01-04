@@ -40,6 +40,5 @@ node_modules
 *.tar.gz
 *.zip
 /src
-build
 postcss.config.js
 .wordpress-org

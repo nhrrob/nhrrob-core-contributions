@@ -5,7 +5,7 @@
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 1.0.6
+ * Version: 1.1.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
@@ -24,12 +24,14 @@ require_once __DIR__ . '/vendor/autoload.php';
  */
 final class Nhrcc_Core_Contributions {
 
+    use Nhrcc\CoreContributions\Traits\GlobalTrait;
+
     /**
      * Plugin version
      *
      * @var string
      */
-    const nhrcc_version = '1.0.6';
+    const nhrcc_version = '1.1.0';
 
     /**
      * Class construcotr
@@ -40,6 +42,8 @@ final class Nhrcc_Core_Contributions {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+
+		add_action( 'init', [ $this, 'init_core_contributions_block' ] );
     }
 
     /**
@@ -104,6 +108,28 @@ final class Nhrcc_Core_Contributions {
         $installer = new Nhrcc\CoreContributions\Installer();
         $installer->run();
     }
+
+    /**
+     * Initialize core contributions block
+     *
+     * @return void
+     */
+    public function init_core_contributions_block() {
+        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build', 
+            [
+				'render_callback' => [ $this, 'core_contributions_block_callback' ],
+            ]
+        );
+    }
+
+    public function core_contributions_block_callback( $attributes = [] ) {
+        if ( empty( $attributes['username'] ) ) {
+            return '<p>Please set a username in the block settings.</p>';
+        }
+    
+        $username = sanitize_text_field( $attributes['username'] );
+        return do_shortcode( '[nhrcc_core_contributions username="' . $username . '"]' );
+    }
 }
 
 /**
@@ -115,5 +141,5 @@ function nhrcc_core_contributions() {
     return Nhrcc_Core_Contributions::init();
 }
 
-//call the plugin
+// Call the plugin
 nhrcc_core_contributions();

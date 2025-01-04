@@ -34,7 +34,7 @@ class SettingsPage extends Page
 
         if (isset( $_REQUEST['nhrcc_form_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nhrcc_form_nonce'] ) ), 'nhrcc_form_action' )) {
             // Default values
-            $username = ! empty($_REQUEST['nhrcc_username']) ? sanitize_text_field($_REQUEST['nhrcc_username']) : sanitize_text_field( $username );
+            $username = ! empty($_REQUEST['nhrcc_username']) ? sanitize_text_field( wp_unslash( $_REQUEST['nhrcc_username'] ) ) : sanitize_text_field( $username );
             $page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
         }
 
