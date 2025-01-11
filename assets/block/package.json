@@ -5,7 +5,7 @@
     "main": "build/index.js",
     "scripts": {
         "build": "wp-scripts build",
-        "start": "wp-scripts start",
+        "dev": "wp-scripts start",
         "plugin-zip": "wp-scripts plugin-zip",
         "format": "wp-scripts format"
     },

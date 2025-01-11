@@ -143,3 +143,23 @@ function nhrcc_core_contributions() {
 
 // Call the plugin
 nhrcc_core_contributions();
+
+add_action('rest_api_init', function () {
+    register_rest_route('nhr/v1', '/render-shortcode', [
+        'methods' => 'POST',
+        'callback' => 'nhr_render_shortcode',
+        'permission_callback' => '__return_true', // Adjust as needed for security
+    ]);
+});
+
+function nhr_render_shortcode(WP_REST_Request $request) {
+    $shortcode = $request->get_param('shortcode');
+    if (!$shortcode) {
+        return new WP_Error('no_shortcode', 'No shortcode provided', ['status' => 400]);
+    }
+
+    // Render the shortcode
+    $rendered = do_shortcode($shortcode);
+
+    return rest_ensure_response(['rendered' => $rendered]);
+}
