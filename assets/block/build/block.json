@@ -4,5 +4,6 @@
   "name": "nhrcc-core-contributions/core-contributions-block",
   "category": "common",
   "icon": "smiley",
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "style": "file:../../css/admin.out.css"
 }

@@ -58,7 +58,7 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":3,"title":"Core Contributions Block","name":"nhrcc-core-contributions/core-contributions-block","category":"common","icon":"smiley","editorScript":"file:./index.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":3,"title":"Core Contributions Block","name":"nhrcc-core-contributions/core-contributions-block","category":"common","icon":"smiley","editorScript":"file:./index.js","style":"file:../../css/admin.out.css"}');
 
 /***/ })
 
@@ -154,6 +154,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const debounce = (func, delay) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+};
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   attributes: {
     username: {
@@ -171,8 +178,17 @@ __webpack_require__.r(__webpack_exports__);
     setAttributes
   }) => {
     const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
+    const [tempUsername, setTempUsername] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(attributes.username);
     const [previewContent, setPreviewContent] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)('');
     const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+    const updateUsernameDebounced = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useRef)(debounce(username => {
+      setAttributes({
+        username
+      });
+    }, 500) // 500ms delay
+    ).current;
+
+    // Update the preview when `attributes.username` changes
     (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
       if (attributes.username) {
         setIsLoading(true);
@@ -202,10 +218,11 @@ __webpack_require__.r(__webpack_exports__);
           title: "Settings",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: "WordPress.org Username",
-            value: attributes.username,
-            onChange: username => setAttributes({
-              username
-            })
+            value: tempUsername,
+            onChange: username => {
+              setTempUsername(username);
+              updateUsernameDebounced(username);
+            }
           })
         })
       }), isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, {}) : attributes.username ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
