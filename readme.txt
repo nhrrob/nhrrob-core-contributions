@@ -4,7 +4,7 @@ Tags: contributions, core, community
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,12 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 3. Shortcode view on the front end
 
 == Changelog ==
+
+= 1.1.1 - 12/01/2025 =
+- Fixed: Cant select block or delete block. Props @faisalahammad.
+- Fixed: Page heading style got changed due to conflict. Props @faisalahammad
+- Updated: Plugin shortcode UI updated to display username along with total contribution count. Props @faisalahammad
+- Few minor bug fixing & improvements
 
 = 1.1.0 - 05/01/2025 =
 - Added: Core Contributions Block
