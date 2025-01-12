@@ -90,4 +90,25 @@ trait CoreContributionsTrait
 
         return $count;
     }
+
+    public function get_wporg_display_name( $username ) {
+        // api link incorrect
+        $username = sanitize_text_field( $username );
+        $url = "https://profiles.wordpress.org/$username/profile.json";
+    
+        $response = wp_remote_get($url);
+    
+        if (is_wp_error($response)) {
+            return 'Unable to fetch user details.';
+        }
+    
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+    
+        if (isset($data['name'])) {
+            return $data['name']; // Display name
+        }
+    
+        return 'Username not found or invalid.';
+    }
 }
