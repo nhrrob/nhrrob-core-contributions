@@ -11,3 +11,4 @@ module.exports = {
   },
 }
 
+// Build : npx tailwindcss -i ./assets/css/admin.css -o ./assets/css/admin.out.css --watch

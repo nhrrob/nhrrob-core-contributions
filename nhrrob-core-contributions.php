@@ -122,13 +122,25 @@ final class Nhrcc_Core_Contributions {
         );
     }
 
+    /**
+     * Block render callback
+     *
+     * @param array $attributes Block attributes.
+     * @return string Rendered block type.
+     */
     public function core_contributions_block_callback( $attributes = [] ) {
-        if ( empty( $attributes['username'] ) ) {
+        if (empty($attributes['username'])) {
             return '<p>Please set a username in the block settings.</p>';
         }
-    
-        $username = sanitize_text_field( $attributes['username'] );
-        return do_shortcode( '[nhrcc_core_contributions username="' . $username . '"]' );
+        
+        $username = sanitize_text_field($attributes['username']);
+        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
+        
+        return do_shortcode(sprintf(
+            '[nhrcc_core_contributions username="%s" preset="%s"]',
+            $username,
+            $preset
+        ));
     }
 }
 

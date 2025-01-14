@@ -19,7 +19,7 @@ class Shortcode extends App
     }
 
     /**
-     * Shortcode handler class
+     * Shortcode handler
      *
      * @param  array $atts
      * @param  string $content
@@ -33,14 +33,20 @@ class Shortcode extends App
         wp_enqueue_style('nhrcc-admin-style');
 
         // Extract shortcode attributes if needed (not used in this example)
-        $atts = shortcode_atts(array(
-            // Define any attributes you might need
-            'username' => 'nhrrob', // Default username
-        ), $atts, 'nhrcc_core_contributions');
+        $atts = shortcode_atts(
+            array(
+                'username' => 'nhrrob', // default
+                'preset' => 'default'
+            ),
+            $atts,
+            'nhrcc_core_contributions'
+        );
 
         $total_contribution_count = 0;
         $core_contributions = [];
         $username = sanitize_text_field( $atts['username'] );
+        $preset = sanitize_text_field( $atts['preset'] );
+
         $page = 1;
         
         // Verify the nonce before processing form data
