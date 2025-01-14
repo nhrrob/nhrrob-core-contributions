@@ -8,6 +8,8 @@ $current_url = is_admin() ? admin_url("tools.php?page={$this->page_slug}") : hom
 $is_shortcode = ! is_admin() ? 1 : 0;
 $hide_on_shortcode = $is_shortcode ? 'hidden' : '';
 
+$is_block_editor = defined('REST_REQUEST') && REST_REQUEST && strpos(wp_get_referer(), 'post.php') !== false;
+
 ?>
 
 <div class="wrap p-6 max-w-4xl mx-auto">
@@ -53,7 +55,7 @@ $hide_on_shortcode = $is_shortcode ? 'hidden' : '';
                     $total_pages = ceil($total_contribution_count / $contributions_per_page);
 
                     // Call the paginate_links function with the username
-                    if ( $total_pages > 1 ) {
+                    if ( $total_pages > 1 && !$is_block_editor ) {
                         $output = $this->paginate_links( intval( $page ), intval( $total_pages ), esc_url( $current_url ), esc_html( sanitize_text_field( $username ) ), intval( $is_shortcode ));
                         echo wp_kses( $output, $this->allowed_html() );
                     }
