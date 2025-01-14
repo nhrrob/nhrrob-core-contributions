@@ -58,6 +58,10 @@ $is_block_editor = defined('REST_REQUEST') && REST_REQUEST && strpos(wp_get_refe
                     if ( $total_pages > 1 && !$is_block_editor ) {
                         $output = $this->paginate_links( intval( $page ), intval( $total_pages ), esc_url( $current_url ), esc_html( sanitize_text_field( $username ) ), intval( $is_shortcode ));
                         echo wp_kses( $output, $this->allowed_html() );
+                    } 
+
+                    if ( $total_pages > 1 && $is_block_editor ) {
+                        echo wp_kses('<p>Pagination is available on frontend only!</p>', $this->allowed_html());
                     }
                     ?>
                 </div>
