@@ -231,14 +231,8 @@ const debounce = (func, delay) => {
               label: 'Default',
               value: 'default'
             }, {
-              label: 'Modern',
-              value: 'modern'
-            }, {
               label: 'Minimal',
               value: 'minimal'
-            }, {
-              label: 'Compact',
-              value: 'compact'
             }],
             onChange: preset => setAttributes({
               preset

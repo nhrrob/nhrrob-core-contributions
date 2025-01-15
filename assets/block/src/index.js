@@ -85,9 +85,7 @@ registerBlockType(metadata.name, {
                             value={attributes.preset}
                             options={[
                                 { label: 'Default', value: 'default' },
-                                { label: 'Modern', value: 'modern' },
                                 { label: 'Minimal', value: 'minimal' },
-                                { label: 'Compact', value: 'compact' },
                             ]}
                             onChange={(preset) => setAttributes({ preset })}
                         />

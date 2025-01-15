@@ -13,45 +13,33 @@ $is_block_editor = defined('REST_REQUEST') && REST_REQUEST && strpos(wp_get_refe
 $preset = isset($preset) ? $preset : 'default';
 $presets = [
     'default' => [
-        'wrapper' => 'nhrcc-preset-default bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto',
-        'header' => 'flex items-center gap-3 mb-6 border-b pb-4',
-        'title' => 'text-2xl font-semibold text-gray-800',
-        'list' => 'space-y-3',
-        'item' => 'flex items-start gap-2 text-gray-700 hover:bg-gray-50 p-2 rounded transition-colors',
-        'link' => 'text-blue-600 hover:text-blue-800 hover:underline'
-    ],
-    'modern' => [
-        'wrapper' => 'nhrcc-preset-modern bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl rounded-xl p-8 max-w-4xl mx-auto',
-        'header' => 'flex items-center gap-3 mb-8',
-        'title' => 'text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600',
-        'list' => 'space-y-4',
-        'item' => 'bg-white shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow',
-        'link' => 'text-indigo-600 hover:text-indigo-800'
-    ],
-    'minimal' => [
-        'wrapper' => 'nhrcc-preset-minimal max-w-4xl mx-auto p-6',
-        'header' => 'flex items-center gap-2 mb-6',
-        'title' => 'text-xl font-medium text-gray-800',
-        'list' => 'space-y-2',
-        'item' => 'border-l-2 border-gray-200 pl-4 py-2 hover:border-gray-400 transition-colors',
-        'link' => 'text-gray-700 hover:text-gray-900'
-    ],
-    'compact' => [
-        'wrapper' => 'nhrcc-preset-compact bg-gray-50 rounded p-4 max-w-4xl mx-auto',
+        'wrapper' => 'nhrcc-preset-default bg-gray-50 rounded p-4 max-w-4xl mx-auto',
         'header' => 'flex items-center gap-2 mb-4',
         'title' => 'text-lg font-medium text-gray-700',
         'list' => 'grid gap-2',
         'item' => 'text-sm bg-white rounded p-2 shadow-sm',
-        'link' => 'text-gray-600 hover:text-gray-900'
-    ]
+        'link' => '!text-gray-600 !no-underline hover:text-gray-900',
+        'pagination_wrap' => 'pagination flex flex-wrap justify-center items-center space-x-2 mt-4',
+        'editor_pagination_wrap' => 'bg-gray-100 border border-gray-500 text-gray-600 px-4 py-2 rounded text-base text-center',
+    ],
+    'minimal' => [
+        'wrapper' => 'nhrcc-preset-minimal rounded p-4 max-w-4xl mx-auto',
+        'header' => 'flex items-center gap-2 mb-4',
+        'title' => 'text-lg font-medium text-gray-700',
+        'list' => 'space-y-2',
+        'item' => 'text-sm p-2',
+        'link' => '!text-gray-600 !no-underline hover:text-gray-900',
+        'pagination_wrap' => 'px-4 py-2 pagination flex flex-wrap space-x-2 mt-4',
+        'editor_pagination_wrap' => 'border border-gray-500 text-gray-600 px-4 py-2 rounded text-base',
+    ],
 ];
 
 $styles = $presets[$preset] ?? $presets['default'];
 ?>
 
-<div class="wrap p-6 max-w-4xl mx-auto">
-    <div class="bg-white shadow rounded-lg p-6 mb-6 <?php echo esc_attr( $hide_on_shortcode ); ?>">
-        <h2 class="text-2xl font-semibold text-gray-800">
+<div class="wrap p-6 max-w-4xl mx-auto <?php echo esc_attr( $hide_on_shortcode ); ?>">
+    <div class="bg-white shadow rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center">
             <?php echo esc_html__('WordPress Core Contributions', 'nhrrob-core-contributions'); ?>
         </h2>
 
@@ -93,7 +81,7 @@ $styles = $presets[$preset] ?? $presets['default'];
         ?>
 
         <?php if ($total_pages > 1 && !$is_block_editor) : ?>
-            <div class="pagination flex flex-wrap items-center space-x-4 mt-6">
+            <div class="<?php echo esc_attr($styles['pagination_wrap']); ?>">
                 <?php
                 $output = $this->paginate_links(
                     intval($page),
@@ -108,7 +96,9 @@ $styles = $presets[$preset] ?? $presets['default'];
         <?php endif; ?>
         
         <?php if ($total_pages > 1 && $is_block_editor) : ?>
-            <p class="text-gray-500 mt-4">Pagination is available on frontend only!</p>
+            <div class="<?php echo esc_attr($styles['editor_pagination_wrap']); ?>">
+                <span>Pagination is hidden in the editor!</span>
+            </div>
         <?php endif; ?>
     <?php else : ?>
         <p class="text-red-500"><?php esc_html_e('No contributions found for this user.', 'nhrrob-core-contributions'); ?></p>
