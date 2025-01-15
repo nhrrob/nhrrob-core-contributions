@@ -5,7 +5,7 @@
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 1.1.1
+ * Version: 1.1.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
@@ -31,7 +31,7 @@ final class Nhrcc_Core_Contributions {
      *
      * @var string
      */
-    const nhrcc_version = '1.1.1';
+    const nhrcc_version = '1.1.2';
 
     /**
      * Class construcotr
@@ -122,13 +122,25 @@ final class Nhrcc_Core_Contributions {
         );
     }
 
+    /**
+     * Block render callback
+     *
+     * @param array $attributes Block attributes.
+     * @return string Rendered block type.
+     */
     public function core_contributions_block_callback( $attributes = [] ) {
-        if ( empty( $attributes['username'] ) ) {
+        if (empty($attributes['username'])) {
             return '<p>Please set a username in the block settings.</p>';
         }
-    
-        $username = sanitize_text_field( $attributes['username'] );
-        return do_shortcode( '[nhrcc_core_contributions username="' . $username . '"]' );
+        
+        $username = sanitize_text_field($attributes['username']);
+        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
+        
+        return do_shortcode(sprintf(
+            '[nhrcc_core_contributions username="%s" preset="%s"]',
+            $username,
+            $preset
+        ));
     }
 }
 

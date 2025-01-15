@@ -3,7 +3,7 @@ import {
     useBlockProps,
     InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Spinner } from '@wordpress/components';
+import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import metadata from './block.json';
 
@@ -21,6 +21,10 @@ registerBlockType(metadata.name, {
             type: 'string',
             default: '',
         },
+        preset: {
+            type: 'string',
+            default: 'default',
+        }
     },
     supports: {
         html: false,
@@ -32,42 +36,40 @@ registerBlockType(metadata.name, {
         const [tempUsername, setTempUsername] = useState(attributes.username);
         const [previewContent, setPreviewContent] = useState('');
         const [isLoading, setIsLoading] = useState(false);
+
         const updateUsernameDebounced = useRef(
             debounce((username) => {
                 setAttributes({ username });
-            }, 500) // 500ms delay
+            }, 500)
         ).current;
 
-        // Update the preview when `attributes.username` changes
+        // Update the preview when attributes change
         useEffect(() => {
             if (attributes.username) {
                 setIsLoading(true);
-
-                // Fetch rendered shortcode output
                 wp.apiFetch({
                     path: `/nhr/v1/render-shortcode`,
                     method: 'POST',
                     data: {
-                        shortcode: `[nhrcc_core_contributions username="${attributes.username}"]`,
+                        shortcode: `[nhrcc_core_contributions username="${attributes.username}" preset="${attributes.preset}"]`,
                     },
                 })
-                    .then((response) => {
-                        setPreviewContent(response.rendered || '');
-                    })
-                    .catch(() => {
-                        setPreviewContent('Failed to load preview.');
-                    })
-                    .finally(() => {
-                        setIsLoading(false);
-                    });
+                .then((response) => {
+                    setPreviewContent(response.rendered || '');
+                })
+                .catch(() => {
+                    setPreviewContent('Failed to load preview.');
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
             } else {
                 setPreviewContent('');
             }
-        }, [attributes.username]);
+        }, [attributes.username, attributes.preset]);
 
         return (
             <div {...blockProps}>
-                {/* Inspector Controls */}
                 <InspectorControls>
                     <PanelBody title="Settings">
                         <TextControl
@@ -78,15 +80,23 @@ registerBlockType(metadata.name, {
                                 updateUsernameDebounced(username);
                             }}
                         />
+                        <SelectControl
+                            label="Design Style"
+                            value={attributes.preset}
+                            options={[
+                                { label: 'Default', value: 'default' },
+                                { label: 'Minimal', value: 'minimal' },
+                            ]}
+                            onChange={(preset) => setAttributes({ preset })}
+                        />
                     </PanelBody>
                 </InspectorControls>
 
-                {/* Block Preview */}
                 {isLoading ? (
                     <Spinner />
                 ) : attributes.username ? (
                     <div className="nhr-core-contributions-preview">
-                        <p dangerouslySetInnerHTML={{ __html: previewContent }} />
+                        <div dangerouslySetInnerHTML={{ __html: previewContent }} />
                     </div>
                 ) : (
                     <p>Please set a WordPress.org username to preview the contributions.</p>
@@ -95,6 +105,6 @@ registerBlockType(metadata.name, {
         );
     },
     save: () => {
-        return null; // Dynamic block rendering handled in PHP.
+        return null;
     },
 });

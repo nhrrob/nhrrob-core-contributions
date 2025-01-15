@@ -127,6 +127,10 @@
   display: flex
 }
 
+.grid {
+  display: grid
+}
+
 .hidden {
   display: none
 }
@@ -139,10 +143,6 @@
   max-width: 56rem
 }
 
-.list-disc {
-  list-style-type: disc
-}
-
 .flex-wrap {
   flex-wrap: wrap
 }
@@ -151,10 +151,18 @@
   align-items: center
 }
 
-.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+.justify-center {
+  justify-content: center
+}
+
+.gap-2 {
+  gap: 0.5rem
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
-  margin-right: calc(1rem * var(--tw-space-x-reverse));
-  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
@@ -190,9 +198,24 @@
   border-color: rgb(209 213 219 / var(--tw-border-opacity))
 }
 
-.bg-gray-300 {
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity))
+}
+
+.bg-gray-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity))
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+}
+
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity))
 }
 
 .bg-white {
@@ -200,8 +223,16 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
+.p-2 {
+  padding: 0.5rem
+}
+
 .p-3 {
   padding: 0.75rem
+}
+
+.p-4 {
+  padding: 1rem
 }
 
 .p-6 {
@@ -213,13 +244,23 @@
   padding-right: 0.75rem
 }
 
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
 }
 
-.pl-5 {
-  padding-left: 1.25rem
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
+}
+
+.text-center {
+  text-align: center
 }
 
 .text-2xl {
@@ -227,13 +268,37 @@
   line-height: 2rem
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem
+}
+
+.font-medium {
+  font-weight: 500
+}
+
 .font-semibold {
   font-weight: 600
 }
 
-.text-blue-500 {
+.\!text-gray-600 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(75 85 99 / var(--tw-text-opacity)) !important
+}
+
+.text-gray-600 {
   --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity))
+  color: rgb(75 85 99 / var(--tw-text-opacity))
 }
 
 .text-gray-700 {
@@ -251,19 +316,43 @@
   color: rgb(239 68 68 / var(--tw-text-opacity))
 }
 
+.\!no-underline {
+  text-decoration-line: none !important
+}
+
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-.hover\:bg-blue-100:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity))
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-.hover\:underline:hover {
-  text-decoration-line: underline
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.hover\:border-gray-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity))
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
+}
+
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
 .focus\:outline-none:focus {
