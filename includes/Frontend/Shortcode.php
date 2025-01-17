@@ -66,7 +66,7 @@ class Shortcode extends App
 
         // Buffer output HTML
         ob_start();
-        include NHRCC_VIEWS_PATH . '/admin/settings/index.php';
+        include NHRCC_VIEWS_PATH . '/shortcode/index.php';
         $content = ob_get_clean();
         
         return wp_kses($content, $this->allowed_html());

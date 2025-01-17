@@ -2,6 +2,8 @@
 
 namespace Nhrcc\CoreContributions;
 
+use Nhrcc\CoreContributions\Admin\SettingsPage;
+
 /**
  * The admin class
  */
@@ -23,7 +25,15 @@ class Admin extends App {
      * @return void
      */
     public function dispatch_actions( ) {
+        $settingsPage = new SettingsPage();
+
         add_filter('plugin_action_links', array($this, 'plugin_actions_links'), 10, 2);
+
+        // Settings Page
+        add_action('admin_init', [ $settingsPage, 'register_settings' ]);
+        add_action('rest_api_init', [ $settingsPage, 'register_rest_routes' ]);
+
+
     }
 
     /**

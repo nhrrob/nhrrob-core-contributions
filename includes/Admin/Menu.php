@@ -56,5 +56,8 @@ class Menu extends App {
     public function enqueue_assets() {
         wp_enqueue_style( 'nhrcc-admin-style' );
         wp_enqueue_script( 'nhrcc-admin-script' );
+        
+        wp_enqueue_style( 'nhrcc-admin-settings-style' );
+        wp_enqueue_script( 'nhrcc-admin-settings-script' );
     }
 }

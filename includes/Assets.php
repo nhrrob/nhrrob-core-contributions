@@ -7,6 +7,8 @@ namespace Nhrcc\CoreContributions;
  */
 class Assets {
 
+    protected $asset_file;
+
     /**
      * Class constructor
      */
@@ -34,6 +36,11 @@ class Assets {
                 'version' => filemtime( NHRCC_PATH . '/assets/js/admin.js' ),
                 'deps'    => [ 'jquery', 'wp-util' ]
             ],
+            'nhrcc-admin-settings-script' => [
+                'src'     => NHRCC_ASSETS . '/dashboard/build/index.js',
+                'version' => filemtime( NHRCC_PATH . '/assets/dashboard/build/index.js' ),
+                'deps'    => ['wp-element']
+            ],
         ];
     }
 
@@ -52,6 +59,10 @@ class Assets {
                 'src'     => NHRCC_ASSETS . '/css/admin.out.css',
                 'version' => filemtime( NHRCC_PATH . '/assets/css/admin.out.css' )
             ],
+            // 'nhrcc-admin-settings-style' => [
+            //     'src'     => NHRCC_ASSETS . '/dashboard/build/index.css',
+            //     'version' => filemtime( NHRCC_PATH . '/assets/dashboard/build/index.css' )
+            // ],
         ];
     }
 
@@ -80,6 +91,7 @@ class Assets {
             'nonce' => wp_create_nonce( 'nhrcc-admin-nonce' ),
             'confirm' => __( 'Are you sure?', 'nhrrob-core-contributions' ),
             'error' => __( 'Something went wrong', 'nhrrob-core-contributions' ),
+            'apiUrl' => esc_url_raw(rest_url('nhrcc-core-contributions/v1/settings')),
         ] );
     }
 }
