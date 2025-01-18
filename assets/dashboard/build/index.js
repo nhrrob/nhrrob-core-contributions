@@ -16,9 +16,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./src/api.js");
 
 
-const SettingsPage2 = () => {
+
+const SettingsPage = () => {
   const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   const [notification, setNotification] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   const [formData, setFormData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({
@@ -45,7 +47,7 @@ const SettingsPage2 = () => {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      await updateSettings(formData);
+      // await updateSettings(formData, nhrccCoreContributions.nonce);
       setNotification({
         type: 'success',
         message: 'Settings saved successfully'
@@ -62,8 +64,11 @@ const SettingsPage2 = () => {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     const loadSettings = async () => {
       try {
-        const data = await getSettings();
-        setFormData(data);
+        // const data = await getSettings(nhrccCoreContributions.nonce);
+        const data = await (0,_api__WEBPACK_IMPORTED_MODULE_2__.getSettings)();
+        console.log(data);
+
+        // setFormData(data);
       } catch (error) {
         setNotification({
           type: 'error',
@@ -99,7 +104,7 @@ const SettingsPage2 = () => {
     type: "text",
     id: "username",
     className: "regular-text",
-    value: formData.username,
+    value: formData?.username,
     onChange: e => setFormData({
       ...formData,
       username: e.target.value
@@ -108,92 +113,7 @@ const SettingsPage2 = () => {
     className: "description error"
   }, errors.username), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "description"
-  }, "This username will be used when no specific user is provided")))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "card"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Cache Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "description"
-  }, "Manage how long contribution data is stored"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
-    className: "form-table"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
-    scope: "row"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "cacheDuration"
-  }, "Cache Duration")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
-    id: "cacheDuration",
-    value: formData.cacheDuration,
-    onChange: e => setFormData({
-      ...formData,
-      cacheDuration: e.target.value
-    })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "1800"
-  }, "30 Minutes"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "3600"
-  }, "1 Hour"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "86400"
-  }, "24 Hours"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "card"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Display Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "description"
-  }, "Customize how contributions are displayed"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
-    className: "form-table"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
-    scope: "row"
-  }, "Show Avatars"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    checked: formData.showAvatars,
-    onChange: e => setFormData({
-      ...formData,
-      showAvatars: e.target.checked
-    })
-  }), "Display user avatars next to contributions"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
-    scope: "row"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "postsPerPage"
-  }, "Posts Per Page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "number",
-    id: "postsPerPage",
-    className: "small-text",
-    value: formData.postsPerPage,
-    onChange: e => setFormData({
-      ...formData,
-      postsPerPage: e.target.value
-    })
-  }), errors.postsPerPage && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "description error"
-  }, errors.postsPerPage))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
-    scope: "row"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "displayStyle"
-  }, "Display Style")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
-    id: "displayStyle",
-    value: formData.displayStyle,
-    onChange: e => setFormData({
-      ...formData,
-      displayStyle: e.target.value
-    })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "grid"
-  }, "Grid"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "list"
-  }, "List"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-    value: "compact"
-  }, "Compact"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "card"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Analytics Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-    className: "description"
-  }, "Configure analytics and tracking preferences"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
-    className: "form-table"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
-    scope: "row"
-  }, "Enable Analytics"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    checked: formData.enableAnalytics,
-    onChange: e => setFormData({
-      ...formData,
-      enableAnalytics: e.target.checked
-    })
-  }), "Collect anonymous usage data to improve the plugin")))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, "This username will be used when no specific user is provided")))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "submit"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
@@ -202,7 +122,51 @@ const SettingsPage2 = () => {
     disabled: loading
   }, loading ? 'Saving...' : 'Save Changes')));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsPage2);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsPage);
+
+/***/ }),
+
+/***/ "./src/api.js":
+/*!********************!*\
+  !*** ./src/api.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getSettings: () => (/* binding */ getSettings),
+/* harmony export */   updateSettings: () => (/* binding */ updateSettings)
+/* harmony export */ });
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+
+const getSettings = async () => {
+  try {
+    let settings = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/nhrcc-core-contributions/v1/settings'
+    });
+    console.log(settings);
+    return settings;
+  } catch (error) {
+    console.error('Error fetching settings:', error);
+    throw error;
+  }
+};
+const updateSettings = async (settings, nonce) => {
+  try {
+    return await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      path: '/nhrcc-core-contributions/v1/settings',
+      method: 'POST',
+      data: {
+        ...settings,
+        _wpnonce: nonce // Add the nonce in the request data
+      }
+    });
+  } catch (error) {
+    console.error('Error updating settings:', error);
+    throw error;
+  }
+};
 
 /***/ }),
 
@@ -213,6 +177,16 @@ const SettingsPage2 = () => {
 /***/ ((module) => {
 
 module.exports = window["React"];
+
+/***/ }),
+
+/***/ "@wordpress/api-fetch":
+/*!**********************************!*\
+  !*** external ["wp","apiFetch"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["apiFetch"];
 
 /***/ }),
 

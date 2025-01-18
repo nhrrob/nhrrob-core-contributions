@@ -1,6 +1,7 @@
 import { useState, useEffect } from '@wordpress/element';
+import { getSettings, updateSettings } from './api';
 
-const SettingsPage2 = () => {
+const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState(null);
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const SettingsPage2 = () => {
 
     setLoading(true);
     try {
-      await updateSettings(formData);
+      // await updateSettings(formData, nhrccCoreContributions.nonce);
       setNotification({
         type: 'success',
         message: 'Settings saved successfully'
@@ -48,8 +49,12 @@ const SettingsPage2 = () => {
   useEffect(() => {
     const loadSettings = async () => {
       try {
+        // const data = await getSettings(nhrccCoreContributions.nonce);
         const data = await getSettings();
-        setFormData(data);
+
+        console.log(data);
+
+        // setFormData(data);
       } catch (error) {
         setNotification({
           type: 'error',
@@ -91,7 +96,7 @@ const SettingsPage2 = () => {
                   type="text"
                   id="username"
                   className="regular-text"
-                  value={formData.username}
+                  value={formData?.username}
                   onChange={(e) => setFormData({...formData, username: e.target.value})}
                 />
                 {errors.username && (
@@ -104,7 +109,7 @@ const SettingsPage2 = () => {
         </table>
       </div>
 
-      <div className="card">
+      {/* <div className="card">
         <h2>Cache Settings</h2>
         <p className="description">Manage how long contribution data is stored</p>
         <table className="form-table">
@@ -182,9 +187,9 @@ const SettingsPage2 = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
-      <div className="card">
+      {/* <div className="card">
         <h2>Analytics Settings</h2>
         <p className="description">Configure analytics and tracking preferences</p>
         <table className="form-table">
@@ -204,7 +209,7 @@ const SettingsPage2 = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       <p className="submit">
         <button 
@@ -220,4 +225,4 @@ const SettingsPage2 = () => {
   );
 };
 
-export default SettingsPage2;
+export default SettingsPage;

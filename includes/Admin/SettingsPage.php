@@ -92,14 +92,14 @@ class SettingsPage extends Page
         register_rest_route('nhrcc-core-contributions/v1', '/settings', array(
             array(
                 'methods' => 'GET',
-                'callback' => 'get_settings',
+                'callback' => [$this, 'get_settings' ],
                 'permission_callback' => function() {
                     return current_user_can('manage_options');
                 }
             ),
             array(
                 'methods' => 'POST',
-                'callback' => 'update_settings',
+                'callback' => [$this, 'update_settings' ],
                 'permission_callback' => function() {
                     return current_user_can('manage_options');
                 }
@@ -109,18 +109,30 @@ class SettingsPage extends Page
 
     // GET settings callback
     public function get_settings() {
-        return new WP_REST_Response(array(
+        // wp_die('okk');
+        // if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'nhrcc-admin-nonce' ) ) {
+        //     wp_send_json_error( array( 'message' => 'Nonce verification failed.' ) );
+        // }
+
+        $settings = array(
             'username' => get_option('nhrcc_default_username', ''),
             'cacheDuration' => get_option('nhrcc_cache_duration', 3600),
             'showAvatars' => get_option('nhrcc_show_avatars', true),
             'postsPerPage' => get_option('nhrcc_posts_per_page', 10),
             'displayStyle' => get_option('nhrcc_display_style', 'grid'),
             'enableAnalytics' => get_option('nhrcc_enable_analytics', false)
-        ));
+        );
+
+        return wp_send_json_success( array( 'settings' => $settings ) );
+
     }
 
     // POST settings callback
     public function update_settings($request) {
+        if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'nhrcc-admin-nonce' ) ) {
+            wp_send_json_error( array( 'message' => 'Nonce verification failed.' ) );
+        }
+
         $params = $request->get_params();
         
         update_option('nhrcc_default_username', sanitize_text_field($params['username']));
@@ -130,7 +142,7 @@ class SettingsPage extends Page
         update_option('nhrcc_display_style', sanitize_text_field($params['displayStyle']));
         update_option('nhrcc_enable_analytics', (bool) $params['enableAnalytics']);
         
-        return new WP_REST_Response(array('success' => true));
+        return wp_send_json_success( array( 'message' => 'Settings saved successfully!' ) );
     }
 
 }

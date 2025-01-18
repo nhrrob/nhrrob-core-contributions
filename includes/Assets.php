@@ -39,7 +39,7 @@ class Assets {
             'nhrcc-admin-settings-script' => [
                 'src'     => NHRCC_ASSETS . '/dashboard/build/index.js',
                 'version' => filemtime( NHRCC_PATH . '/assets/dashboard/build/index.js' ),
-                'deps'    => ['wp-element']
+                'deps'    => ['wp-element', 'wp-api-fetch']
             ],
         ];
     }

@@ -22,5 +22,10 @@ module.exports = {
     resolve: {
         ...defaultConfig.resolve,
         extensions: ['.js', '.jsx']
-    }
+    },
+    externals: {
+        ...defaultConfig.externals,
+        '@wordpress/api-fetch': ['wp', 'apiFetch'],
+        '@wordpress/element': ['wp', 'element'],
+    },    
 };

@@ -13,6 +13,8 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Nhrcc\CoreContributions\Admin;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -155,6 +157,8 @@ function nhrcc_core_contributions() {
 
 // Call the plugin
 nhrcc_core_contributions();
+
+Admin::dispatch_actions();
 
 add_action('rest_api_init', function () {
     register_rest_route('nhr/v1', '/render-shortcode', [
