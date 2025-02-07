@@ -7,10 +7,10 @@ const SettingsPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     cacheDuration: '3600',
-    showAvatars: true,
+    // showAvatars: true,
     postsPerPage: '10',
-    displayStyle: 'grid',
-    enableAnalytics: false
+    // displayStyle: 'grid',
+    // enableAnalytics: false
   });
   const [errors, setErrors] = useState({});
 
@@ -31,7 +31,8 @@ const SettingsPage = () => {
 
     setLoading(true);
     try {
-      // await updateSettings(formData, nhrccCoreContributions.nonce);
+      await updateSettings(formData);
+
       setNotification({
         type: 'success',
         message: 'Settings saved successfully'
@@ -49,12 +50,11 @@ const SettingsPage = () => {
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        // const data = await getSettings(nhrccCoreContributions.nonce);
         const data = await getSettings();
 
         console.log(data);
 
-        // setFormData(data);
+        setFormData(data);
       } catch (error) {
         setNotification({
           type: 'error',

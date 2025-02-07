@@ -13,6 +13,8 @@ class Menu extends App {
      * Initialize the class
      */
     function __construct( ) {
+        parent::__construct();
+        
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 
         add_filter('plugin_action_links', array($this, 'plugin_actions_links'), 10, 2);

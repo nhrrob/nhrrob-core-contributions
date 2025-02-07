@@ -50,43 +50,6 @@ class SettingsPage extends Page
         echo wp_kses($content, $this->allowed_html());
     }
 
-    // Register settings
-    public function register_settings() {
-        register_setting('nhrcc-core-contributions', 'nhrcc_default_username', array(
-            'type' => 'string',
-            'sanitize_callback' => 'sanitize_text_field',
-            'default' => ''
-        ));
-
-        register_setting('nhrcc-core-contributions', 'nhrcc_cache_duration', array(
-            'type' => 'integer',
-            'sanitize_callback' => 'absint',
-            'default' => 3600
-        ));
-
-        register_setting('nhrcc-core-contributions', 'nhrcc_show_avatars', array(
-            'type' => 'boolean',
-            'default' => true
-        ));
-
-        register_setting('nhrcc-core-contributions', 'nhrcc_posts_per_page', array(
-            'type' => 'integer',
-            'sanitize_callback' => 'absint',
-            'default' => 10
-        ));
-
-        register_setting('nhrcc-core-contributions', 'nhrcc_display_style', array(
-            'type' => 'string',
-            'sanitize_callback' => 'sanitize_text_field',
-            'default' => 'grid'
-        ));
-
-        register_setting('nhrcc-core-contributions', 'nhrcc_enable_analytics', array(
-            'type' => 'boolean',
-            'default' => false
-        ));
-    }
-
     // Register REST API endpoints
     public function register_rest_routes() {
         register_rest_route('nhrcc-core-contributions/v1', '/settings', array(
@@ -108,41 +71,31 @@ class SettingsPage extends Page
     }
 
     // GET settings callback
-    public function get_settings() {
-        // wp_die('okk');
-        // if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'nhrcc-admin-nonce' ) ) {
-        //     wp_send_json_error( array( 'message' => 'Nonce verification failed.' ) );
-        // }
-
+    public function get_settings($request) {
         $settings = array(
             'username' => get_option('nhrcc_default_username', ''),
             'cacheDuration' => get_option('nhrcc_cache_duration', 3600),
-            'showAvatars' => get_option('nhrcc_show_avatars', true),
+            // 'showAvatars' => get_option('nhrcc_show_avatars', true),
             'postsPerPage' => get_option('nhrcc_posts_per_page', 10),
-            'displayStyle' => get_option('nhrcc_display_style', 'grid'),
-            'enableAnalytics' => get_option('nhrcc_enable_analytics', false)
+            // 'displayStyle' => get_option('nhrcc_display_style', 'grid'),
+            // 'enableAnalytics' => get_option('nhrcc_enable_analytics', false)
         );
 
-        return wp_send_json_success( array( 'settings' => $settings ) );
-
+        return rest_ensure_response($settings);
     }
 
     // POST settings callback
     public function update_settings($request) {
-        if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'nhrcc-admin-nonce' ) ) {
-            wp_send_json_error( array( 'message' => 'Nonce verification failed.' ) );
-        }
-
         $params = $request->get_params();
         
         update_option('nhrcc_default_username', sanitize_text_field($params['username']));
         update_option('nhrcc_cache_duration', absint($params['cacheDuration']));
-        update_option('nhrcc_show_avatars', (bool) $params['showAvatars']);
+        // update_option('nhrcc_show_avatars', (bool) $params['showAvatars']);
         update_option('nhrcc_posts_per_page', absint($params['postsPerPage']));
-        update_option('nhrcc_display_style', sanitize_text_field($params['displayStyle']));
-        update_option('nhrcc_enable_analytics', (bool) $params['enableAnalytics']);
+        // update_option('nhrcc_display_style', sanitize_text_field($params['displayStyle']));
+        // update_option('nhrcc_enable_analytics', (bool) $params['enableAnalytics']);
         
-        return wp_send_json_success( array( 'message' => 'Settings saved successfully!' ) );
+        return rest_ensure_response(['message' => 'Settings saved successfully!']);
     }
 
 }

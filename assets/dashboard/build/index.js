@@ -26,10 +26,10 @@ const SettingsPage = () => {
   const [formData, setFormData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({
     username: '',
     cacheDuration: '3600',
-    showAvatars: true,
-    postsPerPage: '10',
-    displayStyle: 'grid',
-    enableAnalytics: false
+    // showAvatars: true,
+    postsPerPage: '10'
+    // displayStyle: 'grid',
+    // enableAnalytics: false
   });
   const [errors, setErrors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({});
   const validateForm = () => {
@@ -47,7 +47,7 @@ const SettingsPage = () => {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      // await updateSettings(formData, nhrccCoreContributions.nonce);
+      await (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateSettings)(formData);
       setNotification({
         type: 'success',
         message: 'Settings saved successfully'
@@ -64,11 +64,9 @@ const SettingsPage = () => {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     const loadSettings = async () => {
       try {
-        // const data = await getSettings(nhrccCoreContributions.nonce);
         const data = await (0,_api__WEBPACK_IMPORTED_MODULE_2__.getSettings)();
         console.log(data);
-
-        // setFormData(data);
+        setFormData(data);
       } catch (error) {
         setNotification({
           type: 'error',
@@ -143,7 +141,8 @@ __webpack_require__.r(__webpack_exports__);
 const getSettings = async () => {
   try {
     let settings = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-      path: '/nhrcc-core-contributions/v1/settings'
+      path: '/nhrcc-core-contributions/v1/settings',
+      method: 'GET'
     });
     console.log(settings);
     return settings;
@@ -152,14 +151,13 @@ const getSettings = async () => {
     throw error;
   }
 };
-const updateSettings = async (settings, nonce) => {
+const updateSettings = async settings => {
   try {
     return await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
       path: '/nhrcc-core-contributions/v1/settings',
       method: 'POST',
       data: {
-        ...settings,
-        _wpnonce: nonce // Add the nonce in the request data
+        ...settings
       }
     });
   } catch (error) {

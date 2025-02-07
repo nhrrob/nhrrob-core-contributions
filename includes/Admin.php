@@ -27,7 +27,6 @@ class Admin extends App {
         $settingsPage = new SettingsPage();
 
         // Settings Page
-        add_action('admin_init', [ $settingsPage, 'register_settings' ]);
         add_action('rest_api_init', [ $settingsPage, 'register_rest_routes' ]);
     }
 }
