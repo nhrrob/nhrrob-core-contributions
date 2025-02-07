@@ -75,6 +75,7 @@ class SettingsPage extends Page
     public function get_settings($request) {
         $default_settings = array(
             'username' => '',
+            'preset' => 'default',
             'cacheDuration' => 3600,
             'postsPerPage' => 10,
         );
@@ -91,6 +92,7 @@ class SettingsPage extends Page
         // Sanitize all settings at once
         $settings = array(
             'username' => sanitize_text_field($params['username']),
+            'preset' => sanitize_text_field($params['preset']),
             'cacheDuration' => absint($params['cacheDuration']),
             'postsPerPage' => absint($params['postsPerPage']),
         );

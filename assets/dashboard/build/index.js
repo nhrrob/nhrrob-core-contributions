@@ -25,6 +25,7 @@ const SettingsPage = () => {
   const [notification, setNotification] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   const [formData, setFormData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({
     username: '',
+    preset: 'default',
     cacheDuration: '3600',
     postsPerPage: '10'
   });
@@ -130,7 +131,43 @@ const SettingsPage = () => {
     value: "3600"
   }, "1 Hour"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "86400"
-  }, "24 Hours"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, "24 Hours"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "card"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Display Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "description"
+  }, "Customize how contributions are displayed"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
+    className: "form-table"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
+    scope: "row"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "preset"
+  }, "Preset")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
+    id: "preset",
+    value: formData?.preset,
+    onChange: e => setFormData({
+      ...formData,
+      preset: e.target.value
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "default"
+  }, "Default"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "minimal"
+  }, "Minimal")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
+    scope: "row"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "postsPerPage"
+  }, "Posts Per Page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "number",
+    id: "postsPerPage",
+    className: "small-text",
+    value: formData?.postsPerPage,
+    onChange: e => setFormData({
+      ...formData,
+      postsPerPage: e.target.value
+    })
+  }), errors.postsPerPage && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "description error"
+  }, errors.postsPerPage)))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "submit"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",

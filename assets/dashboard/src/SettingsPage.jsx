@@ -6,6 +6,7 @@ const SettingsPage = () => {
   const [notification, setNotification] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
+    preset: 'default',
     cacheDuration: '3600',
     postsPerPage: '10',
   });
@@ -130,24 +131,27 @@ const SettingsPage = () => {
         </table>
       </div>
 
-      {/* <div className="card">
+      <div className="card">
         <h2>Display Settings</h2>
         <p className="description">Customize how contributions are displayed</p>
         <table className="form-table">
           <tbody>
             <tr>
-              <th scope="row">Show Avatars</th>
+              <th scope="row">
+                <label htmlFor="preset">Preset</label>
+              </th>
               <td>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={formData.showAvatars}
-                    onChange={(e) => setFormData({...formData, showAvatars: e.target.checked})}
-                  />
-                  Display user avatars next to contributions
-                </label>
+                <select
+                  id="preset"
+                  value={formData?.preset}
+                  onChange={(e) => setFormData({...formData, preset: e.target.value})}
+                >
+                  <option value="default">Default</option>
+                  <option value="minimal">Minimal</option>
+                </select>
               </td>
             </tr>
+
             <tr>
               <th scope="row">
                 <label htmlFor="postsPerPage">Posts Per Page</label>
@@ -157,7 +161,7 @@ const SettingsPage = () => {
                   type="number"
                   id="postsPerPage"
                   className="small-text"
-                  value={formData.postsPerPage}
+                  value={formData?.postsPerPage}
                   onChange={(e) => setFormData({...formData, postsPerPage: e.target.value})}
                 />
                 {errors.postsPerPage && (
@@ -165,47 +169,9 @@ const SettingsPage = () => {
                 )}
               </td>
             </tr>
-            <tr>
-              <th scope="row">
-                <label htmlFor="displayStyle">Display Style</label>
-              </th>
-              <td>
-                <select
-                  id="displayStyle"
-                  value={formData.displayStyle}
-                  onChange={(e) => setFormData({...formData, displayStyle: e.target.value})}
-                >
-                  <option value="grid">Grid</option>
-                  <option value="list">List</option>
-                  <option value="compact">Compact</option>
-                </select>
-              </td>
-            </tr>
           </tbody>
         </table>
-      </div> */}
-
-      {/* <div className="card">
-        <h2>Analytics Settings</h2>
-        <p className="description">Configure analytics and tracking preferences</p>
-        <table className="form-table">
-          <tbody>
-            <tr>
-              <th scope="row">Enable Analytics</th>
-              <td>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={formData.enableAnalytics}
-                    onChange={(e) => setFormData({...formData, enableAnalytics: e.target.checked})}
-                  />
-                  Collect anonymous usage data to improve the plugin
-                </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> */}
+      </div>
 
       <p className="submit">
         <button 
