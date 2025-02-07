@@ -7,10 +7,7 @@ const SettingsPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     cacheDuration: '3600',
-    // showAvatars: true,
     postsPerPage: '10',
-    // displayStyle: 'grid',
-    // enableAnalytics: false
   });
   const [errors, setErrors] = useState({});
 
@@ -31,11 +28,11 @@ const SettingsPage = () => {
 
     setLoading(true);
     try {
-      await updateSettings(formData);
+      const response = await updateSettings(formData);
 
       setNotification({
         type: 'success',
-        message: 'Settings saved successfully'
+        message: response.message
       });
     } catch (error) {
       setNotification({
@@ -52,8 +49,6 @@ const SettingsPage = () => {
       try {
         const data = await getSettings();
 
-        console.log(data);
-
         setFormData(data);
       } catch (error) {
         setNotification({
@@ -62,11 +57,12 @@ const SettingsPage = () => {
         });
       }
     };
+
     loadSettings();
   }, []);
 
   return (
-    <div className="wrap">
+    <div className="nhrcc-core-contributions-settings-wrap">
       <h1 className="wp-heading-inline">Core Contributions Settings</h1>
       
       {notification && (
@@ -109,7 +105,7 @@ const SettingsPage = () => {
         </table>
       </div>
 
-      {/* <div className="card">
+      <div className="card">
         <h2>Cache Settings</h2>
         <p className="description">Manage how long contribution data is stored</p>
         <table className="form-table">
@@ -121,7 +117,7 @@ const SettingsPage = () => {
               <td>
                 <select
                   id="cacheDuration"
-                  value={formData.cacheDuration}
+                  value={formData?.cacheDuration}
                   onChange={(e) => setFormData({...formData, cacheDuration: e.target.value})}
                 >
                   <option value="1800">30 Minutes</option>
@@ -134,7 +130,7 @@ const SettingsPage = () => {
         </table>
       </div>
 
-      <div className="card">
+      {/* <div className="card">
         <h2>Display Settings</h2>
         <p className="description">Customize how contributions are displayed</p>
         <table className="form-table">

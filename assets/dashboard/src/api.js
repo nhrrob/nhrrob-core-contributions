@@ -2,13 +2,10 @@ import apiFetch from '@wordpress/api-fetch';
 
 export const getSettings = async () => {
     try {
-
-        let settings = await apiFetch({ 
+        const settings = await apiFetch({ 
             path: '/nhrcc-core-contributions/v1/settings',
             method: 'GET',
         });
-
-        console.log(settings);
 
         return settings;
 
@@ -23,9 +20,7 @@ export const updateSettings = async (settings) => {
         return await apiFetch({
             path: '/nhrcc-core-contributions/v1/settings',
             method: 'POST',
-            data: {
-                ...settings,
-            }
+            data: settings
         });
     } catch (error) {
         console.error('Error updating settings:', error);

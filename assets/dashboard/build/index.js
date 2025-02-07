@@ -26,10 +26,7 @@ const SettingsPage = () => {
   const [formData, setFormData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({
     username: '',
     cacheDuration: '3600',
-    // showAvatars: true,
     postsPerPage: '10'
-    // displayStyle: 'grid',
-    // enableAnalytics: false
   });
   const [errors, setErrors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)({});
   const validateForm = () => {
@@ -47,10 +44,10 @@ const SettingsPage = () => {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      await (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateSettings)(formData);
+      const response = await (0,_api__WEBPACK_IMPORTED_MODULE_2__.updateSettings)(formData);
       setNotification({
         type: 'success',
-        message: 'Settings saved successfully'
+        message: response.message
       });
     } catch (error) {
       setNotification({
@@ -65,7 +62,6 @@ const SettingsPage = () => {
     const loadSettings = async () => {
       try {
         const data = await (0,_api__WEBPACK_IMPORTED_MODULE_2__.getSettings)();
-        console.log(data);
         setFormData(data);
       } catch (error) {
         setNotification({
@@ -77,7 +73,7 @@ const SettingsPage = () => {
     loadSettings();
   }, []);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wrap"
+    className: "nhrcc-core-contributions-settings-wrap"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
     className: "wp-heading-inline"
   }, "Core Contributions Settings"), notification && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -111,7 +107,30 @@ const SettingsPage = () => {
     className: "description error"
   }, errors.username), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "description"
-  }, "This username will be used when no specific user is provided")))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, "This username will be used when no specific user is provided")))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "card"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Cache Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "description"
+  }, "Manage how long contribution data is stored"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", {
+    className: "form-table"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", {
+    scope: "row"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "cacheDuration"
+  }, "Cache Duration")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
+    id: "cacheDuration",
+    value: formData?.cacheDuration,
+    onChange: e => setFormData({
+      ...formData,
+      cacheDuration: e.target.value
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "1800"
+  }, "30 Minutes"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "3600"
+  }, "1 Hour"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "86400"
+  }, "24 Hours"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "submit"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
@@ -140,11 +159,10 @@ __webpack_require__.r(__webpack_exports__);
 
 const getSettings = async () => {
   try {
-    let settings = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    const settings = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
       path: '/nhrcc-core-contributions/v1/settings',
       method: 'GET'
     });
-    console.log(settings);
     return settings;
   } catch (error) {
     console.error('Error fetching settings:', error);
@@ -156,9 +174,7 @@ const updateSettings = async settings => {
     return await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
       path: '/nhrcc-core-contributions/v1/settings',
       method: 'POST',
-      data: {
-        ...settings
-      }
+      data: settings
     });
   } catch (error) {
     console.error('Error updating settings:', error);

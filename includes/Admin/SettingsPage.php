@@ -9,6 +9,7 @@ use WP_REST_Response;
  */
 class SettingsPage extends Page
 {
+    private $option_name = 'nhrcc_settings';
 
     /**
      * Initialize the class
@@ -72,14 +73,13 @@ class SettingsPage extends Page
 
     // GET settings callback
     public function get_settings($request) {
-        $settings = array(
-            'username' => get_option('nhrcc_default_username', ''),
-            'cacheDuration' => get_option('nhrcc_cache_duration', 3600),
-            // 'showAvatars' => get_option('nhrcc_show_avatars', true),
-            'postsPerPage' => get_option('nhrcc_posts_per_page', 10),
-            // 'displayStyle' => get_option('nhrcc_display_style', 'grid'),
-            // 'enableAnalytics' => get_option('nhrcc_enable_analytics', false)
+        $default_settings = array(
+            'username' => '',
+            'cacheDuration' => 3600,
+            'postsPerPage' => 10,
         );
+        
+        $settings = get_option($this->option_name, $default_settings);
 
         return rest_ensure_response($settings);
     }
@@ -88,14 +88,20 @@ class SettingsPage extends Page
     public function update_settings($request) {
         $params = $request->get_params();
         
-        update_option('nhrcc_default_username', sanitize_text_field($params['username']));
-        update_option('nhrcc_cache_duration', absint($params['cacheDuration']));
-        // update_option('nhrcc_show_avatars', (bool) $params['showAvatars']);
-        update_option('nhrcc_posts_per_page', absint($params['postsPerPage']));
-        // update_option('nhrcc_display_style', sanitize_text_field($params['displayStyle']));
-        // update_option('nhrcc_enable_analytics', (bool) $params['enableAnalytics']);
+        // Sanitize all settings at once
+        $settings = array(
+            'username' => sanitize_text_field($params['username']),
+            'cacheDuration' => absint($params['cacheDuration']),
+            'postsPerPage' => absint($params['postsPerPage']),
+        );
+
+        // Update single option with all settings
+        update_option($this->option_name, $settings);
         
-        return rest_ensure_response(['message' => 'Settings saved successfully!']);
+        return rest_ensure_response([
+            'message' => 'Settings saved successfully!',
+            'settings' => $settings
+        ]);
     }
 
 }
