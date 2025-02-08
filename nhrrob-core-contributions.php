@@ -13,8 +13,6 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-use Nhrcc\CoreContributions\Admin;
-
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -45,7 +43,7 @@ final class Nhrcc_Core_Contributions {
 
         add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
 
-		add_action( 'init', [ $this, 'init_core_contributions_block' ] );
+		// add_action( 'init', [ $this, 'init_core_contributions_block' ] );
     }
 
     /**
@@ -88,6 +86,8 @@ final class Nhrcc_Core_Contributions {
 
         new Nhrcc\CoreContributions\Assets();
 
+        $blocksObj = new Nhrst\SmartsyncTable\Blocks();
+
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new Nhrcc\CoreContributions\Ajax();
         }
@@ -99,6 +99,8 @@ final class Nhrcc_Core_Contributions {
         }
 
         new Nhrcc\CoreContributions\API();
+        
+        $blocksObj->init();
     }
 
     /**
@@ -116,13 +118,13 @@ final class Nhrcc_Core_Contributions {
      *
      * @return void
      */
-    public function init_core_contributions_block() {
-        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build', 
-            [
-				'render_callback' => [ $this, 'core_contributions_block_callback' ],
-            ]
-        );
-    }
+    // public function init_core_contributions_block() {
+        // register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build', 
+        //     [
+		// 		'render_callback' => [ $this, 'core_contributions_block_callback' ],
+        //     ]
+        // );
+    // }
 
     /**
      * Block render callback
@@ -130,20 +132,20 @@ final class Nhrcc_Core_Contributions {
      * @param array $attributes Block attributes.
      * @return string Rendered block type.
      */
-    public function core_contributions_block_callback( $attributes = [] ) {
-        if (empty($attributes['username'])) {
-            return '<p>Please set a username in the block settings.</p>';
-        }
+    // public function core_contributions_block_callback( $attributes = [] ) {
+    //     if (empty($attributes['username'])) {
+    //         return '<p>Please set a username in the block settings.</p>';
+    //     }
         
-        $username = sanitize_text_field($attributes['username']);
-        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
+    //     $username = sanitize_text_field($attributes['username']);
+    //     $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
         
-        return do_shortcode(sprintf(
-            '[nhrcc_core_contributions username="%s" preset="%s"]',
-            $username,
-            $preset
-        ));
-    }
+    //     return do_shortcode(sprintf(
+    //         '[nhrcc_core_contributions username="%s" preset="%s"]',
+    //         $username,
+    //         $preset
+    //     ));
+    // }
 }
 
 /**
@@ -158,24 +160,26 @@ function nhrcc_core_contributions() {
 // Call the plugin
 nhrcc_core_contributions();
 
-Admin::dispatch_actions();
+// Dispatch actions
+Nhrcc\CoreContributions\Admin::dispatch_actions();
 
-add_action('rest_api_init', function () {
-    register_rest_route('nhr/v1', '/render-shortcode', [
-        'methods' => 'POST',
-        'callback' => 'nhr_render_shortcode',
-        'permission_callback' => '__return_true', // Adjust as needed for security
-    ]);
-});
 
-function nhr_render_shortcode(WP_REST_Request $request) {
-    $shortcode = $request->get_param('shortcode');
-    if (!$shortcode) {
-        return new WP_Error('no_shortcode', 'No shortcode provided', ['status' => 400]);
-    }
+// add_action('rest_api_init', function () {
+//     register_rest_route('nhr/v1', '/render-shortcode', [
+//         'methods' => 'POST',
+//         'callback' => 'nhr_render_shortcode',
+//         'permission_callback' => '__return_true', // Adjust as needed for security
+//     ]);
+// });
 
-    // Render the shortcode
-    $rendered = do_shortcode($shortcode);
+// function nhr_render_shortcode(WP_REST_Request $request) {
+//     $shortcode = $request->get_param('shortcode');
+//     if (!$shortcode) {
+//         return new WP_Error('no_shortcode', 'No shortcode provided', ['status' => 400]);
+//     }
 
-    return rest_ensure_response(['rendered' => $rendered]);
-}
+//     // Render the shortcode
+//     $rendered = do_shortcode($shortcode);
+
+//     return rest_ensure_response(['rendered' => $rendered]);
+// }
