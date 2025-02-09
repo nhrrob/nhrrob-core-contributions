@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "nhrcc-core-contributions/core-contributions-block",
+  "version": "1.1.2",
+  "title": "NHR Core Contributions",
+  "category": "widgets",
+  "icon": "admin-users",
+  "description": "Display Core Contributions stat in your own website",
+  "keywords": [
+    "contributions",
+    "wordpress",
+    "core"
+  ],
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "nhrrob-core-contributions",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./index.js",
+  "editorStyle": "file:../../css/admin.out.css",
+  "style": "file:../../css/admin.out.css",
+  "attributes": {
+    "username": {
+      "type": "string",
+      "default": ""
+    },
+    "preset": {
+      "type": "string",
+      "default": "default"
+    }
+  }
+}

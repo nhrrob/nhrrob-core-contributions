@@ -29,18 +29,6 @@ class Blocks extends App {
      * @return void
      */
     public function register_blocks() {
-        register_block_type( 
-            NHRCC_PATH . '/build/core-contributions-block',
-            // array(
-            //     'render_callback' => array($this, 'render_table_block'),
-            // )
-        );
-
-        // register_block_type( __DIR__ . '/build/copyright-date-block' );
-        
+        register_block_type( NHRCC_PATH . '/assets/blocks/build/core-contributions-block' );
     }
-
-    // public function render_table_block($attributes) {
-        
-    // }
 }

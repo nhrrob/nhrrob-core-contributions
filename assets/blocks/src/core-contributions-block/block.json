@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "nhrcc-core-contributions/core-contributions-block",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "NHR Core Contributions",
     "category": "widgets",
     "icon": "admin-users",
@@ -15,8 +15,8 @@
     "textdomain": "nhrrob-core-contributions",
     "editorScript": "file:./index.js",
     "viewScript": "file:./index.js",
-    "editorStyle": "file:./index.css",
-    "style": "file:./style-index.css",
+    "editorStyle": "file:../../css/admin.out.css",
+    "style": "file:../../css/admin.out.css",
     "attributes": {
         "username": {
             "type": "string",
