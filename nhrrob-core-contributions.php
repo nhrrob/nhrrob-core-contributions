@@ -84,7 +84,7 @@ final class Nhrcc_Core_Contributions {
 
         new Nhrcc\CoreContributions\Assets();
 
-        $blocksObj = new Nhrst\SmartsyncTable\Blocks();
+        $blocksObj = new Nhrcc\CoreContributions\Blocks();
 
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new Nhrcc\CoreContributions\Ajax();
