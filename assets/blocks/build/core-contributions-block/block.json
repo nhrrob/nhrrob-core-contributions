@@ -12,13 +12,6 @@
     "wordpress",
     "core"
   ],
-  "supports": {
-    "html": false,
-    "align": [
-      "wide",
-      "full"
-    ]
-  },
   "textdomain": "nhrrob-core-contributions",
   "editorScript": "file:./index.js",
   "viewScript": "file:./index.js",
@@ -33,5 +26,10 @@
       "type": "string",
       "default": "default"
     }
+  },
+  "supports": {
+    "html": false,
+    "reusable": true,
+    "align": true
   }
 }

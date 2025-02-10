@@ -29,21 +29,43 @@ class Blocks extends App {
      * @return void
      */
     public function register_blocks() {
+        $nhrcc_settings = get_option('nhrcc_settings');
+
+        $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
+        $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
+
+        $block_json = json_decode(file_get_contents(NHRCC_PATH . '/assets/blocks/build/core-contributions-block' . '/block.json'), true);
+    
+        // Set defaults from options
+        $block_json['attributes']['username'] = $default_username;
+        $block_json['attributes']['preset'] = $default_preset;
+
+        // register_block_type_from_metadata(__DIR__, [
+        //     'render_callback' => 'nhrcc_core_contributions_render_callback',
+        //     'attributes' => $block_json['attributes']
+        // ]);
+        
         register_block_type( NHRCC_PATH . '/assets/blocks/build/core-contributions-block', 
             [
 				'render_callback' => [ $this, 'core_contributions_block_callback' ],
+                'attributes' => $block_json['attributes'],
             ]
         );
     }
 
     public function core_contributions_block_callback( $attributes = [] ){
-        if (empty($attributes['username'])) {
+        $nhrcc_settings = get_option('nhrcc_settings');
+
+        $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
+        $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
+        
+        $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $default_username;
+        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $default_preset;
+
+        if (empty($username)) {
             return '<p>Please set a username in the block settings.</p>';
         }
-        
-        $username = sanitize_text_field($attributes['username']);
-        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
-        
+
         wp_enqueue_script('nhrcc-script');
         wp_enqueue_style('nhrcc-style');
         wp_enqueue_style('nhrcc-admin-style');
