@@ -82,9 +82,11 @@ final class Nhrcc_Core_Contributions {
      */
     public function init_plugin() {
 
-        new Nhrcc\CoreContributions\Assets();
-
+        $assetObj = new Nhrcc\CoreContributions\Assets();
+        $apiObj = new Nhrcc\CoreContributions\API();
         $blocksObj = new Nhrcc\CoreContributions\Blocks();
+
+        $assetObj->init();
 
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new Nhrcc\CoreContributions\Ajax();
@@ -96,7 +98,7 @@ final class Nhrcc_Core_Contributions {
             new Nhrcc\CoreContributions\Frontend();
         }
 
-        new Nhrcc\CoreContributions\API();
+        $apiObj->init();
         
         $blocksObj->init();
     }

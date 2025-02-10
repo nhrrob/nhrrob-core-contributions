@@ -15,8 +15,8 @@
     "textdomain": "nhrrob-core-contributions",
     "editorScript": "file:./index.js",
     "viewScript": "file:./index.js",
-    "editorStyle": "file:../../../../css/admin.out.css",
-    "style": "file:../../../../css/admin.out.css",
+    "editorStyle": "file:../../../css/admin.out.css",
+    "style": "file:../../../css/admin.out.css",
     "attributes": {
         "username": {
             "type": "string",

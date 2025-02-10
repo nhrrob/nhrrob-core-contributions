@@ -5,15 +5,16 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
 
-const debounce = (func, delay) => {
-    let timer;
+function debounce(func, delay) {
+    let timeoutId;
     return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => func(...args), delay);
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
     };
-};
+}
 
 registerBlockType(metadata.name, {
     attributes: {
@@ -26,85 +27,113 @@ registerBlockType(metadata.name, {
             default: 'default',
         }
     },
+    
     supports: {
         html: false,
         reusable: true,
         align: true,
     },
-    edit: ({ attributes, setAttributes }) => {
-        const blockProps = useBlockProps();
-        const [tempUsername, setTempUsername] = useState(attributes.username);
-        const [previewContent, setPreviewContent] = useState('');
-        const [isLoading, setIsLoading] = useState(false);
 
-        const updateUsernameDebounced = useRef(
-            debounce((username) => {
-                setAttributes({ username });
-            }, 500)
-        ).current;
+    edit: EditComponent,
+    save: () => null, // Use dynamic rendering on PHP side
+});
 
-        // Update the preview when attributes change
-        useEffect(() => {
-            if (attributes.username) {
-                setIsLoading(true);
-                wp.apiFetch({
-                    path: `/nhr/v1/render-shortcode`,
-                    method: 'POST',
-                    data: {
-                        shortcode: `[nhrcc_core_contributions username="${attributes.username}" preset="${attributes.preset}"]`,
-                    },
-                })
-                .then((response) => {
-                    setPreviewContent(response.rendered || '');
-                })
-                .catch(() => {
-                    setPreviewContent('Failed to load preview.');
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
-            } else {
-                setPreviewContent('');
-            }
-        }, [attributes.username, attributes.preset]);
+function EditComponent({ attributes, setAttributes }) {
+    const blockProps = useBlockProps();
+    const [previewContent, setPreviewContent] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    
+    // Create debounced function with useRef to maintain reference
+    const updateUsername = useRef(
+        debounce((newUsername) => {
+            setAttributes({ username: newUsername });
+        }, 500)
+    ).current;
 
+    useEffect(() => {
+        if (!attributes.username) {
+            setPreviewContent('');
+            return;
+        }
+
+        setIsLoading(true);
+        
+        fetchPreview(attributes)
+            .then(setPreviewContent)
+            .catch((error) => {
+                console.error('Failed to load preview:', error);
+                setPreviewContent(`Error: ${error.message}`);
+            })
+            .finally(() => setIsLoading(false));
+    }, [attributes.username, attributes.preset]);
+
+    return (
+        <div {...blockProps}>
+            <InspectorControls>
+                <PanelBody title="Core Contributions Settings">
+                    <TextControl
+                        label="WordPress.org Username"
+                        value={attributes.username}
+                        onChange={updateUsername}
+                        help="Enter your WordPress.org username to display contributions"
+                    />
+                    <SelectControl
+                        label="Design Style"
+                        value={attributes.preset}
+                        options={PRESET_OPTIONS}
+                        onChange={(preset) => setAttributes({ preset })}
+                    />
+                </PanelBody>
+            </InspectorControls>
+            
+            <PreviewContent 
+                isLoading={isLoading}
+                username={attributes.username}
+                content={previewContent}
+            />
+        </div>
+    );
+}
+
+// Constants
+const PRESET_OPTIONS = [
+    { label: 'Default', value: 'default' },
+    { label: 'Minimal', value: 'minimal' },
+];
+
+// API and Helper Functions
+async function fetchPreview({ username, preset }) {
+    try {
+        const response = await apiFetch({
+            path: '/nhrcc-core-contributions/v1/core-contributions/render',
+            method: 'POST',
+            data: { username, preset },
+        });
+        return response.content || '';
+    } catch (error) {
+        console.error('Failed to fetch preview:', error);
+        throw new Error('Failed to load preview');
+    }
+}
+
+// Presentational Components
+function PreviewContent({ isLoading, username, content }) {
+    if (isLoading) {
+        return <Spinner />;
+    }
+    
+    if (!username) {
         return (
-            <div {...blockProps}>
-                <InspectorControls>
-                    <PanelBody title="Settings">
-                        <TextControl
-                            label="WordPress.org Username"
-                            value={tempUsername}
-                            onChange={(username) => {
-                                setTempUsername(username);
-                                updateUsernameDebounced(username);
-                            }}
-                        />
-                        <SelectControl
-                            label="Design Style"
-                            value={attributes.preset}
-                            options={[
-                                { label: 'Default', value: 'default' },
-                                { label: 'Minimal', value: 'minimal' },
-                            ]}
-                            onChange={(preset) => setAttributes({ preset })}
-                        />
-                    </PanelBody>
-                </InspectorControls>
-
-                {isLoading ? (
-                    <Spinner />
-                ) : attributes.username ? (
-                    <div className="nhr-core-contributions-preview">
-                        <div dangerouslySetInnerHTML={{ __html: previewContent }} />
-                    </div>
-                ) : (
-                    <p>Please set a WordPress.org username to preview the contributions.</p>
-                )}
+            <div className="components-placeholder">
+                <p>Please set a WordPress.org username to preview the contributions.</p>
             </div>
         );
-    },
-    save: () => {
-        return null;
-    },
-});
+    }
+    
+    return (
+        <div 
+            className="nhr-core-contributions-preview"
+            dangerouslySetInnerHTML={{ __html: content }}
+        />
+    );
+}

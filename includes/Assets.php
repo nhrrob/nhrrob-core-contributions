@@ -13,6 +13,10 @@ class Assets {
      * Class constructor
      */
     function __construct() {
+        
+    }
+
+    public function init() {
         add_action( 'wp_enqueue_scripts', [ $this, 'register_assets' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'register_assets' ] );
         // add_action( 'enqueue_block_editor_assets', [ $this, 'register_assets' ] ); // editor only
