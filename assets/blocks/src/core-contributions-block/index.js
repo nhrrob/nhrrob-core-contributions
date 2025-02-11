@@ -38,13 +38,14 @@ registerBlockType(metadata.name, {
 
 function EditComponent({ attributes, setAttributes }) {
     const blockProps = useBlockProps();
+    const [tempUsername, setTempUsername] = useState(attributes.username);
     const [previewContent, setPreviewContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     
     // Create debounced function with useRef to maintain reference
-    const updateUsername = useRef(
-        debounce((newUsername) => {
-            setAttributes({ username: newUsername });
+    const updateUsernameDebounced = useRef(
+        debounce((username) => {
+            setAttributes({ username });
         }, 500)
     ).current;
 
@@ -82,8 +83,11 @@ function EditComponent({ attributes, setAttributes }) {
                 <PanelBody title="Core Contributions Settings">
                     <TextControl
                         label="WordPress.org Username"
-                        value={attributes.username}
-                        onChange={updateUsername}
+                        value={tempUsername}
+                        onChange={(username) => {
+                            setTempUsername(username);
+                            updateUsernameDebounced(username);
+                        }}
                         help="Enter your WordPress.org username to display contributions"
                     />
                     <SelectControl
