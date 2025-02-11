@@ -29,16 +29,16 @@ class Blocks extends App {
      * @return void
      */
     public function register_blocks() {
-        $nhrcc_settings = get_option('nhrcc_settings');
+        // $nhrcc_settings = get_option('nhrcc_settings');
 
-        $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
-        $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
+        // $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
+        // $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
 
-        $block_json = json_decode(file_get_contents(NHRCC_PATH . '/assets/blocks/build/core-contributions-block' . '/block.json'), true);
+        // $block_json = json_decode(file_get_contents(NHRCC_PATH . '/assets/blocks/build/core-contributions-block' . '/block.json'), true);
     
-        // Set defaults from options
-        $block_json['attributes']['username'] = $default_username;
-        $block_json['attributes']['preset'] = $default_preset;
+        // // Set defaults from options
+        // $block_json['attributes']['username'] = $default_username;
+        // $block_json['attributes']['preset'] = $default_preset;
 
         // register_block_type_from_metadata(__DIR__, [
         //     'render_callback' => 'nhrcc_core_contributions_render_callback',
@@ -48,7 +48,7 @@ class Blocks extends App {
         register_block_type( NHRCC_PATH . '/assets/blocks/build/core-contributions-block', 
             [
 				'render_callback' => [ $this, 'core_contributions_block_callback' ],
-                'attributes' => $block_json['attributes'],
+                // 'attributes' => $block_json['attributes'],
             ]
         );
     }

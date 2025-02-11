@@ -17,6 +17,21 @@ function debounce(func, delay) {
 }
 
 registerBlockType(metadata.name, {
+    attributes: {
+        username: {
+            type: 'string',
+            default: '',
+        },
+        preset: {
+            type: 'string',
+            default: 'default',
+        }
+    },
+    supports: {
+        html: false,
+        reusable: true,
+        align: true,
+    },
     edit: EditComponent,
     save: () => null, // Use dynamic rendering on PHP side
 });
@@ -33,10 +48,19 @@ function EditComponent({ attributes, setAttributes }) {
         }, 500)
     ).current;
 
+    // Separate effect for setting initial values
     useEffect(() => {
-        console.log(nhrccCoreContributionsCommonObj);
-        
         if (!attributes.username) {
+            setAttributes({ 
+                username: nhrccCoreContributionsCommonObj?.nhrccSettings?.username || '',
+                preset: nhrccCoreContributionsCommonObj?.nhrccSettings?.preset || 'default'
+            });
+        }
+    }, []); // Empty dependency array - runs once
+
+    useEffect(() => {
+        if (!attributes.username) {
+            // setAttributes({ username: nhrccCoreContributionsCommonObj?.nhrccSettings?.username });
             setPreviewContent('');
             return;
         }
