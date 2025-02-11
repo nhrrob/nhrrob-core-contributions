@@ -7,7 +7,7 @@ const SettingsPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     preset: 'default',
-    cacheDuration: '3600',
+    cacheDuration: 12 * 3600,
     postsPerPage: '10',
   });
   const [errors, setErrors] = useState({});
@@ -17,9 +17,9 @@ const SettingsPage = () => {
     if (!formData.username.trim()) {
       newErrors.username = 'Username is required';
     }
-    if (!formData.postsPerPage || parseInt(formData.postsPerPage) < 1) {
-      newErrors.postsPerPage = 'Must be a positive number';
-    }
+    // if (!formData.postsPerPage || parseInt(formData.postsPerPage) < 1) {
+    //   newErrors.postsPerPage = 'Must be a positive number';
+    // }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -123,6 +123,8 @@ const SettingsPage = () => {
                 >
                   <option value="1800">30 Minutes</option>
                   <option value="3600">1 Hour</option>
+                  <option value="21600">6 Hour</option>
+                  <option value="43200">12 Hour</option>
                   <option value="86400">24 Hours</option>
                 </select>
               </td>
@@ -152,7 +154,7 @@ const SettingsPage = () => {
               </td>
             </tr>
 
-            <tr>
+            <tr className='hidden'>
               <th scope="row">
                 <label htmlFor="postsPerPage">Posts Per Page</label>
               </th>

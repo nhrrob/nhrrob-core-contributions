@@ -4,7 +4,7 @@ namespace Nhrcc\CoreContributions\Traits;
 
 trait CoreContributionsTrait
 {
-    public function get_core_contributions($username, $page = 1)
+    public function get_core_contributions($username, $page = 1, $cache_duration = '')
     {
         // Check for cached results
         $cache_key = 'nhrcc_' . md5($username . '_' . $page);
@@ -47,7 +47,12 @@ trait CoreContributionsTrait
         }
 
         // Cache the results for 12 hours
-        set_transient($cache_key, $formatted, 12 * HOUR_IN_SECONDS);
+        $nhrcc_settings = get_option('nhrcc_settings');
+        
+        $cache_duration_default = ! empty( $nhrcc_settings['cacheDuration'] ) ? intval( $nhrcc_settings['cacheDuration'] ) : 12 * HOUR_IN_SECONDS;
+        $cache_duration = ! empty( $cache_duration ) ? $cache_duration : $cache_duration_default;
+
+        set_transient($cache_key, $formatted, $cache_duration);
 
         return $formatted;
     }

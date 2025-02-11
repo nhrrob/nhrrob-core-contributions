@@ -76,7 +76,7 @@ class SettingsPage extends Page
         $default_settings = array(
             'username' => '',
             'preset' => 'default',
-            'cacheDuration' => 3600,
+            'cacheDuration' => 12 * 3600,
             'postsPerPage' => 10,
         );
         

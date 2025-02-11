@@ -110,6 +110,14 @@ const PRESET_OPTIONS = [
     { label: 'Minimal', value: 'minimal' },
 ];
 
+const CACHE_DURATION_OPTIONS = [
+    { label: '30 Minutes', value: 1800 },
+    { label: '1 Hour', value: 3600 },
+    { label: '6 Hours', value: 21600 },
+    { label: '12 Hours', value: 43200 },
+    { label: '24 Hours', value: 86400 },
+];
+
 // API and Helper Functions
 async function fetchPreview({ username, preset }) {
     try {
