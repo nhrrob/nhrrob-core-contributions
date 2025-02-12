@@ -98,6 +98,48 @@ const SettingsPage = () => {
     createElement(
       'div',
       { className: 'card' },
+      createElement('h2', null, 'Display Settings'),
+      createElement('p', { className: 'description' }, 'Customize how contributions are displayed'),
+      createElement(
+        'table',
+        { className: 'form-table' },
+        createElement('tbody', null,
+          createElement('tr', null,
+            createElement('th', { scope: 'row' },
+              createElement('label', { htmlFor: 'preset' }, 'Preset')
+            ),
+            createElement('td', null,
+              createElement('select', {
+                id: 'preset',
+                value: formData.preset,
+                onChange: (e) => setFormData({ ...formData, preset: e.target.value })
+              },
+                createElement('option', { value: 'default' }, 'Default'),
+                createElement('option', { value: 'minimal' }, 'Minimal')
+              )
+            )
+          ),
+          createElement('tr', { className: 'hidden' },
+            createElement('th', { scope: 'row' },
+              createElement('label', { htmlFor: 'postsPerPage' }, 'Posts Per Page')
+            ),
+            createElement('td', null,
+              createElement('input', {
+                type: 'number',
+                id: 'postsPerPage',
+                className: 'small-text',
+                value: formData.postsPerPage,
+                onChange: (e) => setFormData({ ...formData, postsPerPage: Number(e.target.value) })
+              }),
+              errors.postsPerPage && createElement('p', { className: 'description error' }, errors.postsPerPage)
+            )
+          )
+        )
+      )
+    ),
+    createElement(
+      'div',
+      { className: 'card' },
       createElement('h2', null, 'Cache Settings'),
       createElement('p', { className: 'description' }, 'Manage how long contribution data is stored'),
       createElement(

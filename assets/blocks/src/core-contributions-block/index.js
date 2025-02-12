@@ -17,21 +17,6 @@ function debounce(func, delay) {
 }
 
 registerBlockType(metadata.name, {
-    attributes: {
-        username: {
-            type: 'string',
-            default: '',
-        },
-        preset: {
-            type: 'string',
-            default: 'default',
-        }
-    },
-    supports: {
-        html: false,
-        reusable: true,
-        align: true,
-    },
     edit: EditComponent,
     save: () => null, // Use dynamic rendering on PHP side
 });

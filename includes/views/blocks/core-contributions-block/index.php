@@ -20,6 +20,7 @@ $is_block_editor = defined('REST_REQUEST') && REST_REQUEST && strpos(wp_get_refe
 
 
 $preset = isset($preset) ? $preset : 'default';
+
 $presets = [
     'default' => [
         'wrapper' => 'nhrcc-preset-default bg-gray-50 rounded p-4 max-w-4xl mx-auto',
