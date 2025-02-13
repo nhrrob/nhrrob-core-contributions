@@ -84,7 +84,7 @@ const SettingsPage = () => {
               createElement('input', {
                 type: 'text',
                 id: 'username',
-                className: 'regular-text',
+                className: 'regular-text1 w-full',
                 value: formData.username,
                 onChange: (e) => setFormData({ ...formData, username: e.target.value })
               }),
@@ -111,6 +111,7 @@ const SettingsPage = () => {
             createElement('td', null,
               createElement('select', {
                 id: 'preset',
+                className: 'w-full',
                 value: formData.preset,
                 onChange: (e) => setFormData({ ...formData, preset: e.target.value })
               },
@@ -127,7 +128,7 @@ const SettingsPage = () => {
               createElement('input', {
                 type: 'number',
                 id: 'postsPerPage',
-                className: 'small-text',
+                className: 'small-text1 w-full',
                 value: formData.postsPerPage,
                 onChange: (e) => setFormData({ ...formData, postsPerPage: Number(e.target.value) })
               }),
@@ -153,6 +154,7 @@ const SettingsPage = () => {
             createElement('td', null,
               createElement('select', {
                 id: 'cacheDuration',
+                className: 'w-full',
                 value: formData.cacheDuration,
                 onChange: (e) => setFormData({ ...formData, cacheDuration: Number(e.target.value) })
               },

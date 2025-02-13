@@ -5,3 +5,7 @@
 .nhrcc-core-contributions .error {
     color: red;
 }
+
+/* .nhrcc-core-contributions .card.max-w-none {
+    max-width: unset;
+} */
