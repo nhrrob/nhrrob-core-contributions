@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "nhrcc/core-contributions",
-  "version": "1.1.1",
-  "title": "Core Contributions",
+  "name": "nhrcc-core-contributions/core-contributions-block",
+  "version": "1.1.2",
+  "title": "NHR Core Contributions",
   "category": "widgets",
   "icon": "admin-users",
   "description": "Display Core Contributions stat in your own website",
@@ -12,10 +12,11 @@
     "wordpress",
     "core"
   ],
-  "supports": {
-    "html": false,
-    "align": true
-  },
+  "textdomain": "nhrrob-core-contributions",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./index.js",
+  "editorStyle": "file:../../../css/admin.out.css",
+  "style": "file:../../../css/admin.out.css",
   "attributes": {
     "username": {
       "type": "string",
@@ -26,8 +27,9 @@
       "default": "default"
     }
   },
-  "textdomain": "nhrrob-core-contributions",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:../../css/admin.out.css",
-  "style": "file:../../css/admin.out.css"
+  "supports": {
+    "html": false,
+    "reusable": true,
+    "align": true
+  }
 }

@@ -5,7 +5,7 @@
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 1.1.2
+ * Version: 1.1.3
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
@@ -31,7 +31,7 @@ final class Nhrcc_Core_Contributions {
      *
      * @var string
      */
-    const nhrcc_version = '1.1.2';
+    const nhrcc_version = '1.1.3';
 
     /**
      * Class construcotr
@@ -42,8 +42,6 @@ final class Nhrcc_Core_Contributions {
         register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
         add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
-
-		add_action( 'init', [ $this, 'init_core_contributions_block' ] );
     }
 
     /**
@@ -84,7 +82,11 @@ final class Nhrcc_Core_Contributions {
      */
     public function init_plugin() {
 
-        new Nhrcc\CoreContributions\Assets();
+        $assetObj = new Nhrcc\CoreContributions\Assets();
+        $apiObj = new Nhrcc\CoreContributions\API();
+        $blocksObj = new Nhrcc\CoreContributions\Blocks();
+
+        $assetObj->init();
 
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             new Nhrcc\CoreContributions\Ajax();
@@ -96,7 +98,9 @@ final class Nhrcc_Core_Contributions {
             new Nhrcc\CoreContributions\Frontend();
         }
 
-        new Nhrcc\CoreContributions\API();
+        $apiObj->init();
+        
+        $blocksObj->init();
     }
 
     /**
@@ -107,40 +111,6 @@ final class Nhrcc_Core_Contributions {
     public function activate() {
         $installer = new Nhrcc\CoreContributions\Installer();
         $installer->run();
-    }
-
-    /**
-     * Initialize core contributions block
-     *
-     * @return void
-     */
-    public function init_core_contributions_block() {
-        register_block_type( plugin_dir_path( __FILE__ ) . '/assets/block/build', 
-            [
-				'render_callback' => [ $this, 'core_contributions_block_callback' ],
-            ]
-        );
-    }
-
-    /**
-     * Block render callback
-     *
-     * @param array $attributes Block attributes.
-     * @return string Rendered block type.
-     */
-    public function core_contributions_block_callback( $attributes = [] ) {
-        if (empty($attributes['username'])) {
-            return '<p>Please set a username in the block settings.</p>';
-        }
-        
-        $username = sanitize_text_field($attributes['username']);
-        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : 'default';
-        
-        return do_shortcode(sprintf(
-            '[nhrcc_core_contributions username="%s" preset="%s"]',
-            $username,
-            $preset
-        ));
     }
 }
 
@@ -156,22 +126,5 @@ function nhrcc_core_contributions() {
 // Call the plugin
 nhrcc_core_contributions();
 
-add_action('rest_api_init', function () {
-    register_rest_route('nhr/v1', '/render-shortcode', [
-        'methods' => 'POST',
-        'callback' => 'nhr_render_shortcode',
-        'permission_callback' => '__return_true', // Adjust as needed for security
-    ]);
-});
-
-function nhr_render_shortcode(WP_REST_Request $request) {
-    $shortcode = $request->get_param('shortcode');
-    if (!$shortcode) {
-        return new WP_Error('no_shortcode', 'No shortcode provided', ['status' => 400]);
-    }
-
-    // Render the shortcode
-    $rendered = do_shortcode($shortcode);
-
-    return rest_ensure_response(['rendered' => $rendered]);
-}
+// Dispatch actions
+Nhrcc\CoreContributions\Admin::dispatch_actions();

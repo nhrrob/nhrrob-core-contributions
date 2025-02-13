@@ -1,0 +1,19 @@
+{
+    "name": "nhrrob-core-contributions",
+    "version": "1.1.2",
+    "description": "Core Contributions block to display contributions on core.",
+    "author": "Nazmul Hasan Robin <robin.sust08@gmail.com>",
+    "license": "GPL-2.0-or-later",
+    "scripts": {
+        "dev": "npm-run-all --parallel blocks:dev dashboard:dev",
+        "build": "npm-run-all --parallel blocks:build dashboard:build",
+        "blocks:dev": "wp-scripts start --webpack-copy-php --webpack-src-dir=assets/blocks/src --output-path=assets/blocks/build",
+        "blocks:build": "wp-scripts build --webpack-copy-php --webpack-src-dir=assets/blocks/src --output-path=assets/blocks/build",
+        "dashboard:dev": "wp-scripts start --webpack-src-dir=assets/dashboard/src --output-path=assets/dashboard/build",
+        "dashboard:build": "wp-scripts build --webpack-src-dir=assets/dashboard/src --output-path=assets/dashboard/build"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^30.10.0",
+        "npm-run-all": "^4.1.5"
+    }
+}
