@@ -47,7 +47,7 @@ class Assets {
             ],
             'nhrcc-common-script' => [
                 'src'     => NHRCC_ASSETS . '/js/common.js',
-                'version' => filemtime( NHRST_PATH . '/assets/js/common.js' ),
+                'version' => filemtime( NHRCC_PATH . '/assets/js/common.js' ),
                 'deps'    => [ 'jquery', 'wp-util' ]
             ],
         ];
