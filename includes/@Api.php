@@ -5,7 +5,7 @@ namespace Nhrcc\CoreContributions;
 /**
  * API Class
  */
-class API extends App {
+class Api extends App {
 
     /**
      * Initialize the class
