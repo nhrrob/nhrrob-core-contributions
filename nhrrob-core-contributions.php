@@ -5,7 +5,7 @@
  * Description: Display Core Contributions stat in your own website
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 1.1.4
+ * Version: 1.1.5
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
@@ -31,7 +31,7 @@ final class Nhrcc_Core_Contributions {
      *
      * @var string
      */
-    const nhrcc_version = '1.1.4';
+    const nhrcc_version = '1.1.5';
 
     /**
      * Class construcotr
