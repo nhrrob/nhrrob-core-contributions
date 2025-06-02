@@ -41,10 +41,21 @@ class Blocks extends App {
 
         $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
         $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
-        
+
         // print_r($attributes);
         $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $default_username;
         $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $default_preset;
+
+        // Extract styling attributes
+        $backgroundColor = isset($attributes['backgroundColor']) ? sanitize_text_field($attributes['backgroundColor']) : '';
+        $textColor = isset($attributes['textColor']) ? sanitize_text_field($attributes['textColor']) : '';
+        $linkColor = isset($attributes['linkColor']) ? sanitize_text_field($attributes['linkColor']) : '';
+        $borderColor = isset($attributes['borderColor']) ? sanitize_text_field($attributes['borderColor']) : '';
+        $borderRadius = isset($attributes['borderRadius']) ? intval($attributes['borderRadius']) : 0;
+        $padding = isset($attributes['padding']) ? $attributes['padding'] : [];
+        $margin = isset($attributes['margin']) ? $attributes['margin'] : [];
+        $fontSize = isset($attributes['fontSize']) ? sanitize_text_field($attributes['fontSize']) : '';
+        $fontWeight = isset($attributes['fontWeight']) ? sanitize_text_field($attributes['fontWeight']) : '';
 
         if (empty($username)) {
             return '<p>Please set a username in the block settings.</p>';
