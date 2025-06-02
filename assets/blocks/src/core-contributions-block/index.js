@@ -2,20 +2,8 @@ import { registerBlockType } from '@wordpress/blocks';
 import {
     useBlockProps,
     InspectorControls,
-    PanelColorSettings,
-    withColors,
-    getColorClassName,
-    getColorObjectByColorValue,
 } from '@wordpress/block-editor';
-import {
-    PanelBody,
-    TextControl,
-    SelectControl,
-    Spinner,
-    RangeControl,
-    __experimentalBoxControl as BoxControl,
-    __experimentalUnitControl as UnitControl
-} from '@wordpress/components';
+import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
@@ -34,18 +22,7 @@ registerBlockType(metadata.name, {
 });
 
 function EditComponent({ attributes, setAttributes }) {
-    const blockProps = useBlockProps({
-        style: {
-            backgroundColor: attributes.backgroundColor,
-            color: attributes.textColor,
-            padding: attributes.padding ? `${attributes.padding.top || 0} ${attributes.padding.right || 0} ${attributes.padding.bottom || 0} ${attributes.padding.left || 0}` : undefined,
-            margin: attributes.margin ? `${attributes.margin.top || 0} ${attributes.margin.right || 0} ${attributes.margin.bottom || 0} ${attributes.margin.left || 0}` : undefined,
-            borderColor: attributes.borderColor,
-            borderRadius: attributes.borderRadius ? `${attributes.borderRadius}px` : undefined,
-            fontSize: attributes.fontSize,
-            fontWeight: attributes.fontWeight,
-        }
-    });
+    const blockProps = useBlockProps();
     const [tempUsername, setTempUsername] = useState(attributes.username);
     const [previewContent, setPreviewContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -83,19 +60,7 @@ function EditComponent({ attributes, setAttributes }) {
                 setPreviewContent(`Error: ${error.message}`);
             })
             .finally(() => setIsLoading(false));
-    }, [
-        attributes.username,
-        attributes.preset,
-        attributes.backgroundColor,
-        attributes.textColor,
-        attributes.linkColor,
-        attributes.borderColor,
-        attributes.borderRadius,
-        attributes.padding,
-        attributes.margin,
-        attributes.fontSize,
-        attributes.fontWeight
-    ]);
+    }, [attributes.username, attributes.preset]);
 
     return (
         <div {...blockProps}>
@@ -117,75 +82,6 @@ function EditComponent({ attributes, setAttributes }) {
                         onChange={(preset) => setAttributes({ preset })}
                     />
                 </PanelBody>
-
-                <PanelColorSettings
-                    title="Color Settings"
-                    colorSettings={[
-                        {
-                            value: attributes.backgroundColor,
-                            onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-                            label: 'Background Color',
-                        },
-                        {
-                            value: attributes.textColor,
-                            onChange: (textColor) => setAttributes({ textColor }),
-                            label: 'Text Color',
-                        },
-                        {
-                            value: attributes.linkColor,
-                            onChange: (linkColor) => setAttributes({ linkColor }),
-                            label: 'Link Color',
-                        },
-                        {
-                            value: attributes.borderColor,
-                            onChange: (borderColor) => setAttributes({ borderColor }),
-                            label: 'Border Color',
-                        },
-                    ]}
-                />
-
-                <PanelBody title="Spacing Settings" initialOpen={false}>
-                    {BoxControl && (
-                        <>
-                            <BoxControl
-                                label="Padding"
-                                values={attributes.padding}
-                                onChange={(padding) => setAttributes({ padding })}
-                            />
-                            <BoxControl
-                                label="Margin"
-                                values={attributes.margin}
-                                onChange={(margin) => setAttributes({ margin })}
-                            />
-                        </>
-                    )}
-                </PanelBody>
-
-                <PanelBody title="Border Settings" initialOpen={false}>
-                    <RangeControl
-                        label="Border Radius"
-                        value={attributes.borderRadius || 0}
-                        onChange={(borderRadius) => setAttributes({ borderRadius })}
-                        min={0}
-                        max={50}
-                    />
-                </PanelBody>
-
-                <PanelBody title="Typography Settings" initialOpen={false}>
-                    {UnitControl && (
-                        <UnitControl
-                            label="Font Size"
-                            value={attributes.fontSize}
-                            onChange={(fontSize) => setAttributes({ fontSize })}
-                        />
-                    )}
-                    <SelectControl
-                        label="Font Weight"
-                        value={attributes.fontWeight}
-                        options={FONT_WEIGHT_OPTIONS}
-                        onChange={(fontWeight) => setAttributes({ fontWeight })}
-                    />
-                </PanelBody>
             </InspectorControls>
             
             <PreviewContent 
@@ -201,23 +97,6 @@ function EditComponent({ attributes, setAttributes }) {
 const PRESET_OPTIONS = [
     { label: 'Default', value: 'default' },
     { label: 'Minimal', value: 'minimal' },
-];
-
-const FONT_WEIGHT_OPTIONS = [
-    { label: 'Normal', value: 'normal' },
-    { label: 'Bold', value: 'bold' },
-    { label: 'Light', value: '300' },
-    { label: 'Medium', value: '500' },
-    { label: 'Semi Bold', value: '600' },
-    { label: 'Extra Bold', value: '800' },
-];
-
-const CACHE_DURATION_OPTIONS = [
-    { label: '30 Minutes', value: 1800 },
-    { label: '1 Hour', value: 3600 },
-    { label: '6 Hours', value: 21600 },
-    { label: '12 Hours', value: 43200 },
-    { label: '24 Hours', value: 86400 },
 ];
 
 // API and Helper Functions

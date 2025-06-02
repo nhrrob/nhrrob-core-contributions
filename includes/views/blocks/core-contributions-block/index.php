@@ -8,15 +8,7 @@
  * @var array  $core_contributions
  * @var int    $total_contribution_count
  * @var int    $page
- * @var string $backgroundColor
- * @var string $textColor
- * @var string $linkColor
- * @var string $borderColor
- * @var int    $borderRadius
- * @var array  $padding
- * @var array  $margin
- * @var string $fontSize
- * @var string $fontWeight
+ * @var string $wrapper_attributes
  */
 
 // Get the current page URL
@@ -55,51 +47,20 @@ $presets = [
 
 $styles = $presets[$preset] ?? $presets['default'];
 
-// Generate custom styles
-$custom_styles = [];
-if (!empty($backgroundColor)) {
-    $custom_styles[] = "background-color: {$backgroundColor}";
+// Combine WordPress wrapper attributes with our preset classes
+$wrapper_classes = $styles['wrapper'];
+if (isset($wrapper_attributes)) {
+    // Extract class from wrapper attributes and merge with our classes
+    if (preg_match('/class="([^"]*)"/', $wrapper_attributes, $matches)) {
+        $wp_classes = $matches[1];
+        $wrapper_classes = $wp_classes . ' ' . $styles['wrapper'];
+        // Remove the class attribute from wrapper_attributes to avoid duplication
+        $wrapper_attributes = preg_replace('/class="[^"]*"/', '', $wrapper_attributes);
+    }
 }
-if (!empty($textColor)) {
-    $custom_styles[] = "color: {$textColor}";
-}
-if (!empty($borderColor)) {
-    $custom_styles[] = "border-color: {$borderColor}";
-}
-if (!empty($borderRadius)) {
-    $custom_styles[] = "border-radius: {$borderRadius}px";
-}
-if (!empty($fontSize)) {
-    $custom_styles[] = "font-size: {$fontSize}";
-}
-if (!empty($fontWeight)) {
-    $custom_styles[] = "font-weight: {$fontWeight}";
-}
-
-// Handle padding
-if (!empty($padding) && is_array($padding)) {
-    $padding_values = [];
-    $padding_values[] = isset($padding['top']) ? $padding['top'] : '0';
-    $padding_values[] = isset($padding['right']) ? $padding['right'] : '0';
-    $padding_values[] = isset($padding['bottom']) ? $padding['bottom'] : '0';
-    $padding_values[] = isset($padding['left']) ? $padding['left'] : '0';
-    $custom_styles[] = "padding: " . implode(' ', $padding_values);
-}
-
-// Handle margin
-if (!empty($margin) && is_array($margin)) {
-    $margin_values = [];
-    $margin_values[] = isset($margin['top']) ? $margin['top'] : '0';
-    $margin_values[] = isset($margin['right']) ? $margin['right'] : '0';
-    $margin_values[] = isset($margin['bottom']) ? $margin['bottom'] : '0';
-    $margin_values[] = isset($margin['left']) ? $margin['left'] : '0';
-    $custom_styles[] = "margin: " . implode(' ', $margin_values);
-}
-
-$style_attribute = !empty($custom_styles) ? 'style="' . esc_attr(implode('; ', $custom_styles)) . '"' : '';
 ?>
 
-<div class="<?php echo esc_attr($styles['wrapper']); ?>" <?php echo $style_attribute; ?>>
+<div class="<?php echo esc_attr($wrapper_classes); ?>" <?php echo isset($wrapper_attributes) ? $wrapper_attributes : ''; ?>>
     <div class="<?php echo esc_attr($styles['header']); ?>">
         <h2 class="<?php echo esc_attr($styles['title']); ?>">
             <?php printf(__('Core Contributions (<code>%s</code>): %d', 'nhrrob-core-contributions'), 
@@ -115,8 +76,7 @@ $style_attribute = !empty($custom_styles) ? 'style="' . esc_attr(implode('; ', $
                 <li class="<?php echo esc_attr($styles['item']); ?>">
                     <a href="<?php echo esc_url($contribution['link']); ?>"
                        target="_blank"
-                       class="<?php echo esc_attr($styles['link']); ?>"
-                       <?php echo !empty($linkColor) ? 'style="color: ' . esc_attr($linkColor) . '"' : ''; ?>>
+                       class="<?php echo esc_attr($styles['link']); ?>">
                         <?php echo esc_html($contribution['description']); ?>
                     </a>
                 </li>

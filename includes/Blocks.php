@@ -36,7 +36,7 @@ class Blocks extends App {
         );
     }
 
-    public function core_contributions_block_callback( $attributes = [] ){
+    public function core_contributions_block_callback( $attributes = [], $content = '', $block = null ){
         $nhrcc_settings = get_option('nhrcc_settings');
 
         $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
@@ -46,16 +46,8 @@ class Blocks extends App {
         $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $default_username;
         $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $default_preset;
 
-        // Extract styling attributes
-        $backgroundColor = isset($attributes['backgroundColor']) ? sanitize_text_field($attributes['backgroundColor']) : '';
-        $textColor = isset($attributes['textColor']) ? sanitize_text_field($attributes['textColor']) : '';
-        $linkColor = isset($attributes['linkColor']) ? sanitize_text_field($attributes['linkColor']) : '';
-        $borderColor = isset($attributes['borderColor']) ? sanitize_text_field($attributes['borderColor']) : '';
-        $borderRadius = isset($attributes['borderRadius']) ? intval($attributes['borderRadius']) : 0;
-        $padding = isset($attributes['padding']) ? $attributes['padding'] : [];
-        $margin = isset($attributes['margin']) ? $attributes['margin'] : [];
-        $fontSize = isset($attributes['fontSize']) ? sanitize_text_field($attributes['fontSize']) : '';
-        $fontWeight = isset($attributes['fontWeight']) ? sanitize_text_field($attributes['fontWeight']) : '';
+        // Get block wrapper attributes for WordPress native styling
+        $wrapper_attributes = get_block_wrapper_attributes();
 
         if (empty($username)) {
             return '<p>Please set a username in the block settings.</p>';
