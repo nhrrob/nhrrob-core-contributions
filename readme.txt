@@ -1,6 +1,6 @@
 === NHR Core Contributions ===
 Contributors: nhrrob
-Tags: contributions, core, community
+Tags: contributions, core, community, open source, profile
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -20,12 +20,17 @@ In the vast tapestry of the WordPress universe, let your contributions shine lik
 
 ### ✨ Features
 - Real-Time Stats: Your latest WordPress core contributions are automatically displayed.
-- Customizable Display: Display core contributions based on username
-- Simple Integration: Just use a simple shortcode to embed your stats anywhere you like.
+- Customizable Display: Display core contributions based on username.
+- Simple Integration: Easily add contribution stats using the Gutenberg block – no shortcode needed.
 - Pagination: Fetch all of your contributions with pagination.
 
-### Shortcode
-- `[nhrcc_core_contributions username="your_wp_username"]`
+### 📦 Block Usage
+Easily add contribution stats using the Gutenberg editor:
+
+- Open the post or page in the block editor.
+- Add the “NHR Core Contributions” block.
+- Enter your WordPress.org username in the block settings.
+- Select a design style and publish.
 
 ## External Services
 
