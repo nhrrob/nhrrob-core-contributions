@@ -42,12 +42,10 @@ class Blocks extends App {
         $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
         $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
 
-        // print_r($attributes);
         $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $default_username;
         $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $default_preset;
 
-        // Get block wrapper attributes for WordPress native styling
-        $wrapper_attributes = get_block_wrapper_attributes();
+
 
         if (empty($username)) {
             return '<p>Please set a username in the block settings.</p>';

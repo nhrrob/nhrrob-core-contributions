@@ -8,7 +8,6 @@
  * @var array  $core_contributions
  * @var int    $total_contribution_count
  * @var int    $page
- * @var string $wrapper_attributes
  */
 
 // Get the current page URL
@@ -18,7 +17,6 @@ $current_url = is_admin() ? admin_url("tools.php?page={$this->page_slug}") : hom
 $is_shortcode = ! is_admin() ? 1 : 0;
 
 $is_block_editor = defined('REST_REQUEST') && REST_REQUEST && strpos(wp_get_referer(), 'post.php') !== false;
-
 
 $preset = isset($preset) ? $preset : 'default';
 
@@ -46,21 +44,9 @@ $presets = [
 ];
 
 $styles = $presets[$preset] ?? $presets['default'];
-
-// Combine WordPress wrapper attributes with our preset classes
-$wrapper_classes = $styles['wrapper'];
-if (isset($wrapper_attributes)) {
-    // Extract class from wrapper attributes and merge with our classes
-    if (preg_match('/class="([^"]*)"/', $wrapper_attributes, $matches)) {
-        $wp_classes = $matches[1];
-        $wrapper_classes = $wp_classes . ' ' . $styles['wrapper'];
-        // Remove the class attribute from wrapper_attributes to avoid duplication
-        $wrapper_attributes = preg_replace('/class="[^"]*"/', '', $wrapper_attributes);
-    }
-}
 ?>
 
-<div class="<?php echo esc_attr($wrapper_classes); ?>" <?php echo isset($wrapper_attributes) ? $wrapper_attributes : ''; ?>>
+<div <?php echo get_block_wrapper_attributes(['class' => $styles['wrapper']]); ?>>
     <div class="<?php echo esc_attr($styles['header']); ?>">
         <h2 class="<?php echo esc_attr($styles['title']); ?>">
             <?php printf(__('Core Contributions (<code>%s</code>): %d', 'nhrrob-core-contributions'), 

@@ -25,84 +25,36 @@
     "preset": {
       "type": "string",
       "default": "default"
-    },
-    "backgroundColor": {
-      "type": "string"
-    },
-    "textColor": {
-      "type": "string"
-    },
-    "linkColor": {
-      "type": "string"
-    },
-    "borderColor": {
-      "type": "string"
-    },
-    "borderRadius": {
-      "type": "number"
-    },
-    "padding": {
-      "type": "object"
-    },
-    "margin": {
-      "type": "object"
-    },
-    "fontSize": {
-      "type": "string"
-    },
-    "fontWeight": {
-      "type": "string"
     }
   },
   "supports": {
     "html": false,
     "reusable": true,
     "align": true,
+    "anchor": true,
+    "className": true,
+    "customClassName": true,
     "color": {
       "background": true,
       "text": true,
       "link": true,
-      "gradients": true,
-      "__experimentalDefaultControls": {
-        "background": true,
-        "text": true,
-        "link": true
-      }
+      "gradients": true
     },
     "spacing": {
       "padding": true,
-      "margin": true,
-      "__experimentalDefaultControls": {
-        "padding": true,
-        "margin": true
-      }
+      "margin": true
     },
     "typography": {
       "fontSize": true,
       "fontWeight": true,
       "lineHeight": true,
-      "__experimentalDefaultControls": {
-        "fontSize": true
-      }
+      "fontFamily": true
     },
     "border": {
       "color": true,
       "radius": true,
       "width": true,
-      "__experimentalDefaultControls": {
-        "color": true,
-        "radius": true
-      }
-    },
-    "__experimentalBorder": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true,
-      "__experimentalDefaultControls": {
-        "color": true,
-        "radius": true
-      }
+      "style": true
     }
   }
 }

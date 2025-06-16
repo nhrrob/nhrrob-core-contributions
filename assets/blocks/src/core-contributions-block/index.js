@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import {
     useBlockProps,
-    InspectorControls,
+    InspectorControls
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
@@ -46,7 +46,6 @@ function EditComponent({ attributes, setAttributes }) {
 
     useEffect(() => {
         if (!attributes.username) {
-            // setAttributes({ username: nhrccCoreContributionsCommonObj?.nhrccSettings?.username });
             setPreviewContent('');
             return;
         }
@@ -60,7 +59,19 @@ function EditComponent({ attributes, setAttributes }) {
                 setPreviewContent(`Error: ${error.message}`);
             })
             .finally(() => setIsLoading(false));
-    }, [attributes.username, attributes.preset]);
+    }, [
+        attributes.username,
+        attributes.preset,
+        attributes.backgroundColor,
+        attributes.textColor,
+        attributes.linkColor,
+        attributes.borderColor,
+        attributes.borderRadius,
+        attributes.padding,
+        attributes.margin,
+        attributes.fontSize,
+        attributes.fontWeight
+    ]);
 
     return (
         <div {...blockProps}>
@@ -83,7 +94,6 @@ function EditComponent({ attributes, setAttributes }) {
                     />
                 </PanelBody>
             </InspectorControls>
-            
             <PreviewContent 
                 isLoading={isLoading}
                 username={attributes.username}
