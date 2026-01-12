@@ -2,8 +2,15 @@ import { registerBlockType } from '@wordpress/blocks';
 import {
     useBlockProps,
     InspectorControls,
+    PanelColorSettings
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
+import {
+    PanelBody,
+    TextControl,
+    SelectControl,
+    Spinner,
+    FontSizePicker
+} from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
@@ -26,7 +33,7 @@ function EditComponent({ attributes, setAttributes }) {
     const [tempUsername, setTempUsername] = useState(attributes.username);
     const [previewContent, setPreviewContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    
+
     // Create debounced function with useRef to maintain reference
     const updateUsernameDebounced = useRef(
         debounce((username) => {
@@ -46,13 +53,12 @@ function EditComponent({ attributes, setAttributes }) {
 
     useEffect(() => {
         if (!attributes.username) {
-            // setAttributes({ username: nhrccCoreContributionsCommonObj?.nhrccSettings?.username });
             setPreviewContent('');
             return;
         }
 
         setIsLoading(true);
-        
+
         fetchPreview(attributes)
             .then(setPreviewContent)
             .catch((error) => {
@@ -60,7 +66,27 @@ function EditComponent({ attributes, setAttributes }) {
                 setPreviewContent(`Error: ${error.message}`);
             })
             .finally(() => setIsLoading(false));
-    }, [attributes.username, attributes.preset]);
+    }, [
+        attributes.username,
+        attributes.preset,
+        attributes.backgroundColor,
+        attributes.textColor,
+        attributes.linkColor,
+        attributes.borderColor,
+        attributes.borderRadius,
+        attributes.padding,
+        attributes.margin,
+        attributes.fontSize,
+        attributes.fontWeight,
+        attributes.titleColor,
+        attributes.titleBackgroundColor,
+        attributes.titleFontSize,
+        attributes.titleFontWeight,
+        attributes.accentColor,
+        attributes.metaColor,
+        attributes.paginationColor,
+        JSON.stringify(attributes.style)
+    ]);
 
     return (
         <div {...blockProps}>
@@ -83,7 +109,70 @@ function EditComponent({ attributes, setAttributes }) {
                     />
                 </PanelBody>
             </InspectorControls>
-            
+            <InspectorControls group="styles">
+                <PanelColorSettings
+                    title="Title Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.titleColor,
+                            onChange: (titleColor) => setAttributes({ titleColor }),
+                            label: 'Title Color',
+                        },
+                        {
+                            value: attributes.titleBackgroundColor,
+                            onChange: (titleBackgroundColor) => setAttributes({ titleBackgroundColor }),
+                            label: 'Title Background',
+                        },
+                    ]}
+                />
+                <PanelBody title="Title Typography" initialOpen={false}>
+                    <FontSizePicker
+                        value={attributes.titleFontSize}
+                        onChange={(titleFontSize) => setAttributes({ titleFontSize })}
+                    />
+                    <SelectControl
+                        label="Font Weight"
+                        value={attributes.titleFontWeight}
+                        options={[
+                            { label: 'Default', value: '' },
+                            { label: 'Normal', value: '400' },
+                            { label: 'Medium', value: '500' },
+                            { label: 'Semibold', value: '600' },
+                            { label: 'Bold', value: '700' },
+                            { label: 'Extra Bold', value: '800' },
+                        ]}
+                        onChange={(titleFontWeight) => setAttributes({ titleFontWeight })}
+                    />
+                </PanelBody>
+                <PanelColorSettings
+                    title="Item & Accent Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.accentColor,
+                            onChange: (accentColor) => setAttributes({ accentColor }),
+                            label: 'Accent Color (Icons/Highlight)',
+                        },
+                        {
+                            value: attributes.metaColor,
+                            onChange: (metaColor) => setAttributes({ metaColor }),
+                            label: 'Meta Text Color',
+                        },
+                    ]}
+                />
+                <PanelColorSettings
+                    title="Pagination Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.paginationColor,
+                            onChange: (paginationColor) => setAttributes({ paginationColor }),
+                            label: 'Pagination Color',
+                        },
+                    ]}
+                />
+            </InspectorControls>
             <PreviewContent 
                 isLoading={isLoading}
                 username={attributes.username}
@@ -97,23 +186,16 @@ function EditComponent({ attributes, setAttributes }) {
 const PRESET_OPTIONS = [
     { label: 'Default', value: 'default' },
     { label: 'Minimal', value: 'minimal' },
-];
-
-const CACHE_DURATION_OPTIONS = [
-    { label: '30 Minutes', value: 1800 },
-    { label: '1 Hour', value: 3600 },
-    { label: '6 Hours', value: 21600 },
-    { label: '12 Hours', value: 43200 },
-    { label: '24 Hours', value: 86400 },
+    { label: 'Modern', value: 'modern' },
 ];
 
 // API and Helper Functions
-async function fetchPreview({ username, preset }) {
+async function fetchPreview(attributes) {
     try {
         const response = await apiFetch({
             path: '/nhrcc-core-contributions/v1/core-contributions/render',
             method: 'POST',
-            data: { username, preset },
+            data: attributes,
         });
         return response.content || '';
     } catch (error) {

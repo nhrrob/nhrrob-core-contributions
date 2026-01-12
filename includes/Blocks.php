@@ -1,6 +1,7 @@
 <?php
-
 namespace Nhrcc\CoreContributions;
+
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * The admin class
@@ -36,15 +37,14 @@ class Blocks extends App {
         );
     }
 
-    public function core_contributions_block_callback( $attributes = [] ){
+    public function core_contributions_block_callback( $attributes = [], $content = '', $block = null ){
         $nhrcc_settings = get_option('nhrcc_settings');
 
-        $default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
-        $default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
-        
-        // print_r($attributes);
-        $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $default_username;
-        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $default_preset;
+        $nhrcc_default_username = ! empty( $nhrcc_settings['username'] ) ? sanitize_text_field( $nhrcc_settings['username'] ) : '';
+        $nhrcc_default_preset = ! empty( $nhrcc_settings['preset'] ) ? sanitize_text_field( $nhrcc_settings['preset'] ) : 'default';
+
+        $username = ! empty( $attributes['username'] ) ? sanitize_text_field($attributes['username']) : $nhrcc_default_username;
+        $preset = isset($attributes['preset']) ? sanitize_text_field($attributes['preset']) : $nhrcc_default_preset;
 
         if (empty($username)) {
             return '<p>Please set a username in the block settings.</p>';
@@ -57,7 +57,7 @@ class Blocks extends App {
         $core_contributions = [];
         $total_contribution_count = 0;
 
-        $page = ! empty($_GET['front_paged']) ? intval( $_GET['front_paged']) : 1;
+        $page = isset($_GET['front_paged']) ? absint(wp_unslash($_GET['front_paged'])) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
         try {
             if ($username) {

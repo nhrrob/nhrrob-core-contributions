@@ -1,6 +1,7 @@
 <?php
-
 namespace Nhrcc\CoreContributions;
+
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * API Class
@@ -39,50 +40,77 @@ class Api extends App {
                 'preset' => [
                     'required' => false,
                     'type' => 'string',
-                    'default' => 'default',
-                    'enum' => ['default', 'minimal'],
                     'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'backgroundColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'textColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'style' => [
+                    'required' => false,
+                    'type' => 'object',
+                ],
+                'linkColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'fontSize' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'fontFamily' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'titleColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'titleFontSize' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'titleFontWeight' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'titleBackgroundColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'accentColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'metaColor' => [
+                    'required' => false,
+                    'type' => 'string',
+                ],
+                'paginationColor' => [
+                    'required' => false,
+                    'type' => 'string',
                 ],
             ],
         ]);
     }
 
     public function render_core_contributions($request) {
-        wp_enqueue_script('nhrcc-script');
-        wp_enqueue_style('nhrcc-style');
-        wp_enqueue_style('nhrcc-admin-style');
-
-        $username   = sanitize_text_field($request->get_param('username')) ?? '';
-        $preset     = sanitize_text_field($request->get_param('preset')) ?? 'default';
-        $page       = absint($request->get_param('front_paged')) ?? 1;
-
-        $core_contributions = [];
-        $total_contribution_count = 0;
-
-        $page = 1;
-
-        try {
-            if ($username) {
-                $core_contributions = $this->get_core_contributions($username, $page);
-                $total_contribution_count = $this->get_core_contribution_count($username);
-    
-                $total_contribution_count = is_wp_error( $total_contribution_count ) ? 0 : $total_contribution_count;
-            }
-
-            // Buffer output HTML
-            ob_start();
-            include NHRCC_VIEWS_PATH . '/blocks/core-contributions-block/index.php';
-            $content = ob_get_clean();
-            
-            return rest_ensure_response([
-                'content' => wp_kses($content, $this->allowed_html()),
-            ]);
-        } catch (\Exception $e) {
-            return new \WP_Error(
-                'fetch_error',
-                $e->getMessage(),
-                ['status' => 500]
-            );
-        }
+        $attributes = $request->get_params();
+        
+        // Render the block using the core function to ensure block context and styles are handled correctly
+        $block = [
+            'blockName' => 'nhrcc-core-contributions/core-contributions-block',
+            'attrs'     => $attributes,
+        ];
+        
+        $content = render_block($block);
+        
+        return rest_ensure_response([
+            'content' => $content,
+        ]);
     }
 }
