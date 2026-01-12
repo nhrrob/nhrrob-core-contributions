@@ -25,6 +25,34 @@
     "preset": {
       "type": "string",
       "default": "default"
+    },
+    "titleColor": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "titleBackgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "accentColor": {
+      "type": "string",
+      "default": ""
+    },
+    "metaColor": {
+      "type": "string",
+      "default": ""
+    },
+    "paginationColor": {
+      "type": "string",
+      "default": ""
     }
   },
   "supports": {

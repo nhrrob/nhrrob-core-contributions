@@ -1,9 +1,16 @@
 import { registerBlockType } from '@wordpress/blocks';
 import {
     useBlockProps,
-    InspectorControls
+    InspectorControls,
+    PanelColorSettings
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, SelectControl, Spinner } from '@wordpress/components';
+import {
+    PanelBody,
+    TextControl,
+    SelectControl,
+    Spinner,
+    FontSizePicker
+} from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
@@ -70,7 +77,15 @@ function EditComponent({ attributes, setAttributes }) {
         attributes.padding,
         attributes.margin,
         attributes.fontSize,
-        attributes.fontWeight
+        attributes.fontWeight,
+        attributes.titleColor,
+        attributes.titleBackgroundColor,
+        attributes.titleFontSize,
+        attributes.titleFontWeight,
+        attributes.accentColor,
+        attributes.metaColor,
+        attributes.paginationColor,
+        JSON.stringify(attributes.style)
     ]);
 
     return (
@@ -93,6 +108,70 @@ function EditComponent({ attributes, setAttributes }) {
                         onChange={(preset) => setAttributes({ preset })}
                     />
                 </PanelBody>
+            </InspectorControls>
+            <InspectorControls group="styles">
+                <PanelColorSettings
+                    title="Title Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.titleColor,
+                            onChange: (titleColor) => setAttributes({ titleColor }),
+                            label: 'Title Color',
+                        },
+                        {
+                            value: attributes.titleBackgroundColor,
+                            onChange: (titleBackgroundColor) => setAttributes({ titleBackgroundColor }),
+                            label: 'Title Background',
+                        },
+                    ]}
+                />
+                <PanelBody title="Title Typography" initialOpen={false}>
+                    <FontSizePicker
+                        value={attributes.titleFontSize}
+                        onChange={(titleFontSize) => setAttributes({ titleFontSize })}
+                    />
+                    <SelectControl
+                        label="Font Weight"
+                        value={attributes.titleFontWeight}
+                        options={[
+                            { label: 'Default', value: '' },
+                            { label: 'Normal', value: '400' },
+                            { label: 'Medium', value: '500' },
+                            { label: 'Semibold', value: '600' },
+                            { label: 'Bold', value: '700' },
+                            { label: 'Extra Bold', value: '800' },
+                        ]}
+                        onChange={(titleFontWeight) => setAttributes({ titleFontWeight })}
+                    />
+                </PanelBody>
+                <PanelColorSettings
+                    title="Item & Accent Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.accentColor,
+                            onChange: (accentColor) => setAttributes({ accentColor }),
+                            label: 'Accent Color (Icons/Highlight)',
+                        },
+                        {
+                            value: attributes.metaColor,
+                            onChange: (metaColor) => setAttributes({ metaColor }),
+                            label: 'Meta Text Color',
+                        },
+                    ]}
+                />
+                <PanelColorSettings
+                    title="Pagination Colors"
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: attributes.paginationColor,
+                            onChange: (paginationColor) => setAttributes({ paginationColor }),
+                            label: 'Pagination Color',
+                        },
+                    ]}
+                />
             </InspectorControls>
             <PreviewContent 
                 isLoading={isLoading}
