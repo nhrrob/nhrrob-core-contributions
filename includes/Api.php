@@ -40,7 +40,7 @@ class Api extends App {
                     'required' => false,
                     'type' => 'string',
                     'default' => 'default',
-                    'enum' => ['default', 'minimal'],
+                    'enum' => ['default', 'minimal', 'modern'],
                     'sanitize_callback' => 'sanitize_text_field',
                 ],
             ],

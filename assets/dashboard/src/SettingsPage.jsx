@@ -116,7 +116,8 @@ const SettingsPage = () => {
                 onChange: (e) => setFormData({ ...formData, preset: e.target.value })
               },
                 createElement('option', { value: 'default' }, 'Default'),
-                createElement('option', { value: 'minimal' }, 'Minimal')
+                createElement('option', { value: 'minimal' }, 'Minimal'),
+                createElement('option', { value: 'modern' }, 'Modern')
               )
             )
           ),

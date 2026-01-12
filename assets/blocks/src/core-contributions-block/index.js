@@ -107,6 +107,7 @@ function EditComponent({ attributes, setAttributes }) {
 const PRESET_OPTIONS = [
     { label: 'Default', value: 'default' },
     { label: 'Minimal', value: 'minimal' },
+    { label: 'Modern', value: 'modern' },
 ];
 
 // API and Helper Functions
