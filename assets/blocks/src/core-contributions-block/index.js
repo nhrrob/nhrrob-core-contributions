@@ -9,11 +9,13 @@ import {
     TextControl,
     SelectControl,
     Spinner,
-    FontSizePicker
+    FontSizePicker,
+    ToggleControl
 } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
+import './style.scss';
 
 function debounce(func, delay) {
     let timeoutId;
@@ -85,6 +87,7 @@ function EditComponent({ attributes, setAttributes }) {
         attributes.accentColor,
         attributes.metaColor,
         attributes.paginationColor,
+        attributes.showTime,
         JSON.stringify(attributes.style)
     ]);
 
@@ -106,6 +109,12 @@ function EditComponent({ attributes, setAttributes }) {
                         value={attributes.preset}
                         options={PRESET_OPTIONS}
                         onChange={(preset) => setAttributes({ preset })}
+                    />
+                    <ToggleControl
+                        label="Display Time"
+                        checked={attributes.showTime}
+                        onChange={(showTime) => setAttributes({ showTime })}
+                        help="Toggle to show the time of each contribution."
                     />
                 </PanelBody>
             </InspectorControls>
@@ -187,6 +196,8 @@ const PRESET_OPTIONS = [
     { label: 'Default', value: 'default' },
     { label: 'Minimal', value: 'minimal' },
     { label: 'Modern', value: 'modern' },
+    { label: 'Card', value: 'card' },
+    { label: 'Timeline', value: 'timeline' },
 ];
 
 // API and Helper Functions
