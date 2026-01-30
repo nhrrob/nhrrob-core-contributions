@@ -16,7 +16,10 @@
   "editorScript": "file:./index.js",
   "viewScript": "file:./index.js",
   "editorStyle": "file:../../../css/admin.out.css",
-  "style": "file:../../../css/admin.out.css",
+  "style": [
+    "file:../../../css/admin.out.css",
+    "file:./style-index.css"
+  ],
   "attributes": {
     "username": {
       "type": "string",
@@ -53,6 +56,10 @@
     "paginationColor": {
       "type": "string",
       "default": ""
+    },
+    "showTime": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

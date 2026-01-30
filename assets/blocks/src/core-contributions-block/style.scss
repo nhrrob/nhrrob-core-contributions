@@ -1,0 +1,451 @@
+/**
+ * Core Contributions Block Styles
+ */
+
+/* =========================================
+   Layout: Modern (Existing)
+   ========================================= */
+.nhrcc-preset-modern {
+    &.rounded-2xl { border-radius: 1rem; }
+    &.p-8 { padding: 2rem; }
+    &.border { border-width: 1px; }
+    &.bg-\[\#F9FAFB\] { background-color: #F9FAFB; }
+    
+    .nhrcc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+        gap: 1.5rem; /* Increased gap */
+        margin: 0 0 2.5rem 0;
+    }
+
+    h2 code {
+        background-color: #f3f4f6;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.375rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.9em;
+        color: #2563eb;
+        border: 1px solid #e5e7eb;
+    }
+
+    /* Fix for missing Tailwind 'w-6 h-6' on the icon SVG */
+    svg.w-6.h-6 {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .nhrcc-badge-wrap svg{
+        width: 1rem;
+        height: 1rem;
+        margin-bottom: -4px;
+    }
+}
+
+/* =========================================
+   Layout: Card
+   ========================================= */
+.nhrcc-preset-card {
+    background-color: #fff;
+    max-width: 80rem; 
+    margin-left: auto;
+    margin-right: auto;
+    
+    .nhrcc-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 3rem; /* Increased spacing */
+        gap: 1.5rem;
+        
+        @media (min-width: 768px) {
+            flex-direction: row;
+            align-items: flex-end;
+        }
+    }
+
+    .nhrcc-title {
+        font-size: 1.875rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        line-height: 1.25;
+        margin: 0;
+    }
+
+    /* Grid Container */
+    .nhrcc-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+        gap: 2.5rem; /* Increased gap */
+        padding: 0;
+        margin: 0 0 3rem 0; /* Added margin bottom */
+        list-style: none;
+        width: 100%;
+    }
+
+    /* Individual Card */
+    .nhrcc-card-item {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border: 1px solid #f3f4f6;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        text-decoration: none;
+        overflow: hidden;
+        box-sizing: border-box; /* Force border-box */
+        height: auto; /* Allow natural growth */
+        min-height: 100%; /* Still fill the row height if other items are taller */
+
+        &:hover {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+            border-color: #dbeafe; /* Blue-100 */
+            z-index: 10;
+        }
+    }
+
+    /* Card Icon */
+    .nhrcc-card-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+        flex-shrink: 0;
+        background-color: var(--nhrcc-accent-color, #eff6ff);
+        color: var(--nhrcc-accent-color, #2563eb);
+        
+        &.nhrcc-card-icon-bg-custom {
+            background-color: transparent; 
+        }
+
+        /* If it's a card icon, we might want it to have white icon if bg is custom, 
+           but for simplicity now we just let color be accent-color or inherited. 
+           User specifically asked for icon color fix. */
+        svg {
+            color: var(--nhrcc-accent-color);
+        }
+    }
+
+    /* Card Link/Title */
+    .nhrcc-card-link {
+        font-size: 1.125rem; /* Slightly larger */
+        font-weight: 700;
+        line-height: 1.4;
+        color: #111827;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Allow 3 lines */
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        
+        &:hover {
+            color: var(--nhrcc-accent-color, #2563eb);
+        }
+    }
+
+    /* Card Footer (Metadata) */
+    .nhrcc-card-meta {
+        margin-top: auto;
+        padding-top: 1.25rem;
+        border-top: 1px solid #f9fafb;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--nhrcc-meta-color, #6b7280);
+
+        .nhrcc-badge-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .nhrcc-badge {
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background-color: var(--nhrcc-accent-color, #f3f4f6);
+            color: var(--nhrcc-accent-color, #4b5563);
+            
+            /* If we have a custom accent color, we might want white text */
+            @if (var(--nhrcc-accent-color) != null) {
+                // This is not possible in SCSS pure, but we can use CSS logic or just trust the variable
+            }
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* =========================================
+   Layout: Timeline
+   ========================================= */
+.nhrcc-preset-timeline {
+    background-color: #fff;
+    max-width: 64rem; /* Slightly wider */
+    margin-left: auto;
+    margin-right: auto;
+    
+    .nhrcc-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 4rem; /* More space before list */
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .nhrcc-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+    }
+
+    /* Timeline Container */
+    .nhrcc-timeline-list {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        /* The vertical line */
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 1.25rem; 
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #e5e7eb 5%, #e5e7eb 95%, transparent);
+            transform: translateX(-50%);
+            
+            @media (min-width: 768px) {
+                left: 50%;
+                margin-left: 0;
+            }
+        }
+    }
+
+    /* Timeline Item */
+    .nhrcc-timeline-item {
+        position: relative;
+        margin-bottom: 3rem; /* Increased spacing between items */
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (min-width: 768px) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            
+            /* Alternate sides */
+            &:nth-child(odd) {
+                flex-direction: row-reverse;
+                
+                .nhrcc-timeline-content {
+                    text-align: left; 
+                }
+            }
+        }
+    }
+
+    /* Timeline Node (The Circle) */
+    .nhrcc-timeline-node {
+        position: absolute;
+        left: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 9999px;
+        border: 4px solid #fff;
+        background-color: var(--nhrcc-accent-color, #3b82f6);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        
+        @media (min-width: 768px) {
+            left: 50%;
+            transform: translateX(-50%);
+            position: absolute; 
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+            color: #fff;
+        }
+
+        &.nhrcc-timeline-node-custom {
+            /* Handled by inline styles */
+            border-color: #fff; 
+        }
+    }
+
+    /* Timeline Content Box */
+    .nhrcc-timeline-content {
+        background-color: #fff;
+        border: 1px solid #f3f4f6;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-left: 4.5rem; /* Increased gap from line */
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.3s ease;
+        position: relative;
+        width: auto;
+
+        /* Pointer arrow */
+        &::before {
+            content: "";
+            position: absolute;
+            top: 1rem;
+            left: -6px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            transform: rotate(45deg);
+            border-left: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        &:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 5;
+        }
+
+        @media (min-width: 768px) {
+            margin-left: 0;
+            width: calc(50% - 3.5rem); /* Increased gap: 2.5rem -> 3.5rem from center */
+            
+            /* Arrow adjustment for right side items (even) */
+            .nhrcc-timeline-item:nth-child(even) &::before {
+                left: -6px; /* Arrow on left */
+                right: auto;
+                border-left: 1px solid #f3f4f6;
+                border-bottom: 1px solid #f3f4f6;
+                border-right: none;
+                border-top: none;
+            }
+
+            /* Arrow adjustment for left side items (odd) */
+            .nhrcc-timeline-item:nth-child(odd) &::before {
+                right: -6px; /* Arrow on right */
+                left: auto;
+                border-right: 1px solid #f3f4f6;
+                border-top: 1px solid #f3f4f6;
+                border-left: none;
+                border-bottom: none;
+            }
+        }
+    }
+
+
+    .nhrcc-timeline-link {
+        display: block;
+        font-size: 0.9375rem; /* 15px */
+        font-weight: 700;
+        color: #111827;
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+
+        &:hover {
+            color: var(--nhrcc-accent-color, #2563eb);
+        }
+    }
+
+    .nhrcc-timeline-meta {
+        font-size: 0.75rem;
+        color: var(--nhrcc-meta-color, #6b7280);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+
+        .nhrcc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-weight: 500;
+        }
+
+        .nhrcc-dot {
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 9999px;
+            background-color: var(--nhrcc-accent-color, #3b82f6);
+        }
+        
+        .nhrcc-separator {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+        }
+    }
+}
+
+/* Pagination - Common */
+.nhrcc-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    
+    .page-numbers {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        color: #4b5563;
+        border: 1px solid #e5e7eb;
+        background-color: #fff;
+        transition: all 0.2s;
+
+        &:hover:not(.current) {
+            border-color: #d1d5db;
+            background-color: #f9fafb;
+            color: #111827;
+        }
+
+        &.current {
+            border-color: var(--nhrcc-pagination-color, #3b82f6);
+            background-color: var(--nhrcc-pagination-color, #eff6ff); // This might be too dark if it's the same color
+            color: var(--nhrcc-pagination-color, #2563eb);
+            font-weight: 600;
+            
+            /* If a custom color is provided, we might need to adjust bg opacity */
+            background-color: color-mix(in srgb, var(--nhrcc-pagination-color, #3b82f6) 10%, transparent);
+        }
+        
+        &.dots {
+            border: none;
+            background: transparent;
+        }
+    }
+}
