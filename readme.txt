@@ -4,7 +4,7 @@ Tags: contributions, core, community, open source, profile
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 5. Dashboard => Tools => Core Contributions page => Settings page
 
 == Changelog ==
+
+= 1.3.1 - 07/02/2026 =
+- Fixed: Fatal error on plugin activation
 
 = 1.3.0 - 28/01/2026 =
 - Added: Two new presets (Card & Timeline) added
