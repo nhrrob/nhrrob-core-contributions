@@ -1,3 +1,4 @@
+.ai/                    export-ignore
 .babelrc                export-ignore
 .deployignore           export-ignore
 .distignore             export-ignore
