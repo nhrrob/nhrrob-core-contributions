@@ -1,6 +1,7 @@
 <?php
-
 namespace Nhrcc\CoreContributions\Admin;
+
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 use WP_REST_Response;
 

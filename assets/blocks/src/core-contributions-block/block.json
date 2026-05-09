@@ -7,12 +7,19 @@
     "category": "widgets",
     "icon": "admin-users",
     "description": "Display Core Contributions stat in your own website",
-    "keywords": ["contributions", "wordpress", "core"],
+    "keywords": [
+        "contributions",
+        "wordpress",
+        "core"
+    ],
     "textdomain": "nhrrob-core-contributions",
     "editorScript": "file:./index.js",
     "viewScript": "file:./index.js",
     "editorStyle": "file:../../../css/admin.out.css",
-    "style": "file:../../../css/admin.out.css",
+    "style": [
+        "file:../../../css/admin.out.css",
+        "file:./style-index.css"
+    ],
     "attributes": {
         "username": {
             "type": "string",
@@ -21,6 +28,38 @@
         "preset": {
             "type": "string",
             "default": "default"
+        },
+        "titleColor": {
+            "type": "string",
+            "default": ""
+        },
+        "titleFontSize": {
+            "type": "string",
+            "default": ""
+        },
+        "titleFontWeight": {
+            "type": "string",
+            "default": ""
+        },
+        "titleBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "accentColor": {
+            "type": "string",
+            "default": ""
+        },
+        "metaColor": {
+            "type": "string",
+            "default": ""
+        },
+        "paginationColor": {
+            "type": "string",
+            "default": ""
+        },
+        "showTime": {
+            "type": "boolean",
+            "default": false
         }
     },
     "supports": {

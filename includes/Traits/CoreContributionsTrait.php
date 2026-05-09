@@ -29,7 +29,7 @@ trait CoreContributionsTrait
         }
 
         // Parse HTML to extract the relevant data
-        $pattern = '/<dt><a href="(.*?)" class="searchable">\[(.*?)\]: ((?s).*?)<\/a><\/dt>\n\s*(<dd class="searchable">.*\n?.*(?:ixes|ee) #(.*?)\n?<\/dd>)?/';
+        $pattern = '/<dt[^>]*><a href="(.*?)"[^>]*>\[(.*?)\]:\s*(.*?)<\/a><\/dt>\s*<dd class="searchable">(.*?)<\/dd>\s*<dd>By\s*<span[^>]*>.*?<\/span>\s*—\s*<span[^>]*>(.*?)<\/span><\/dd>/s';
         preg_match_all($pattern, $body, $matches, PREG_SET_ORDER);
 
         if (empty($matches)) {
@@ -38,11 +38,17 @@ trait CoreContributionsTrait
 
         $formatted = [];
         foreach ($matches as $match) {
+            $ticket = '';
+            if ( preg_match( '/(?:fixes|ee) #(\d+)/i', $match[4], $ticket_match ) ) {
+                $ticket = intval( $ticket_match[1] );
+            }
+
             $formatted[] = [
                 'link'        => 'https://core.trac.wordpress.org' . sanitize_text_field( $match[1] ),
                 'changeset'   => intval($match[2]),
                 'description' => sanitize_text_field( $match[3] ),
-                'ticket'      => isset($match[5]) ? intval($match[5]) : '',
+                'ticket'      => $ticket,
+                'date'        => isset($match[5]) ? sanitize_text_field( trim( $match[5] ) ) : '',
             ];
         }
 
