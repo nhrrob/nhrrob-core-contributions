@@ -23,6 +23,7 @@ In the vast tapestry of the WordPress universe, let your contributions shine lik
 - Customizable Display: Display core contributions based on username.
 - Simple Integration: Easily add contribution stats using the Gutenberg block – no shortcode needed.
 - Pagination: Fetch all of your contributions with pagination.
+- AI Agent & MCP Ready: On WordPress 6.9 and later, AI agents and MCP clients (through the WordPress MCP Adapter) can read a username's core contributions with the `nhrcc/get-core-contributions` ability. Read-only, for users who can edit posts.
 
 ### 📦 Block Usage
 Easily add contribution stats using the Gutenberg editor:
@@ -61,6 +62,12 @@ Absolutely. It fetches all of your contributions with pagination.
 = Can I see total contributions count? Also link to the details for each ticket? =
 Yes. Total count is shown at the top. Also all tickets are linked to the changesheet url.
 
+= Can an AI agent or MCP client use this plugin? =
+Yes, on WordPress 6.9 or later. The plugin registers one read-only ability with the WordPress Abilities API, `nhrcc/get-core-contributions`: give it a WordPress.org username (and optionally a page) and it returns the total count and that page of changesets. It needs a signed-in user who can edit posts, and it sends the username to WordPress Core Trac exactly as the block does. To use it over MCP, install the WordPress MCP Adapter plugin.
+
+= Which PHP versions are supported? =
+PHP 7.4 and every later version. Each change is tested on PHP 7.4 through 8.5, and on the upcoming 8.6.
+
 = How does the plugin handle my data? =
 The NHR Core Contributions plugin only transmits the WordPress.org username specified by the user to the WordPress Core Trac API. This is done solely to fetch and display your core contributions. No personal or sensitive data beyond the username is shared or stored.
 
@@ -74,6 +81,11 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 5. Dashboard => Tools => Core Contributions page => Settings page
 
 == Changelog ==
+
+= 1.4.0 =
+- New: AI agent and MCP support. On WordPress 6.9+ the read-only `nhrcc/get-core-contributions` ability returns a username's core contributions.
+- Compatibility: verified on PHP 7.4 through 8.5 and on PHP 8.6 release candidates.
+- Developer: every pull request now runs the PHPCompatibilityWP ruleset, a syntax check and a runtime smoke test on each supported PHP version.
 
 = 1.3.2 - 09/05/2026 =
 - WordPress tested up to version is updated to 7.0
