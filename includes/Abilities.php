@@ -30,10 +30,13 @@ class Abilities extends App {
      * @return void
      */
     public function register_category() {
-        wp_register_ability_category( 'nhrcc', [
-            'label'       => __( 'Core Contributions', 'nhrrob-core-contributions' ),
-            'description' => __( 'WordPress core contributions of a WordPress.org user.', 'nhrrob-core-contributions' ),
-        ] );
+        // The hook only exists on 6.9+; the check is for Plugin Check ("Requires at least" is 6.0).
+        if ( function_exists( 'wp_register_ability_category' ) ) {
+            wp_register_ability_category( 'nhrcc', [
+                'label'       => __( 'Core Contributions', 'nhrrob-core-contributions' ),
+                'description' => __( 'WordPress core contributions of a WordPress.org user.', 'nhrrob-core-contributions' ),
+            ] );
+        }
     }
 
     /**
@@ -42,6 +45,10 @@ class Abilities extends App {
      * @return void
      */
     public function register_abilities() {
+        if ( ! function_exists( 'wp_register_ability' ) ) {
+            return;
+        }
+
         wp_register_ability( 'nhrcc/get-core-contributions', [
             'label'               => __( 'Get core contributions', 'nhrrob-core-contributions' ),
             'description'         => __( 'Returns the WordPress core contributions (changesets that give props) of a WordPress.org username: the total count and one page of changesets with link, description, ticket and date. Data comes from WordPress Core Trac and is cached.', 'nhrrob-core-contributions' ),
