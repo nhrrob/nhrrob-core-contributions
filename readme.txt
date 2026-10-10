@@ -2,9 +2,9 @@
 Contributors: nhrrob
 Tags: contributions, core, community, open source, profile
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.3.2
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,10 +82,11 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 
 == Changelog ==
 
-= 1.4.0 =
+= 1.4.0 - 10/10/2026 =
 - New: AI agent and MCP support. On WordPress 6.9+ the read-only `nhrcc/get-core-contributions` ability returns a username's core contributions.
 - Compatibility: verified on PHP 7.4 through 8.5 and on PHP 8.6 release candidates.
 - Developer: every pull request now runs the PHPCompatibilityWP ruleset, a syntax check and a runtime smoke test on each supported PHP version.
+- WordPress tested up to version is updated to 7.1
 
 = 1.3.2 - 09/05/2026 =
 - WordPress tested up to version is updated to 7.0
