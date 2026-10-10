@@ -4,7 +4,7 @@ Tags: contributions, core, community, open source, profile
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,10 +35,11 @@ Easily add contribution stats using the Gutenberg editor:
 
 ## External Services
 
-This plugin uses the WordPress Core Trac API to retrieve core contributions data. By using this plugin, data is sent to the following service:
+This plugin uses the GitHub API to retrieve core contributions data from the official WordPress core mirror (https://github.com/WordPress/wordpress-develop). By using this plugin, data is sent to the following service:
 
-- **WordPress Core Trac**: https://core.trac.wordpress.org/
-- [Privacy Policy](https://wordpress.org/about/privacy/)
+- **GitHub API**: https://api.github.com/
+- [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)
+- [Privacy Policy](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
 
 No personal or sensitive data beyond the specified username is shared. This data is used solely to fetch and display the user's contributions to the WordPress core project.
 
@@ -63,13 +64,13 @@ Absolutely. It fetches all of your contributions with pagination.
 Yes. Total count is shown at the top. Also all tickets are linked to the changesheet url.
 
 = Can an AI agent or MCP client use this plugin? =
-Yes, on WordPress 6.9 or later. The plugin registers one read-only ability with the WordPress Abilities API, `nhrcc/get-core-contributions`: give it a WordPress.org username (and optionally a page) and it returns the total count and that page of changesets. It needs a signed-in user who can edit posts, and it sends the username to WordPress Core Trac exactly as the block does. To use it over MCP, install the WordPress MCP Adapter plugin.
+Yes, on WordPress 6.9 or later. The plugin registers one read-only ability with the WordPress Abilities API, `nhrcc/get-core-contributions`: give it a WordPress.org username (and optionally a page) and it returns the total count and that page of changesets. It needs a signed-in user who can edit posts, and it sends the username to the GitHub API exactly as the block does. To use it over MCP, install the WordPress MCP Adapter plugin.
 
 = Which PHP versions are supported? =
 PHP 7.4 and every later version. Each change is tested on PHP 7.4 through 8.5, and on the upcoming 8.6.
 
 = How does the plugin handle my data? =
-The NHR Core Contributions plugin only transmits the WordPress.org username specified by the user to the WordPress Core Trac API. This is done solely to fetch and display your core contributions. No personal or sensitive data beyond the username is shared or stored.
+The NHR Core Contributions plugin only transmits the WordPress.org username specified by the user to the GitHub API. This is done solely to fetch and display your core contributions. No personal or sensitive data beyond the username is shared or stored.
 
 
 == Screenshots ==
@@ -81,6 +82,10 @@ The NHR Core Contributions plugin only transmits the WordPress.org username spec
 5. Dashboard => Tools => Core Contributions page => Settings page
 
 == Changelog ==
+
+= 1.4.1 - 10/10/2026 =
+- Fixed: Contributions showing as 0 for every username. WordPress Core Trac now blocks automated requests, so the data is fetched from the official WordPress core mirror on GitHub instead.
+- Fixed: The AI ability returning an error when the contribution count was served from cache.
 
 = 1.4.0 - 10/10/2026 =
 - New: AI agent and MCP support. On WordPress 6.9+ the read-only `nhrcc/get-core-contributions` ability returns a username's core contributions.

@@ -51,7 +51,7 @@ class Abilities extends App {
 
         wp_register_ability( 'nhrcc/get-core-contributions', [
             'label'               => __( 'Get core contributions', 'nhrrob-core-contributions' ),
-            'description'         => __( 'Returns the WordPress core contributions (changesets that give props) of a WordPress.org username: the total count and one page of changesets with link, description, ticket and date. Data comes from WordPress Core Trac and is cached.', 'nhrrob-core-contributions' ),
+            'description'         => __( 'Returns the WordPress core contributions (changesets that give props) of a WordPress.org username: the total count and one page of changesets with link, description, ticket and date. Data comes from the WordPress core mirror on GitHub and is cached.', 'nhrrob-core-contributions' ),
             'category'            => 'nhrcc',
             'execute_callback'    => [ $this, 'get_contributions' ],
             // Anyone who can add the block can read what it would show.
@@ -103,7 +103,7 @@ class Abilities extends App {
         $page     = isset( $input['page'] ) ? absint( $input['page'] ) : 1;
         $total    = $this->get_core_contribution_count( $username );
 
-        // The count comes back as a message when Trac gave no usable answer.
+        // The count comes back as a message when GitHub gave no usable answer.
         if ( ! is_int( $total ) ) {
             return new \WP_Error( 'nhrcc_unavailable', wp_strip_all_tags( $total ) );
         }
