@@ -99,6 +99,8 @@ final class Nhrcc_Core_Contributions {
         }
 
         $apiObj->init();
+
+        ( new Nhrcc\CoreContributions\Abilities() )->init();
         
         $blocksObj->init();
     }

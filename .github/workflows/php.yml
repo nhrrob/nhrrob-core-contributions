@@ -1,0 +1,88 @@
+name: PHP Compatibility
+
+# Proves the plugin on every PHP version it supports (readme "Requires PHP"
+# up to the newest release, plus the upcoming one): the PHPCompatibilityWP
+# ruleset, then per version a syntax check and a runtime smoke test inside a
+# real WordPress.
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - trunk
+  workflow_dispatch:
+
+jobs:
+  phpcompatibility:
+    name: PHPCompatibilityWP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      - name: PHPCompatibilityWP (PHP 7.4 and later)
+        run: |
+          mkdir -p /tmp/tools && cd /tmp/tools
+          composer init --no-interaction --name=tmp/tools --stability=alpha >/dev/null
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require --no-interaction --quiet "phpcompatibility/phpcompatibility-wp:^3.0@alpha" "dealerdirect/phpcodesniffer-composer-installer:^1.0"
+          cd "$GITHUB_WORKSPACE"
+          /tmp/tools/vendor/bin/phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- \
+            --extensions=php --ignore='*/vendor/*,*/node_modules/*' -s .
+
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    # A PHP version that is not released yet reports its result without
+    # blocking the pull request. Move it into the list below at its GA.
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        experimental: [false]
+        include:
+          - php: '8.6'
+            experimental: true
+    env:
+      WP_PATH: /tmp/wordpress
+      SLUG: nhrrob-core-contributions
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli
+          tools: wp-cli
+          coverage: none
+          ini-values: error_reporting=E_ALL, display_errors=On
+
+      - name: Syntax check
+        run: |
+          find . -name '*.php' -not -path './node_modules/*' -print0 \
+            | xargs -0 -n1 php -l > /tmp/lint.log 2>&1 || { cat /tmp/lint.log; exit 1; }
+          ! grep -E 'Deprecated|Warning|Parse error' /tmp/lint.log
+
+      - name: Install WordPress with the plugin
+        run: |
+          sudo systemctl start mysql.service
+          wp core download --path="$WP_PATH" --quiet
+          wp config create --path="$WP_PATH" --dbname=wp --dbuser=root --dbpass=root --dbhost=127.0.0.1 --skip-check
+          wp db create --path="$WP_PATH"
+          wp core install --path="$WP_PATH" --url=http://localhost --title=Smoke --admin_user=admin \
+            --admin_password="$(openssl rand -hex 12)" --admin_email=admin@example.invalid --skip-email
+          rsync -a --exclude=.git --exclude=node_modules ./ "$WP_PATH/wp-content/plugins/$SLUG/"
+          wp plugin activate "$SLUG" --path="$WP_PATH"
+
+      - name: Runtime smoke test (read-only REST routes and abilities)
+        run: wp eval-file "$WP_PATH/wp-content/plugins/$SLUG/.github/ci/smoke.php" --path="$WP_PATH"
