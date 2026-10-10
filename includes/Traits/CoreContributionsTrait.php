@@ -4,6 +4,36 @@ namespace Nhrcc\CoreContributions\Traits;
 
 trait CoreContributionsTrait
 {
+    /**
+     * Search the WordPress/wordpress-develop GitHub mirror for commits giving props to a username.
+     * Core Trac search now sits behind a browser check that server-side requests cannot pass.
+     *
+     * @return array|false Decoded response, or false when GitHub gave no usable answer.
+     */
+    private function search_core_commits($username, $page = 1, $per_page = 10)
+    {
+        $url = add_query_arg(
+            [
+                'q'        => rawurlencode('repo:WordPress/wordpress-develop props ' . $username),
+                'sort'     => 'committer-date',
+                'order'    => 'desc',
+                'per_page' => intval($per_page),
+                'page'     => max(1, intval($page)),
+            ],
+            'https://api.github.com/search/commits'
+        );
+
+        $response = wp_remote_get($url, ['headers' => ['Accept' => 'application/vnd.github+json']]);
+
+        if (is_wp_error($response) || 200 !== wp_remote_retrieve_response_code($response)) {
+            return false;
+        }
+
+        $data = json_decode(wp_remote_retrieve_body($response), true);
+
+        return isset($data['total_count'], $data['items']) && is_array($data['items']) ? $data : false;
+    }
+
     public function get_core_contributions($username, $page = 1, $cache_duration = '')
     {
         // Check for cached results
@@ -16,39 +46,34 @@ trait CoreContributionsTrait
         $username = sanitize_text_field($username);
         $page = intval( $page );
 
-        $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on&page=$page";
-        $response = wp_remote_get($url);
+        $data = $this->search_core_commits($username, $page);
 
-        if (is_wp_error($response)) {
-            return [];
-        }
-
-        $body = wp_remote_retrieve_body($response);
-        if (empty($body)) {
-            return [];
-        }
-
-        // Parse HTML to extract the relevant data
-        $pattern = '/<dt[^>]*><a href="(.*?)"[^>]*>\[(.*?)\]:\s*(.*?)<\/a><\/dt>\s*<dd class="searchable">(.*?)<\/dd>\s*<dd>By\s*<span[^>]*>.*?<\/span>\s*—\s*<span[^>]*>(.*?)<\/span><\/dd>/s';
-        preg_match_all($pattern, $body, $matches, PREG_SET_ORDER);
-
-        if (empty($matches)) {
+        if (empty($data['items'])) {
             return [];
         }
 
         $formatted = [];
-        foreach ($matches as $match) {
+        foreach ($data['items'] as $item) {
+            $message = isset($item['commit']['message']) ? (string) $item['commit']['message'] : '';
+
+            // Every commit in the mirror carries its Trac changeset number in the git-svn-id line.
+            if ( ! preg_match( '/git-svn-id:\s*\S+@(\d+)/', $message, $changeset_match ) ) {
+                continue;
+            }
+
             $ticket = '';
-            if ( preg_match( '/(?:fixes|ee) #(\d+)/i', $match[4], $ticket_match ) ) {
+            if ( preg_match( '/(?:fixes|ee) #(\d+)/i', $message, $ticket_match ) ) {
                 $ticket = intval( $ticket_match[1] );
             }
 
+            $timestamp = isset($item['commit']['committer']['date']) ? strtotime($item['commit']['committer']['date']) : false;
+
             $formatted[] = [
-                'link'        => 'https://core.trac.wordpress.org' . sanitize_text_field( $match[1] ),
-                'changeset'   => intval($match[2]),
-                'description' => sanitize_text_field( $match[3] ),
+                'link'        => 'https://core.trac.wordpress.org/changeset/' . intval($changeset_match[1]),
+                'changeset'   => intval($changeset_match[1]),
+                'description' => sanitize_text_field( strtok($message, "\n") ),
                 'ticket'      => $ticket,
-                'date'        => isset($match[5]) ? sanitize_text_field( trim( $match[5] ) ) : '',
+                'date'        => $timestamp ? gmdate('m/d/Y h:i:s A', $timestamp) : '',
             ];
         }
 
@@ -59,6 +84,8 @@ trait CoreContributionsTrait
         $cache_duration = ! empty( $cache_duration ) ? $cache_duration : $cache_duration_default;
 
         set_transient($cache_key, $formatted, $cache_duration);
+        // The same response carries the total, so the count needs no request of its own.
+        set_transient('nhrcc_count_' . md5($username), intval($data['total_count']), 12 * HOUR_IN_SECONDS);
 
         return $formatted;
     }
@@ -70,31 +97,18 @@ trait CoreContributionsTrait
         $cache_key = 'nhrcc_count_' . md5($username);
         $cached_count = get_transient($cache_key);
         if ($cached_count !== false) {
-            return $cached_count;
+            // Transients stored in the options table come back as strings.
+            return intval($cached_count);
         }
 
         $username = sanitize_text_field($username);
-        $url = "https://core.trac.wordpress.org/search?q=props+$username&noquickjump=1&changeset=on";
-        $response = wp_remote_get($url);
+        $data = $this->search_core_commits($username, 1, 1);
 
-        if (is_wp_error($response)) {
+        if (false === $data) {
             return '<p>' . __('Unable to fetch contributions at this time.', 'nhrrob-core-contributions') . '</p>';
         }
 
-        $body = wp_remote_retrieve_body($response);
-        if (empty($body)) {
-            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
-        }
-
-        // Parse HTML to extract the total number of results
-        $pattern = '/<meta name="totalResults" content="(\d*)" \/>/';
-        preg_match($pattern, $body, $matches);
-
-        if (!isset($matches[1])) {
-            return '<p>' . __('No contributions found for this user.', 'nhrrob-core-contributions') . '</p>';
-        }
-
-        $count = intval($matches[1]);
+        $count = intval($data['total_count']);
 
         // Cache the count for 12 hours
         set_transient($cache_key, $count, 12 * HOUR_IN_SECONDS);
