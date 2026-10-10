@@ -1,0 +1,12 @@
+# PHPStan for the security workflow (dev/CI only — .github is not shipped).
+# Level 0 = undefined variables/functions/classes/methods, the class of bug that
+# fatals at runtime. Raise the level once the codebase is clean at the next one.
+# szepeviktor/phpstan-wordpress (WordPress stubs) is loaded by extension-installer.
+parameters:
+    level: 0
+    paths:
+        - ../../includes
+        - ../../nhrrob-core-contributions.php
+        - ../../uninstall.php
+    bootstrapFiles:
+        - ../../vendor/autoload.php

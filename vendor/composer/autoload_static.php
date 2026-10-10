@@ -6,19 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitc90f13d90f71eb0b8f30f5eb692c9eee
 {
-    public static $files = array (
-        '1242c9da548a53d2570d9f4db62bcd7d' => __DIR__ . '/../..' . '/includes/functions.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'N' => 
+        'N' =>
         array (
             'Nhrcc\\CoreContributions\\' => 24,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Nhrcc\\CoreContributions\\' => 
+        'Nhrcc\\CoreContributions\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),

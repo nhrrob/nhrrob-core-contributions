@@ -1,4 +1,40 @@
+# System files
 .ai/                    export-ignore
+CLAUDE.md               export-ignore
+.sass-cache             export-ignore
+.DS_Store               export-ignore
+.phpintel               export-ignore
+.idea/                  export-ignore
+
+# Package managers
+package-lock.json       export-ignore
+pnpm-lock.yaml          export-ignore
+composer.lock           export-ignore
+
+# Dependencies
+node_modules/           export-ignore
+
+# Development tools
+.phpunit.result.cache   export-ignore
+vendor/phpunit/         export-ignore
+vendor/10up/            export-ignore
+vendor/mockery/         export-ignore
+vendor/hamcrest/        export-ignore
+vendor/sebastian/       export-ignore
+vendor/bin/             export-ignore
+vendor/symfony/yaml/    export-ignore
+vendor/antecedent/      export-ignore
+vendor/doctrine/        export-ignore
+vendor/myclabs/         export-ignore
+vendor/nikic/           export-ignore
+vendor/phar-io/         export-ignore
+vendor/theseer/         export-ignore
+vendor/squizlabs/       export-ignore
+vendor/wp-coding-standards/ export-ignore
+vendor/phpcsstandards/  export-ignore
+vendor/dealerdirect/    export-ignore
+
+# WordPress.org exclusions
 .babelrc                export-ignore
 .deployignore           export-ignore
 .distignore             export-ignore
@@ -11,18 +47,15 @@
 .gitignore              export-ignore
 .gitlab-ci.yml          export-ignore
 .travis.yml             export-ignore
-.DS_Store               export-ignore
 .wordpress-org          export-ignore
 Thumbs.db               export-ignore
 behat.yml               export-ignore
 bitbucket-pipelines.yml export-ignore
 bin/                    export-ignore
 .circleci/config.yml    export-ignore
-composer.lock           export-ignore
 dependencies.yml        export-ignore
 Gruntfile.js            export-ignore
 package.json            export-ignore
-package-lock.json       export-ignore
 phpunit.xml             export-ignore
 phpunit.xml.dist        export-ignore
 multisite.xml           export-ignore
@@ -36,9 +69,9 @@ webpack.config.js       export-ignore
 wp-cli.local.yml        export-ignore
 yarn.lock               export-ignore
 tests/                  export-ignore
-node_modules/           export-ignore
 *.sql                   export-ignore
 *.tar.gz                export-ignore
 *.zip                   export-ignore
 /src/                   export-ignore
 postcss.config.js       export-ignore
+.husky/                export-ignore

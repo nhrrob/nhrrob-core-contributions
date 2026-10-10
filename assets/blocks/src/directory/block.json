@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nhrcc-core-contributions/directory",
+	"version": "2.0.0",
+	"title": "Plugins and Themes",
+	"category": "nhrcc",
+	"icon": "admin-plugins",
+	"description": "The plugins or themes a username has published on WordPress.org.",
+	"keywords": [
+		"nhr",
+		"contributor",
+		"contributions",
+		"plugins",
+		"themes",
+		"author"
+	],
+	"textdomain": "nhrrob-core-contributions",
+	"attributes": {
+		"username": {
+			"type": "string",
+			"default": ""
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"type": {
+			"type": "string",
+			"default": "plugins",
+			"enum": [
+				"plugins",
+				"themes"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"gradients": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"style": true
+		}
+	},
+	"editorScript": "nhrcc-blocks-editor",
+	"style": "nhrcc-blocks"
+}

@@ -1,95 +1,94 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "nhrcc-core-contributions/core-contributions-block",
-    "version": "1.1.2",
-    "title": "NHR Core Contributions",
-    "category": "widgets",
-    "icon": "admin-users",
-    "description": "Display Core Contributions stat in your own website",
-    "keywords": [
-        "contributions",
-        "wordpress",
-        "core"
-    ],
-    "textdomain": "nhrrob-core-contributions",
-    "editorScript": "file:./index.js",
-    "viewScript": "file:./index.js",
-    "editorStyle": "file:../../../css/admin.out.css",
-    "style": [
-        "file:../../../css/admin.out.css",
-        "file:./style-index.css"
-    ],
-    "attributes": {
-        "username": {
-            "type": "string",
-            "default": ""
-        },
-        "preset": {
-            "type": "string",
-            "default": "default"
-        },
-        "titleColor": {
-            "type": "string",
-            "default": ""
-        },
-        "titleFontSize": {
-            "type": "string",
-            "default": ""
-        },
-        "titleFontWeight": {
-            "type": "string",
-            "default": ""
-        },
-        "titleBackgroundColor": {
-            "type": "string",
-            "default": ""
-        },
-        "accentColor": {
-            "type": "string",
-            "default": ""
-        },
-        "metaColor": {
-            "type": "string",
-            "default": ""
-        },
-        "paginationColor": {
-            "type": "string",
-            "default": ""
-        },
-        "showTime": {
-            "type": "boolean",
-            "default": false
-        }
-    },
-    "supports": {
-        "html": false,
-        "reusable": true,
-        "align": true,
-        "anchor": true,
-        "className": true,
-        "customClassName": true,
-        "color": {
-            "background": true,
-            "text": true,
-            "link": true,
-            "gradients": true
-        },
-        "spacing": {
-            "padding": true,
-            "margin": true
-        },
-        "typography": {
-            "fontSize": true,
-            "fontWeight": true,
-            "lineHeight": true,
-            "fontFamily": true
-        },
-        "border": {
-            "color": true,
-            "radius": true,
-            "width": true,
-            "style": true
-        }
-    }
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nhrcc-core-contributions/core-contributions-block",
+	"version": "2.0.0",
+	"title": "NHR Core Contributions",
+	"category": "nhrcc",
+	"icon": "list-view",
+	"description": "A paginated list of the WordPress core or Gutenberg contributions of a WordPress.org username.",
+	"keywords": [
+		"nhr",
+		"contributor",
+		"contributions",
+		"core",
+		"gutenberg",
+		"props"
+	],
+	"textdomain": "nhrrob-core-contributions",
+	"attributes": {
+		"username": {
+			"type": "string",
+			"default": ""
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"source": {
+			"type": "string",
+			"default": "core",
+			"enum": [
+				"core",
+				"gutenberg"
+			]
+		},
+		"showHeader": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDate": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPagination": {
+			"type": "boolean",
+			"default": true
+		},
+		"preset": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"gradients": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"style": true
+		}
+	},
+	"styles": [
+		{
+			"name": "default",
+			"label": "Default",
+			"isDefault": true
+		},
+		{
+			"name": "minimal",
+			"label": "Minimal"
+		},
+		{
+			"name": "timeline",
+			"label": "Timeline"
+		}
+	],
+	"editorScript": "nhrcc-blocks-editor",
+	"style": "nhrcc-blocks"
 }

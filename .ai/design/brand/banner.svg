@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1544 500" width="1544" height="500" font-family="-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+	<defs>
+		<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#4f6df5"/>
+			<stop offset="1" stop-color="#2434ad"/>
+		</linearGradient>
+	</defs>
+	<rect width="1544" height="500" fill="url(#bg)"/>
+	<circle cx="1420" cy="-40" r="260" fill="#fff" opacity=".06"/>
+	<circle cx="120" cy="560" r="220" fill="#fff" opacity=".05"/>
+
+	<!-- Left: name and promise. Kept inside the centre-safe area of the 772x250 crop. -->
+	<g fill="#fff">
+		<text x="110" y="168" font-size="30" font-weight="600" letter-spacing="3" opacity=".8">NHR</text>
+		<text x="108" y="246" font-size="76" font-weight="800">Core Contributions</text>
+		<text x="110" y="312" font-size="31" opacity=".9">Show your WordPress contributions on your own site.</text>
+	</g>
+	<g font-size="22" font-weight="600" fill="#fff">
+		<rect x="110" y="352" width="92" height="44" rx="22" fill="#fff" opacity=".16"/><text x="156" y="381" text-anchor="middle">Core</text>
+		<rect x="214" y="352" width="146" height="44" rx="22" fill="#fff" opacity=".16"/><text x="287" y="381" text-anchor="middle">Gutenberg</text>
+		<rect x="372" y="352" width="128" height="44" rx="22" fill="#fff" opacity=".16"/><text x="436" y="381" text-anchor="middle">Releases</text>
+		<rect x="512" y="352" width="110" height="44" rx="22" fill="#fff" opacity=".16"/><text x="567" y="381" text-anchor="middle">Badges</text>
+		<rect x="634" y="352" width="118" height="44" rx="22" fill="#fff" opacity=".16"/><text x="693" y="381" text-anchor="middle">Plugins</text>
+	</g>
+
+	<!-- Right: a simplified Contributor Card with the activity bars. -->
+	<g transform="translate(980 70)">
+		<rect width="454" height="360" rx="24" fill="#fff"/>
+		<circle cx="64" cy="66" r="30" fill="#dfe5ff"/>
+		<circle cx="64" cy="58" r="11" fill="#3858e9"/>
+		<path d="M44 84a20 14 0 0 1 40 0z" fill="#3858e9"/>
+		<rect x="110" y="46" width="170" height="16" rx="8" fill="#1e2233"/>
+		<rect x="110" y="72" width="110" height="11" rx="5.5" fill="#c3c8d8"/>
+		<g>
+			<rect x="34" y="122" width="118" height="78" rx="12" fill="#f3f5fb"/>
+			<rect x="168" y="122" width="118" height="78" rx="12" fill="#f3f5fb"/>
+			<rect x="302" y="122" width="118" height="78" rx="12" fill="#f3f5fb"/>
+			<g font-size="30" font-weight="800" fill="#3858e9">
+				<text x="50" y="164">128</text><text x="184" y="164">42</text><text x="318" y="164">9</text>
+			</g>
+			<g fill="#c3c8d8">
+				<rect x="50" y="176" width="66" height="9" rx="4.5"/><rect x="184" y="176" width="74" height="9" rx="4.5"/><rect x="318" y="176" width="58" height="9" rx="4.5"/>
+			</g>
+		</g>
+		<g fill="#3858e9">
+			<rect x="34" y="296" width="40" height="30" rx="6" opacity=".45"/>
+			<rect x="88" y="280" width="40" height="46" rx="6" opacity=".55"/>
+			<rect x="142" y="262" width="40" height="64" rx="6" opacity=".65"/>
+			<rect x="196" y="270" width="40" height="56" rx="6" opacity=".75"/>
+			<rect x="250" y="244" width="40" height="82" rx="6" opacity=".85"/>
+			<rect x="304" y="232" width="40" height="94" rx="6" opacity=".92"/>
+			<rect x="358" y="218" width="40" height="108" rx="6"/>
+		</g>
+	</g>
+</svg>
