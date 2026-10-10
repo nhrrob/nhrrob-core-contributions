@@ -7,7 +7,7 @@
 		'wp-dom-ready',
 		'wp-element',
 		'wp-i18n',
-		'wp-server-side-render'
+		'wp-url'
 	),
-	'version' => 'a21f7fde3d6bc4c8218d'
+	'version' => 'aad1b89f63cf2a4b08a9'
 );

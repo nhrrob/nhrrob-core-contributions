@@ -43,6 +43,22 @@ class Blocks {
 	 */
 	public function init() {
 		add_action( 'init', [ $this, 'register' ] );
+		add_filter( 'block_categories_all', [ $this, 'category' ] );
+	}
+
+	/**
+	 * Add the inserter category that groups every block of the plugin.
+	 *
+	 * @param array $categories Block categories.
+	 * @return array
+	 */
+	public function category( $categories ) {
+		$categories[] = [
+			'slug'  => 'nhrcc',
+			'title' => __( 'NHR Core Contributions', 'nhrrob-core-contributions' ),
+		];
+
+		return $categories;
 	}
 
 	/**
@@ -136,6 +152,7 @@ class Blocks {
 
 		$pages = Commits::pages( $data['total'], $settings['postsPerPage'] );
 		if ( $pages > 1 && ( ! isset( $attributes['showPagination'] ) || $attributes['showPagination'] ) ) {
+			// Every page is one GitHub search, so crawlers are told not to walk them.
 			$links = paginate_links(
 				[
 					'base'         => add_query_arg( $param, '%#%' ),
@@ -146,7 +163,7 @@ class Blocks {
 					'add_fragment' => '#nhrcc-' . $source,
 				]
 			);
-			$html .= '<nav class="nhrcc-pagination" aria-label="' . esc_attr__( 'Contributions pagination', 'nhrrob-core-contributions' ) . '">' . wp_kses_post( (string) $links ) . '</nav>';
+			$html .= '<nav class="nhrcc-pagination" aria-label="' . esc_attr__( 'Contributions pagination', 'nhrrob-core-contributions' ) . '">' . wp_kses_post( str_replace( '<a ', '<a rel="nofollow" ', (string) $links ) ) . '</nav>';
 
 			if ( $data['total'] > Commits::MAX_RESULTS ) {
 				/* translators: 1: number of contributions shown, 2: total number of contributions. */

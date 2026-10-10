@@ -33,6 +33,7 @@ class Commits {
 	 *
 	 * Core commits name contributors in a "Props" line; Gutenberg commits carry
 	 * a "Co-authored-by: … <username@git.wordpress.org>" trailer per contributor.
+	 * The username is quoted so one with a dot or hyphen is matched whole.
 	 *
 	 * @param string $source   'core' or 'gutenberg'.
 	 * @param string $username WordPress.org username.
@@ -44,7 +45,7 @@ class Commits {
 	 */
 	public static function url( $source, $username, $page = 1, $per_page = 10, $order = 'desc', $year = 0 ) {
 		$source = isset( self::REPOS[ $source ] ) ? $source : 'core';
-		$query  = 'repo:' . self::REPOS[ $source ] . ' ' . ( 'core' === $source ? 'props ' . $username : $username . '@git.wordpress.org' );
+		$query  = 'repo:' . self::REPOS[ $source ] . ' ' . ( 'core' === $source ? 'props "' . $username . '"' : '"' . $username . '@git.wordpress.org"' );
 
 		if ( $year > 0 ) {
 			$query .= sprintf( ' committer-date:%1$d-01-01..%1$d-12-31', $year );

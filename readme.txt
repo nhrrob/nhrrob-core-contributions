@@ -1,7 +1,7 @@
 === NHR Core Contributions ===
 Contributors: nhrrob
 Tags: contributions, core, gutenberg, contributor, profile
-Requires at least: 6.0
+Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 2.0.0
@@ -36,7 +36,7 @@ You contribute to WordPress. NHR Core Contributions puts that record on your own
 
 ### 📦 Block Usage
 - Open a post or page in the block editor.
-- Add any of the blocks above (search for "contribution").
+- Add any of the blocks above. They are grouped under "NHR Core Contributions" in the block inserter, and searching for "nhr" or "contributor" finds all of them.
 - Enter a WordPress.org username in the block settings, or leave it empty to use the default one.
 - Publish.
 
@@ -73,7 +73,7 @@ It is the last part of your profile address. For https://profiles.wordpress.org/
 The total is always complete. The list pages through your latest 1,000 contributions, which is the most GitHub's search returns. The Contribution Activity chart covers every year.
 
 = Why are some blocks empty right after I add them? =
-Contribution Activity, Release Badges and some numbers on the card need your full history. It is gathered in the background and usually arrives within a few minutes. Visitors see nothing until it is ready; you see a short note.
+Contribution Activity, Release Badges and some numbers on the card need your full history. It is gathered in the background and usually arrives within a few minutes. Visitors see nothing until it is ready; you see a short note. The background work uses WP-Cron, so a site with WP-Cron disabled needs a real cron job calling wp-cron.php.
 
 = Do I need a GitHub token? =
 No. Without one GitHub allows a few requests a minute, which is enough because results are cached. If you show many usernames, add a token under Tools → Core Contributions → Data. A token with no scopes is enough.
@@ -119,6 +119,7 @@ It sends only the WordPress.org username you enter to the services listed under 
 - Fixed: A failed request to GitHub is no longer repeated on every page view.
 - Improved: The front end loads no JavaScript and one small stylesheet. Tailwind CSS and the jQuery scripts are removed.
 - Improved: The settings screen is translatable. Deleting the plugin removes its data.
+- Changed: Requires WordPress 6.6 or later.
 - Developer: coding standards (WPCS), unit tests, Plugin Check and a security review run on every pull request.
 
 = 1.4.1 - 10/10/2026 =

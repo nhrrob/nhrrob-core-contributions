@@ -47,7 +47,8 @@ class Remote {
 		$response = wp_remote_get(
 			$url,
 			[
-				'timeout' => 10,
+				// A lifetime of 0 marks a background request, which can wait longer than a page view.
+				'timeout' => $ttl > 0 ? 5 : 10,
 				'headers' => $headers,
 			]
 		);

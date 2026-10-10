@@ -289,7 +289,23 @@ class Sync {
 		$all = (array) get_option( self::OPTION, [] );
 		unset( $all[ $username ] );
 		$all[ $username ] = $summary;
+		$settings         = Settings::get();
 
-		update_option( self::OPTION, array_slice( $all, -self::MAX_USERS, null, true ), false );
+		update_option( self::OPTION, self::trim( $all, $settings['username'] ), false );
+	}
+
+	/**
+	 * Keep the newest MAX_USERS summaries. The default username's is never dropped,
+	 * so looking up other usernames cannot empty the site's own blocks.
+	 *
+	 * @param array  $all      Summaries by username, oldest first.
+	 * @param string $username The default username.
+	 * @return array
+	 */
+	public static function trim( array $all, $username ) {
+		$keep = isset( $all[ $username ] ) ? [ $username => $all[ $username ] ] : [];
+		unset( $all[ $username ] );
+
+		return $keep + array_slice( $all, count( $keep ) - self::MAX_USERS, null, true );
 	}
 }

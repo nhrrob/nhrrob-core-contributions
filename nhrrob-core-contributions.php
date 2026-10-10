@@ -6,7 +6,7 @@
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
  * Version: 2.0.0
- * Requires at least: 6.0
+ * Requires at least: 6.6
  * Requires PHP: 7.4
  * Text Domain: nhrrob-core-contributions
  * License: GPLv2 or later

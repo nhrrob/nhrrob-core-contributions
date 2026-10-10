@@ -4,10 +4,13 @@
 	"name": "nhrcc-core-contributions/team-badges",
 	"version": "2.0.0",
 	"title": "WordPress.org Badges",
-	"category": "widgets",
+	"category": "nhrcc",
 	"icon": "groups",
 	"description": "The WordPress.org profile badges of a username: teams, WordCamps, translation and more.",
 	"keywords": [
+		"nhr",
+		"contributor",
+		"contributions",
 		"badges",
 		"teams",
 		"polyglots",
@@ -27,10 +30,7 @@
 	},
 	"supports": {
 		"html": false,
-		"align": [
-			"wide",
-			"full"
-		],
+		"align": true,
 		"color": {
 			"background": true,
 			"text": true,

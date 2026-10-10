@@ -3,6 +3,7 @@ namespace Nhrcc\CoreContributions\Tests;
 
 use Nhrcc\CoreContributions\Settings;
 use PHPUnit\Framework\TestCase;
+use WP_Mock;
 
 /**
  * Settings never leave their allowed ranges, whatever is stored or posted.
@@ -46,5 +47,39 @@ class SettingsTest extends TestCase {
 		$this->assertSame( 'a..b', Settings::username( 'a/../b?' ) );
 		$this->assertSame( '', Settings::username( '../..' ) );
 		$this->assertSame( 60, strlen( Settings::username( str_repeat( 'a', 200 ) ) ) );
+	}
+
+	public function testAPartialUpdateKeepsTheOtherSettings() {
+		WP_Mock::setUp();
+		WP_Mock::userFunction( 'get_option' )->with( Settings::OPTION, [] )->andReturn(
+			[
+				'username'     => 'nhrrob',
+				'postsPerPage' => 25,
+				'cacheVersion' => 4,
+			]
+		);
+		WP_Mock::userFunction( 'get_option' )->with( Settings::TOKEN_OPTION, '' )->andReturn( '' );
+		WP_Mock::userFunction( 'get_option' )->with( 'nhrcc_summaries', [] )->andReturn( [] );
+		WP_Mock::userFunction( 'update_option' )->once()->with(
+			Settings::OPTION,
+			[
+				'username'      => 'nhrrob',
+				'postsPerPage'  => 50,
+				'cacheDuration' => 43200,
+				'cacheVersion'  => 4,
+			]
+		);
+
+		$request = \Mockery::mock( 'WP_REST_Request' );
+		$request->shouldReceive( 'get_params' )->andReturn(
+			[
+				'postsPerPage' => 50,
+				'cacheVersion' => 99,
+			]
+		);
+
+		( new Settings() )->rest_update( $request );
+		WP_Mock::tearDown();
+		$this->addToAssertionCount( 1 );
 	}
 }

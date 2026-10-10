@@ -44,7 +44,7 @@ Browsers without `color-mix()` get fixed grey fallbacks declared first. Sizes ar
 
 List styles: **Default** (bordered rows on the soft surface), **Minimal** (divider lines only), **Timeline** (left rule with accent dots). Style selectors are written as `.is-style-x .nhrcc-item` so they match both on the front end and in the editor, where the style class sits on the outer wrapper.
 
-Pagination uses core `paginate_links()` markup (`.page-numbers`): bordered boxes, the current page filled with the accent.
+Pagination uses core `paginate_links()` markup (`.page-numbers`, links marked `rel="nofollow"`): bordered boxes, the current page filled with the accent.
 
 ## 4. Editor
 

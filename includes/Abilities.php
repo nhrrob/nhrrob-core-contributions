@@ -42,7 +42,7 @@ class Abilities {
 	 * @return void
 	 */
 	public function register_category() {
-		// The hook only exists on 6.9+; the check is for Plugin Check ("Requires at least" is 6.0).
+		// The hook only exists on 6.9+; the check is for Plugin Check ("Requires at least" is 6.6).
 		if ( function_exists( 'wp_register_ability_category' ) ) {
 			wp_register_ability_category(
 				self::CATEGORY,
@@ -115,7 +115,7 @@ class Abilities {
 			),
 			'nhrcc/get-contribution-summary'    => $this->ability(
 				__( 'Get contribution summary', 'nhrrob-core-contributions' ),
-				__( 'Returns the stored summary of a WordPress.org username: core and Gutenberg totals, core contributions per year, top components, first and latest contribution dates and the WordPress releases that credit them. The summary is gathered in the background; "ready" is false until the first run has finished.', 'nhrrob-core-contributions' ),
+				__( 'Returns the stored summary of a WordPress.org username: core and Gutenberg totals, core contributions per year, top components, first and latest contribution dates and the WordPress releases that credit them. The summary exists for the default username and for usernames a block on this site shows; "ready" is false for any other username and until the first background run has finished.', 'nhrrob-core-contributions' ),
 				'get_summary',
 				[],
 				[
@@ -250,7 +250,9 @@ class Abilities {
 	 */
 	public function get_summary( $input ) {
 		$username = Settings::username( $input['username'] );
-		$summary  = Sync::summary( $username );
+		$settings = Settings::get();
+		// Only a username the site already shows is gathered; asking about another one starts no background work.
+		$summary = $username === $settings['username'] || Sync::stored( $username ) ? Sync::summary( $username ) : [];
 		unset( $summary['job'], $summary['checked'] );
 
 		return [

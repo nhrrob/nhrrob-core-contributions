@@ -75,6 +75,9 @@ const SELECTS = {
 function UsernameControl( { value, onCommit } ) {
 	const [ draft, setDraft ] = useState( value );
 
+	// Follow undo, redo and any other outside change.
+	useEffect( () => setDraft( value ), [ value ] );
+
 	return (
 		<TextControl
 			__nextHasNoMarginBottom
@@ -97,21 +100,17 @@ function UsernameControl( { value, onCommit } ) {
 function Edit( { name, attributes, setAttributes } ) {
 	const { username, accentColor, preset, className = '' } = attributes;
 
-	// Blocks saved before 2.0 chose their look with a "preset" attribute.
-	useEffect( () => {
-		if ( ! preset ) {
-			return;
-		}
-		const style =
-			[ 'minimal', 'timeline' ].includes( preset ) &&
-			! className.includes( 'is-style-' )
-				? `${ className } is-style-${ preset }`.trim()
-				: className;
-		setAttributes( { preset: '', className: style || undefined } );
-	}, [ preset, className, setAttributes ] );
+	// Blocks saved before 2.0 chose their look with a "preset" attribute. Until
+	// a block style is picked, the preset's style shows, without changing the block.
+	const legacyStyle =
+		[ 'minimal', 'timeline' ].includes( preset ) &&
+		! className.includes( 'is-style-' )
+			? `is-style-${ preset }`
+			: undefined;
+	const blockProps = useBlockProps( { className: legacyStyle } );
 
 	return (
-		<div { ...useBlockProps() }>
+		<div { ...blockProps }>
 			<InspectorControls>
 				<PanelBody
 					title={ __( 'Settings', 'nhrrob-core-contributions' ) }
@@ -171,7 +170,7 @@ function Edit( { name, attributes, setAttributes } ) {
 			<Disabled>
 				<ServerSideRender
 					block={ name }
-					attributes={ attributes }
+					attributes={ { ...attributes, preset: '' } }
 					skipBlockSupportAttributes
 				/>
 			</Disabled>

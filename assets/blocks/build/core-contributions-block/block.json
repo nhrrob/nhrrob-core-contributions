@@ -4,10 +4,12 @@
   "name": "nhrcc-core-contributions/core-contributions-block",
   "version": "2.0.0",
   "title": "NHR Core Contributions",
-  "category": "widgets",
+  "category": "nhrcc",
   "icon": "list-view",
   "description": "A paginated list of the WordPress core or Gutenberg contributions of a WordPress.org username.",
   "keywords": [
+    "nhr",
+    "contributor",
     "contributions",
     "core",
     "gutenberg",
@@ -50,10 +52,7 @@
   },
   "supports": {
     "html": false,
-    "align": [
-      "wide",
-      "full"
-    ],
+    "align": true,
     "color": {
       "background": true,
       "text": true,

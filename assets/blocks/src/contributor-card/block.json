@@ -4,11 +4,13 @@
 	"name": "nhrcc-core-contributions/contributor-card",
 	"version": "2.0.0",
 	"title": "Contributor Card",
-	"category": "widgets",
+	"category": "nhrcc",
 	"icon": "id",
 	"description": "A WordPress.org contributor at a glance: name, headline numbers, first and latest contribution and top components.",
 	"keywords": [
+		"nhr",
 		"contributor",
+		"contributions",
 		"profile",
 		"card"
 	],
@@ -25,10 +27,7 @@
 	},
 	"supports": {
 		"html": false,
-		"align": [
-			"wide",
-			"full"
-		],
+		"align": true,
 		"color": {
 			"background": true,
 			"text": true,

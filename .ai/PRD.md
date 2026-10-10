@@ -86,7 +86,7 @@ Not ported: `PRD-PRO.md` (no paid tier is planned).
 
 ### 4.3 Verified locally (2026-10-10)
 
-PHPCS clean · 28 unit tests · JS lint clean · smoke test 0 notices · endpoint probe 16 checks, 0 failures · every block checked on the front end and in the editor (Twenty Twenty-Five) for `nhrrob` (6 contributions) and `audrasjb` (1,387, the over-1,000 path) · sync completed for both · PHPStan level 0 and Plugin Check clean · a block saved by 1.4.1 (preset, old colour attributes) renders · dist zip **75 KB** (`wp dist-archive` of the working tree).
+PHPCS clean · 30 unit tests · JS lint clean · smoke test 0 notices · endpoint probe 16 checks, 0 failures · every block checked on the front end and in the editor (Twenty Twenty-Five) for `nhrrob` (6 contributions) and `audrasjb` (1,387, the over-1,000 path) · sync completed for both · PHPStan level 0 and Plugin Check clean · a block saved by 1.4.1 (preset, old colour attributes) renders · dist zip **75 KB** (`wp dist-archive` of the working tree).
 
 ### 4.4 Release gate (still to run, needs a commit)
 
@@ -108,7 +108,6 @@ All three PR workflows green on GitHub · `~/Sites/nhrrob-staging/bin/prerelease
 
 1. **Version number:** built as 2.0.0 (breaking attribute changes). The release skill's own rule would call it 1.5.0.
 2. **Brand art:** icon and banner were drafted as SVG in `.ai/design/brand/`; Robin approves or replaces them before the WP.org assets are synced.
-3. **"Requires at least":** still 6.0. Nothing below 6.3 was tested; raising it to 6.3 would match what `apiVersion: 3` blocks expect.
 
 ## 7. Decided (don't relitigate)
 
@@ -118,6 +117,7 @@ All three PR workflows green on GitHub · `~/Sites/nhrrob-staging/bin/prerelease
 - 2026-10-10: profile badges come from the profile page, with silent degradation, because no API exists.
 - 2026-10-10: full `WordPress` PHPCS ruleset, same as NHROTM.
 - 2026-10-10: history is gathered by WP-Cron and stored in one option; no custom tables.
+- 2026-10-10: "Requires at least" is 6.6, the first version that registers the `react-jsx-runtime` script the built bundles depend on. Nothing below 7.1 was tested.
 - 1.4.1: core data comes from the `WordPress/wordpress-develop` GitHub mirror, not Core Trac search.
 
 ## 8. Sources

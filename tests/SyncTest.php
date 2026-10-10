@@ -82,6 +82,21 @@ class SyncTest extends TestCase {
 		$this->assertSame( 'gutenberg', $job['stage'] );
 	}
 
+	public function testTheDefaultUsernameIsNeverEvicted() {
+		$all = [ 'owner' => [ 'synced' => 1 ] ];
+		for ( $i = 1; $i <= Sync::MAX_USERS + 5; $i++ ) {
+			$all[ 'user' . $i ] = [ 'synced' => 1 ];
+		}
+
+		$kept = Sync::trim( $all, 'owner' );
+
+		$this->assertCount( Sync::MAX_USERS, $kept );
+		$this->assertArrayHasKey( 'owner', $kept );
+		$this->assertArrayNotHasKey( 'user6', $kept );
+		$this->assertArrayHasKey( 'user7', $kept );
+		$this->assertCount( Sync::MAX_USERS, Sync::trim( $all, 'nobody' ) );
+	}
+
 	public function testANewJobRechecksOnlyTheNewestTwoReleases() {
 		$job = Sync::new_job(
 			[

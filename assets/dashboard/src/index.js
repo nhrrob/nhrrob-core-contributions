@@ -17,7 +17,7 @@ import { dateI18n, getSettings } from '@wordpress/date';
 import domReady from '@wordpress/dom-ready';
 import { createRoot, useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
+import { addQueryArgs } from '@wordpress/url';
 
 import './style.css';
 
@@ -40,6 +40,37 @@ const PREVIEWS = [
 	'nhrcc-core-contributions/contribution-activity',
 	'nhrcc-core-contributions/core-contributions-block',
 ];
+
+/**
+ * A block as the server renders it. The settings screen is not an editor, so
+ * the blocks are not registered here and core's block renderer is called directly.
+ *
+ * @param {Object} props          Props.
+ * @param {string} props.block    Block name.
+ * @param {string} props.username WordPress.org username.
+ * @return {Element} Preview.
+ */
+function Preview( { block, username } ) {
+	const [ html, setHtml ] = useState( null );
+
+	useEffect( () => {
+		apiFetch( {
+			path: addQueryArgs( `/wp/v2/block-renderer/${ block }`, {
+				context: 'edit',
+				attributes: { username },
+			} ),
+		} )
+			.then( ( response ) => setHtml( response.rendered || '' ) )
+			.catch( () => setHtml( '' ) );
+	}, [ block, username ] );
+
+	if ( null === html ) {
+		return <Spinner />;
+	}
+
+	// The markup comes from this plugin's own render callbacks, which escape every value.
+	return <div dangerouslySetInnerHTML={ { __html: html } } />;
+}
 
 function Settings() {
 	const [ saved, setSaved ] = useState( null );
@@ -105,7 +136,11 @@ function Settings() {
 			{
 				path: `${ PATH }/settings`,
 				method: 'POST',
-				data: { ...form, ...extra },
+				data: {
+					...form,
+					postsPerPage: parseInt( form.postsPerPage, 10 ) || 10,
+					...extra,
+				},
 			},
 			__( 'Settings saved successfully.', 'nhrrob-core-contributions' )
 		);
@@ -171,8 +206,7 @@ function Settings() {
 										onChange={ ( value ) =>
 											setForm( {
 												...form,
-												postsPerPage:
-													parseInt( value, 10 ) || 10,
+												postsPerPage: value,
 											} )
 										}
 									/>
@@ -293,12 +327,10 @@ function Settings() {
 								( saved.username ? (
 									<Disabled className="nhrcc-settings__preview">
 										{ PREVIEWS.map( ( block ) => (
-											<ServerSideRender
+											<Preview
 												key={ block }
 												block={ block }
-												attributes={ {
-													username: saved.username,
-												} }
+												username={ saved.username }
 											/>
 										) ) }
 									</Disabled>

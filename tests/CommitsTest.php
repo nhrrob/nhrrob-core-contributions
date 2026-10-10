@@ -83,10 +83,10 @@ class CommitsTest extends TestCase {
 		parse_str( (string) parse_url( Commits::url( 'core', 'nhrrob', 2, 500 ), PHP_URL_QUERY ), $core );
 		parse_str( (string) parse_url( Commits::url( 'gutenberg', 'nhrrob', 1, 1, 'asc', 2024 ), PHP_URL_QUERY ), $gutenberg );
 
-		$this->assertSame( 'repo:WordPress/wordpress-develop props nhrrob', $core['q'] );
+		$this->assertSame( 'repo:WordPress/wordpress-develop props "nhrrob"', $core['q'] );
 		$this->assertSame( '100', $core['per_page'] );
 		$this->assertSame( '2', $core['page'] );
-		$this->assertSame( 'repo:WordPress/gutenberg nhrrob@git.wordpress.org committer-date:2024-01-01..2024-12-31', $gutenberg['q'] );
+		$this->assertSame( 'repo:WordPress/gutenberg "nhrrob@git.wordpress.org" committer-date:2024-01-01..2024-12-31', $gutenberg['q'] );
 		$this->assertSame( 'asc', $gutenberg['order'] );
 	}
 }

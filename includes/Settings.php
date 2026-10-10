@@ -143,11 +143,11 @@ class Settings {
 	 * @return array
 	 */
 	public function rest_update( $request ) {
-		$params                 = (array) $request->get_params();
-		$current                = self::get();
-		$params['cacheVersion'] = $current['cacheVersion'];
+		$params  = (array) $request->get_params();
+		$current = self::get();
 
-		update_option( self::OPTION, self::sanitize( $params ) );
+		// A request that sends some settings leaves the others as they are.
+		update_option( self::OPTION, self::sanitize( array_merge( $params, array_diff_key( $current, $params ), [ 'cacheVersion' => $current['cacheVersion'] ] ) ) );
 
 		// An absent key leaves the token alone; an empty one removes it.
 		if ( isset( $params['githubToken'] ) ) {
@@ -173,6 +173,10 @@ class Settings {
 
 		update_option( self::OPTION, $settings );
 		delete_option( Sync::OPTION );
+
+		if ( '' !== $settings['username'] ) {
+			Sync::schedule( $settings['username'], 0 );
+		}
 
 		return $this->rest_get();
 	}
