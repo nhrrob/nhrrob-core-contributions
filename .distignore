@@ -1,5 +1,41 @@
-# A set of files you probably don't want in your WordPress.org distribution
+# System files
 .ai/
+CLAUDE.md
+.sass-cache
+.DS_Store
+.phpintel
+.idea/*
+
+# Package managers
+package-lock.json
+pnpm-lock.yaml
+composer.lock
+
+# Dependencies
+node_modules
+
+# Development tools
+/.phpunit.result.cache
+/vendor/phpunit
+/vendor/10up
+/vendor/mockery
+/vendor/hamcrest
+/vendor/sebastian
+/vendor/bin
+/vendor/symfony/yaml
+/vendor/antecedent
+/vendor/doctrine
+/vendor/myclabs
+/vendor/nikic
+/vendor/phar-io
+/vendor/theseer
+/vendor/squizlabs
+/vendor/wp-coding-standards
+/vendor/phpcsstandards
+/vendor/phpcompatibility
+/vendor/dealerdirect
+
+# Additional WordPress.org exclusions
 .babelrc
 .deployignore
 .distignore
@@ -12,17 +48,14 @@
 .gitignore
 .gitlab-ci.yml
 .travis.yml
-.DS_Store
 Thumbs.db
 behat.yml
 bitbucket-pipelines.yml
 bin
 .circleci/config.yml
-composer.lock
 dependencies.yml
 Gruntfile.js
 package.json
-package-lock.json
 phpunit.xml
 phpunit.xml.dist
 multisite.xml
@@ -36,10 +69,10 @@ webpack.config.js
 wp-cli.local.yml
 yarn.lock
 tests
-node_modules
 *.sql
 *.tar.gz
 *.zip
 /src
 postcss.config.js
 .wordpress-org
+.husky

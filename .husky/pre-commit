@@ -1,0 +1,12 @@
+#!/bin/sh
+# Block the commit on lint, coding-standards, or unit-test failure.
+npm run lint || exit 1
+
+# Run PHPCS and PHP unit tests only when the dev toolchain is present.
+if [ -f vendor/bin/phpcs ]; then
+	composer run phpcs || exit 1
+fi
+
+if [ -f vendor/bin/phpunit ]; then
+	composer run test:unit || exit 1
+fi

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "nhrcc-core-contributions/contributor-card",
+  "version": "2.0.0",
+  "title": "Contributor Card",
+  "category": "widgets",
+  "icon": "id",
+  "description": "A WordPress.org contributor at a glance: name, headline numbers, first and latest contribution and top components.",
+  "keywords": [
+    "contributor",
+    "profile",
+    "card"
+  ],
+  "textdomain": "nhrrob-core-contributions",
+  "attributes": {
+    "username": {
+      "type": "string",
+      "default": ""
+    },
+    "accentColor": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true,
+      "gradients": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "width": true,
+      "style": true
+    }
+  },
+  "editorScript": "nhrcc-blocks-editor",
+  "style": "nhrcc-blocks"
+}

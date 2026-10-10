@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nhrcc-core-contributions/contribution-activity",
+	"version": "2.0.0",
+	"title": "Contribution Activity",
+	"category": "widgets",
+	"icon": "chart-area",
+	"description": "WordPress core contributions per year as a bar chart.",
+	"keywords": [
+		"contributions",
+		"chart",
+		"activity"
+	],
+	"textdomain": "nhrrob-core-contributions",
+	"attributes": {
+		"username": {
+			"type": "string",
+			"default": ""
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true,
+			"gradients": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"style": true
+		}
+	},
+	"editorScript": "nhrcc-blocks-editor",
+	"style": "nhrcc-blocks"
+}

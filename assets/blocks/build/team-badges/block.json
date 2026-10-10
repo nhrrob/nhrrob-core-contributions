@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "nhrcc-core-contributions/team-badges",
+  "version": "2.0.0",
+  "title": "WordPress.org Badges",
+  "category": "widgets",
+  "icon": "groups",
+  "description": "The WordPress.org profile badges of a username: teams, WordCamps, translation and more.",
+  "keywords": [
+    "badges",
+    "teams",
+    "polyglots",
+    "wordcamp",
+    "docs"
+  ],
+  "textdomain": "nhrrob-core-contributions",
+  "attributes": {
+    "username": {
+      "type": "string",
+      "default": ""
+    },
+    "accentColor": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true,
+      "gradients": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "width": true,
+      "style": true
+    }
+  },
+  "editorScript": "nhrcc-blocks-editor",
+  "style": "nhrcc-blocks"
+}

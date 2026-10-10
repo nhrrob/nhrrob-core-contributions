@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<ruleset
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="NHR Core Contributions"
+	xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+>
+	<description>NHR Core Contributions PHP Coding Standards</description>
+
+	<!-- PHP files only — JS/CSS are linted by ESLint -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Files/directories to scan -->
+	<file>.</file>
+
+	<!-- Exclude generated / dependency directories -->
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/assets/*/build/*</exclude-pattern>
+	<exclude-pattern>/tests/*</exclude-pattern>
+
+	<!--
+	index.php files are directory-listing guards whose entire contents are
+	fixed by the nhrrob plugin standard ("<?php # Silence is golden."). They
+	hold no code, so the file-comment and inline-comment sniffs don't apply.
+	-->
+	<rule ref="Squiz.Commenting.FileComment">
+		<exclude-pattern>*/index.php</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.InlineComment">
+		<exclude-pattern>*/index.php</exclude-pattern>
+	</rule>
+	<rule ref="PEAR.Commenting.InlineComment">
+		<exclude-pattern>*/index.php</exclude-pattern>
+	</rule>
+
+	<!-- Every PHP version from the plugin's minimum up (PHPCompatibilityWP reads testVersion) -->
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- Apply full WordPress Coding Standards -->
+	<rule ref="WordPress">
+		<!-- Short array syntax [] is allowed -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<!-- PSR-4 class filenames (e.g. Folders.php) are intentional — not WordPress-style class-folders.php -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<!-- Main plugin file intentionally holds both the class and the bootstrap function — standard WP pattern -->
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed"/>
+	</rule>
+
+	<!-- Enforce the plugin text domain for all i18n calls -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="nhrrob-core-contributions"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- All global symbols must carry the plugin prefix -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="nhrcc"/>
+				<element value="Nhrcc"/>
+				<element value="NHRCC"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Enforce Yoda conditions per WordPress style -->
+	<rule ref="WordPress.PHP.YodaConditions"/>
+</ruleset>

@@ -1,11 +1,36 @@
+# System files
 .sass-cache
 .DS_Store
 .phpintel
+.idea/*
+
+# Package managers
 ./gulpfile.js
 package-lock.json
 pnpm-lock.yaml
 composer.lock
+
+# Dependencies
 /node_modules
-.idea/*
-pnpm-lock.yaml
-node_modules
+
+# Development tools
+/.phpunit.result.cache
+/vendor/phpunit
+/vendor/10up
+/vendor/mockery
+/vendor/hamcrest
+/vendor/sebastian
+/vendor/bin
+/vendor/symfony/yaml
+/vendor/antecedent
+/vendor/doctrine
+/vendor/myclabs
+/vendor/nikic
+/vendor/phar-io
+/vendor/theseer
+/vendor/squizlabs
+/vendor/wp-coding-standards
+/vendor/phpcsstandards
+/vendor/phpcompatibility
+/vendor/dealerdirect
+/vendor/composer/autoload_files.php

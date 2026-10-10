@@ -2,46 +2,20 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "nhrcc-core-contributions/core-contributions-block",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "title": "NHR Core Contributions",
   "category": "widgets",
-  "icon": "admin-users",
-  "description": "Display Core Contributions stat in your own website",
+  "icon": "list-view",
+  "description": "A paginated list of the WordPress core or Gutenberg contributions of a WordPress.org username.",
   "keywords": [
     "contributions",
-    "wordpress",
-    "core"
+    "core",
+    "gutenberg",
+    "props"
   ],
   "textdomain": "nhrrob-core-contributions",
-  "editorScript": "file:./index.js",
-  "viewScript": "file:./index.js",
-  "editorStyle": "file:../../../css/admin.out.css",
-  "style": [
-    "file:../../../css/admin.out.css",
-    "file:./style-index.css"
-  ],
   "attributes": {
     "username": {
-      "type": "string",
-      "default": ""
-    },
-    "preset": {
-      "type": "string",
-      "default": "default"
-    },
-    "titleColor": {
-      "type": "string",
-      "default": ""
-    },
-    "titleFontSize": {
-      "type": "string",
-      "default": ""
-    },
-    "titleFontWeight": {
-      "type": "string",
-      "default": ""
-    },
-    "titleBackgroundColor": {
       "type": "string",
       "default": ""
     },
@@ -49,26 +23,37 @@
       "type": "string",
       "default": ""
     },
-    "metaColor": {
+    "source": {
       "type": "string",
-      "default": ""
+      "default": "core",
+      "enum": [
+        "core",
+        "gutenberg"
+      ]
     },
-    "paginationColor": {
-      "type": "string",
-      "default": ""
-    },
-    "showTime": {
+    "showHeader": {
       "type": "boolean",
-      "default": false
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "preset": {
+      "type": "string",
+      "default": ""
     }
   },
   "supports": {
     "html": false,
-    "reusable": true,
-    "align": true,
-    "anchor": true,
-    "className": true,
-    "customClassName": true,
+    "align": [
+      "wide",
+      "full"
+    ],
     "color": {
       "background": true,
       "text": true,
@@ -81,15 +66,30 @@
     },
     "typography": {
       "fontSize": true,
-      "fontWeight": true,
-      "lineHeight": true,
-      "fontFamily": true
+      "lineHeight": true
     },
-    "border": {
+    "__experimentalBorder": {
       "color": true,
       "radius": true,
       "width": true,
       "style": true
     }
-  }
+  },
+  "styles": [
+    {
+      "name": "default",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "minimal",
+      "label": "Minimal"
+    },
+    {
+      "name": "timeline",
+      "label": "Timeline"
+    }
+  ],
+  "editorScript": "nhrcc-blocks-editor",
+  "style": "nhrcc-blocks"
 }

@@ -1,0 +1,74 @@
+name: Security Review
+
+# Pre-empts WordPress.org's automated release security review
+# (make.wordpress.org/plugins/2026/09/09/automated-security-review-for-plugin-releases/),
+# which blocks high-risk releases after the SVN commit. Runs on every PR to main.
+on:
+  pull_request:
+    branches:
+      - main
+      - trunk
+  workflow_dispatch:
+
+jobs:
+  static:
+    name: Semgrep + PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Semgrep (PHP security rules)
+        run: |
+          pipx install semgrep
+          semgrep scan --config p/php --error --metrics=off \
+            includes nhrrob-core-contributions.php uninstall.php
+
+      - name: PHPStan (WordPress-aware)
+        run: |
+          mkdir -p /tmp/tools && cd /tmp/tools
+          composer init --no-interaction --name=tmp/tools >/dev/null
+          composer config --no-plugins allow-plugins.phpstan/extension-installer true
+          composer require --no-interaction --quiet phpstan/phpstan szepeviktor/phpstan-wordpress phpstan/extension-installer
+          cd "$GITHUB_WORKSPACE"
+          /tmp/tools/vendor/bin/phpstan analyse -c .github/security/phpstan.neon --no-progress --memory-limit=1G
+
+  endpoints:
+    name: Endpoint authorization probe
+    runs-on: ubuntu-latest
+    env:
+      WP_PATH: /tmp/wordpress
+      SLUG: nhrrob-core-contributions
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mysqli
+          tools: wp-cli
+
+      - name: Install WordPress with the plugin (production autoloader)
+        run: |
+          sudo systemctl start mysql.service
+          composer install --no-dev --no-interaction --quiet
+          wp core download --path="$WP_PATH" --quiet
+          wp config create --path="$WP_PATH" --dbname=wp --dbuser=root --dbpass=root --dbhost=127.0.0.1 --skip-check
+          wp db create --path="$WP_PATH"
+          wp core install --path="$WP_PATH" --url=http://localhost --title=Probe --admin_user=admin \
+            --admin_password="$(openssl rand -hex 12)" --admin_email=admin@example.invalid --skip-email
+          rsync -a --exclude=.git --exclude=node_modules ./ "$WP_PATH/wp-content/plugins/$SLUG/"
+          wp plugin activate "$SLUG" --path="$WP_PATH"
+
+      - name: Probe every AJAX action and REST route as subscriber/anonymous
+        run: |
+          python3 .github/security/probe.py --wp "wp --path=$WP_PATH" \
+            --script "$WP_PATH/wp-content/plugins/$SLUG/.github/security/endpoint-probe.php"

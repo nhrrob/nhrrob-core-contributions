@@ -7,7 +7,9 @@ This skill outlines the standard operating procedure for releasing a new version
 - **Minor Release**: Increment the third digit (0.0.1 bump). Example: `1.0.0` -> `1.0.1`.
 
 ## Prerequisites
-- Ensure all tests pass.
+- Ensure all tests pass: `composer run phpcs`, `composer run test:unit`, `npm run lint`, `npm run build`.
+- Run `composer install --no-dev` so the committed `vendor/` is the production autoloader.
+- Run `~/Sites/nhrrob-staging/bin/prerelease-check nhrrob-core-contributions` on the committed code.
 
 ## Step 0: Sync Local Branches
 Ensure all local branches are up to date with the remote before starting.
@@ -26,7 +28,8 @@ git merge staging
 ```
 
 ## Step 2: Version Bumping
-1. **Main Plugin File**: Update the `Version:` header and constant in `nhrrob-core-contributions.php`.
+1. **Main Plugin File**: Update the `Version:` header and the `VERSION` constant in `nhrrob-core-contributions.php`.
+   - Also update `version` in `package.json` and in every `assets/blocks/src/*/block.json`, then run `npm run build` so `assets/blocks/build/` carries the same number.
 2. **Readme File**: 
    - Update `Tested up to:` and `Stable tag:` in `readme.txt`.
    - Add a new entry under `== Changelog ==` following the existing format:
@@ -38,7 +41,7 @@ git merge staging
 ## Step 3: Commit and PR
 1. Commit the version bump:
    ```bash
-   git add nhrrob-core-contributions.php readme.txt
+   git add nhrrob-core-contributions.php readme.txt package.json assets/blocks
    git commit -m "Chore: Bump version to X.Y.Z"
    ```
 2. Push and create a Pull Request to `main`:
