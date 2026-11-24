@@ -17,3 +17,25 @@ jobs:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
         
+
+  github-release:
+    name: GitHub release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Make the GitHub release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        version="${GITHUB_REF_NAME#v}"
+
+        if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+          echo "$GITHUB_REF_NAME is already released."
+          exit 0
+        fi
+
+        # The notes are this version's lines under "== Changelog ==" in readme.txt.
+        awk -v version="$version" '/^= /{ found = ( $2 == version ); next } /^== /{ found = 0 } found' readme.txt > release-notes.md
+        gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --notes-file release-notes.md
